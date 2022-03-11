@@ -16,20 +16,20 @@ class ManualControlServiceStub(object):
             channel: A grpc.Channel.
         """
         self.StartPositionControl = channel.unary_unary(
-                '/mavsdk.rpc.manual_control.ManualControlService/StartPositionControl',
-                request_serializer=manual__control_dot_manual__control__pb2.StartPositionControlRequest.SerializeToString,
-                response_deserializer=manual__control_dot_manual__control__pb2.StartPositionControlResponse.FromString,
-                )
+            "/mavsdk.rpc.manual_control.ManualControlService/StartPositionControl",
+            request_serializer=manual__control_dot_manual__control__pb2.StartPositionControlRequest.SerializeToString,
+            response_deserializer=manual__control_dot_manual__control__pb2.StartPositionControlResponse.FromString,
+        )
         self.StartAltitudeControl = channel.unary_unary(
-                '/mavsdk.rpc.manual_control.ManualControlService/StartAltitudeControl',
-                request_serializer=manual__control_dot_manual__control__pb2.StartAltitudeControlRequest.SerializeToString,
-                response_deserializer=manual__control_dot_manual__control__pb2.StartAltitudeControlResponse.FromString,
-                )
+            "/mavsdk.rpc.manual_control.ManualControlService/StartAltitudeControl",
+            request_serializer=manual__control_dot_manual__control__pb2.StartAltitudeControlRequest.SerializeToString,
+            response_deserializer=manual__control_dot_manual__control__pb2.StartAltitudeControlResponse.FromString,
+        )
         self.SetManualControlInput = channel.unary_unary(
-                '/mavsdk.rpc.manual_control.ManualControlService/SetManualControlInput',
-                request_serializer=manual__control_dot_manual__control__pb2.SetManualControlInputRequest.SerializeToString,
-                response_deserializer=manual__control_dot_manual__control__pb2.SetManualControlInputResponse.FromString,
-                )
+            "/mavsdk.rpc.manual_control.ManualControlService/SetManualControlInput",
+            request_serializer=manual__control_dot_manual__control__pb2.SetManualControlInputRequest.SerializeToString,
+            response_deserializer=manual__control_dot_manual__control__pb2.SetManualControlInputResponse.FromString,
+        )
 
 
 class ManualControlServiceServicer(object):
@@ -44,8 +44,8 @@ class ManualControlServiceServicer(object):
         Requires a valid position using e.g. GPS, external vision, or optical flow.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def StartAltitudeControl(self, request, context):
         """
@@ -55,8 +55,8 @@ class ManualControlServiceServicer(object):
         Does not require a  valid position e.g. GPS.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SetManualControlInput(self, request, context):
         """
@@ -66,85 +66,122 @@ class ManualControlServiceServicer(object):
         triggering of RC loss, a good minimum rate is 10 Hz.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ManualControlServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'StartPositionControl': grpc.unary_unary_rpc_method_handler(
-                    servicer.StartPositionControl,
-                    request_deserializer=manual__control_dot_manual__control__pb2.StartPositionControlRequest.FromString,
-                    response_serializer=manual__control_dot_manual__control__pb2.StartPositionControlResponse.SerializeToString,
-            ),
-            'StartAltitudeControl': grpc.unary_unary_rpc_method_handler(
-                    servicer.StartAltitudeControl,
-                    request_deserializer=manual__control_dot_manual__control__pb2.StartAltitudeControlRequest.FromString,
-                    response_serializer=manual__control_dot_manual__control__pb2.StartAltitudeControlResponse.SerializeToString,
-            ),
-            'SetManualControlInput': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetManualControlInput,
-                    request_deserializer=manual__control_dot_manual__control__pb2.SetManualControlInputRequest.FromString,
-                    response_serializer=manual__control_dot_manual__control__pb2.SetManualControlInputResponse.SerializeToString,
-            ),
+        "StartPositionControl": grpc.unary_unary_rpc_method_handler(
+            servicer.StartPositionControl,
+            request_deserializer=manual__control_dot_manual__control__pb2.StartPositionControlRequest.FromString,
+            response_serializer=manual__control_dot_manual__control__pb2.StartPositionControlResponse.SerializeToString,
+        ),
+        "StartAltitudeControl": grpc.unary_unary_rpc_method_handler(
+            servicer.StartAltitudeControl,
+            request_deserializer=manual__control_dot_manual__control__pb2.StartAltitudeControlRequest.FromString,
+            response_serializer=manual__control_dot_manual__control__pb2.StartAltitudeControlResponse.SerializeToString,
+        ),
+        "SetManualControlInput": grpc.unary_unary_rpc_method_handler(
+            servicer.SetManualControlInput,
+            request_deserializer=manual__control_dot_manual__control__pb2.SetManualControlInputRequest.FromString,
+            response_serializer=manual__control_dot_manual__control__pb2.SetManualControlInputResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.manual_control.ManualControlService', rpc_method_handlers)
+        "mavsdk.rpc.manual_control.ManualControlService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class ManualControlService(object):
     """Enable manual control using e.g. a joystick or gamepad.
     """
 
     @staticmethod
-    def StartPositionControl(request,
+    def StartPositionControl(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.manual_control.ManualControlService/StartPositionControl',
+            "/mavsdk.rpc.manual_control.ManualControlService/StartPositionControl",
             manual__control_dot_manual__control__pb2.StartPositionControlRequest.SerializeToString,
             manual__control_dot_manual__control__pb2.StartPositionControlResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def StartAltitudeControl(request,
+    def StartAltitudeControl(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.manual_control.ManualControlService/StartAltitudeControl',
+            "/mavsdk.rpc.manual_control.ManualControlService/StartAltitudeControl",
             manual__control_dot_manual__control__pb2.StartAltitudeControlRequest.SerializeToString,
             manual__control_dot_manual__control__pb2.StartAltitudeControlResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SetManualControlInput(request,
+    def SetManualControlInput(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.manual_control.ManualControlService/SetManualControlInput',
+            "/mavsdk.rpc.manual_control.ManualControlService/SetManualControlInput",
             manual__control_dot_manual__control__pb2.SetManualControlInputRequest.SerializeToString,
             manual__control_dot_manual__control__pb2.SetManualControlInputResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

@@ -52,32 +52,34 @@ class custom_build(build):
         """
         Trying to detect the platform to know which `mavsdk_server` executable to download
         """
-        if sys.platform.startswith('linux') and 'MAVSDK_SERVER_ARCH' in os.environ:
-            if os.environ['MAVSDK_SERVER_ARCH'] == "armv6l":
-                return 'linux-armv6-musl'
-            elif os.environ['MAVSDK_SERVER_ARCH'] == "armv7l":
-                return 'linux-armv7l-musl'
-            elif os.environ['MAVSDK_SERVER_ARCH'] == "aarch64":
-                return 'linux-arm64-musl'
+        if sys.platform.startswith("linux") and "MAVSDK_SERVER_ARCH" in os.environ:
+            if os.environ["MAVSDK_SERVER_ARCH"] == "armv6l":
+                return "linux-armv6-musl"
+            elif os.environ["MAVSDK_SERVER_ARCH"] == "armv7l":
+                return "linux-armv7l-musl"
+            elif os.environ["MAVSDK_SERVER_ARCH"] == "aarch64":
+                return "linux-arm64-musl"
             else:
                 raise NotImplementedError(
-                    f"Error: unknown MAVSDK_SERVER_ARCH: {os.environ['MAVSDK_SERVER_ARCH']}")
-        elif sys.platform.startswith('linux'):
-            return 'musl_x86_64'
-        elif sys.platform.startswith('darwin'):
-            return 'macos'
-        elif sys.platform.startswith('win'):
-            return 'win32.exe'
+                    f"Error: unknown MAVSDK_SERVER_ARCH: {os.environ['MAVSDK_SERVER_ARCH']}"
+                )
+        elif sys.platform.startswith("linux"):
+            return "musl_x86_64"
+        elif sys.platform.startswith("darwin"):
+            return "macos"
+        elif sys.platform.startswith("win"):
+            return "win32.exe"
         else:
             raise NotImplementedError(
-                f"Error: mavsdk_server is not distributed for platform {sys.platform} (yet)! You should set the 'MAVSDK_BUILD_PURE=ON' environment variable and get mavsdk_server manually.")
+                f"Error: mavsdk_server is not distributed for platform {sys.platform} (yet)! You should set the 'MAVSDK_BUILD_PURE=ON' environment variable and get mavsdk_server manually."
+            )
 
     @property
     def mavsdk_server_filepath(self):
         """
         The location of the downloaded `mavsdk_server` binary
         """
-        return 'mavsdk/bin/mavsdk_server'
+        return "mavsdk/bin/mavsdk_server"
 
     @property
     def mavsdk_server_tag(self):
@@ -96,17 +98,14 @@ class custom_build(build):
         return f"https://github.com/mavlink/MAVSDK/releases/download/{self.mavsdk_server_tag}/mavsdk_server_{self.platform_suffix}"
 
     def run(self):
-        if 'MAVSDK_BUILD_PURE' not in os.environ:
+        if "MAVSDK_BUILD_PURE" not in os.environ:
             self.download_mavsdk_server()
 
         build.run(self)
 
     def download_mavsdk_server(self):
-        print(
-            f"downloading {self.mavsdk_server_url} into {self.mavsdk_server_filepath}")
-        urllib.request.urlretrieve(
-            self.mavsdk_server_url,
-            filename=self.mavsdk_server_filepath)
+        print(f"downloading {self.mavsdk_server_url} into {self.mavsdk_server_filepath}")
+        urllib.request.urlretrieve(self.mavsdk_server_url, filename=self.mavsdk_server_filepath)
 
         print(f"adding execution permission to {self.mavsdk_server_filepath}")
         st = os.stat(self.mavsdk_server_filepath)
@@ -114,8 +113,7 @@ class custom_build(build):
 
 
 def version():
-    process = subprocess.Popen(["git", "describe", "--tags"],
-                               stdout=subprocess.PIPE)
+    process = subprocess.Popen(["git", "describe", "--tags"], stdout=subprocess.PIPE)
     (output, err) = process.communicate()
     exit_code = process.wait()
     if exit_code != 0:
@@ -132,22 +130,18 @@ setup(
     url="https://github.com/mavlink/MAVSDK-Python",
     maintainer="Jonas Vautherin, Julian Oes",
     maintainer_email="jonas@auterion.com, julian.oes@auterion.com",
-    python_requires='>=3.6',
+    python_requires=">=3.6",
     include_package_data=True,
-    cmdclass={'build': custom_build},
-
+    cmdclass={"build": custom_build},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python :: 3.6",
     ],
-
-    packages=find_packages(exclude=["other", "docs", "tests", "examples",
-                                    "proto"]),
+    packages=find_packages(exclude=["other", "docs", "tests", "examples", "proto"]),
     install_requires=parse_requirements("requirements.txt"),
     setup_requires=parse_requirements("requirements-dev.txt"),
-
     project_urls={
         "Bug Reports": "https://github.com/mavlink/MAVSDK-Python/issues",
         "Source": "https://github.com/mavlink/MAVSDK-Python/",

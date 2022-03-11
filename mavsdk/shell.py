@@ -20,8 +20,6 @@ class ShellResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for shell requests
@@ -48,7 +46,6 @@ class ShellResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -88,12 +85,8 @@ class ShellResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ShellResult object """
         self.result = result
         self.result_str = result_str
@@ -103,19 +96,16 @@ class ShellResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ShellResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ShellResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ShellResult: [{struct_repr}]"
 
@@ -123,30 +113,15 @@ class ShellResult:
     def translate_from_rpc(rpcShellResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ShellResult(
-                
-                ShellResult.Result.translate_from_rpc(rpcShellResult.result),
-                
-                
-                rpcShellResult.result_str
-                )
+            ShellResult.Result.translate_from_rpc(rpcShellResult.result), rpcShellResult.result_str
+        )
 
     def translate_to_rpc(self, rpcShellResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcShellResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcShellResult.result_str = self.result_str
-            
-        
-        
 
+        rpcShellResult.result_str = self.result_str
 
 
 class ShellError(Exception):
@@ -176,11 +151,9 @@ class Shell(AsyncBase):
         """ Setups the api stub """
         self._stub = shell_pb2_grpc.ShellServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ShellResult.translate_from_rpc(response.shell_result)
-    
 
     async def send(self, command):
         """
@@ -201,12 +174,10 @@ class Shell(AsyncBase):
         request.command = command
         response = await self._stub.Send(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ShellResult.Result.SUCCESS:
             raise ShellError(result, "send()", command)
-        
 
     async def receive(self):
         """
@@ -227,9 +198,7 @@ class Shell(AsyncBase):
 
         try:
             async for response in receive_stream:
-                
 
-            
                 yield response.data
         finally:
             receive_stream.cancel()

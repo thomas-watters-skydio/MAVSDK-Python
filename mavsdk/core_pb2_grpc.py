@@ -16,15 +16,15 @@ class CoreServiceStub(object):
             channel: A grpc.Channel.
         """
         self.SubscribeConnectionState = channel.unary_stream(
-                '/mavsdk.rpc.core.CoreService/SubscribeConnectionState',
-                request_serializer=core_dot_core__pb2.SubscribeConnectionStateRequest.SerializeToString,
-                response_deserializer=core_dot_core__pb2.ConnectionStateResponse.FromString,
-                )
+            "/mavsdk.rpc.core.CoreService/SubscribeConnectionState",
+            request_serializer=core_dot_core__pb2.SubscribeConnectionStateRequest.SerializeToString,
+            response_deserializer=core_dot_core__pb2.ConnectionStateResponse.FromString,
+        )
         self.SetMavlinkTimeout = channel.unary_unary(
-                '/mavsdk.rpc.core.CoreService/SetMavlinkTimeout',
-                request_serializer=core_dot_core__pb2.SetMavlinkTimeoutRequest.SerializeToString,
-                response_deserializer=core_dot_core__pb2.SetMavlinkTimeoutResponse.FromString,
-                )
+            "/mavsdk.rpc.core.CoreService/SetMavlinkTimeout",
+            request_serializer=core_dot_core__pb2.SetMavlinkTimeoutRequest.SerializeToString,
+            response_deserializer=core_dot_core__pb2.SetMavlinkTimeoutResponse.FromString,
+        )
 
 
 class CoreServiceServicer(object):
@@ -36,8 +36,8 @@ class CoreServiceServicer(object):
         Subscribe to 'connection state' updates.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SetMavlinkTimeout(self, request, context):
         """
@@ -49,63 +49,88 @@ class CoreServiceServicer(object):
         need to be increased to prevent timeouts.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_CoreServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SubscribeConnectionState': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeConnectionState,
-                    request_deserializer=core_dot_core__pb2.SubscribeConnectionStateRequest.FromString,
-                    response_serializer=core_dot_core__pb2.ConnectionStateResponse.SerializeToString,
-            ),
-            'SetMavlinkTimeout': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetMavlinkTimeout,
-                    request_deserializer=core_dot_core__pb2.SetMavlinkTimeoutRequest.FromString,
-                    response_serializer=core_dot_core__pb2.SetMavlinkTimeoutResponse.SerializeToString,
-            ),
+        "SubscribeConnectionState": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeConnectionState,
+            request_deserializer=core_dot_core__pb2.SubscribeConnectionStateRequest.FromString,
+            response_serializer=core_dot_core__pb2.ConnectionStateResponse.SerializeToString,
+        ),
+        "SetMavlinkTimeout": grpc.unary_unary_rpc_method_handler(
+            servicer.SetMavlinkTimeout,
+            request_deserializer=core_dot_core__pb2.SetMavlinkTimeoutRequest.FromString,
+            response_serializer=core_dot_core__pb2.SetMavlinkTimeoutResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.core.CoreService', rpc_method_handlers)
+        "mavsdk.rpc.core.CoreService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class CoreService(object):
     """Access to the connection state and core configurations
     """
 
     @staticmethod
-    def SubscribeConnectionState(request,
+    def SubscribeConnectionState(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.core.CoreService/SubscribeConnectionState',
+            "/mavsdk.rpc.core.CoreService/SubscribeConnectionState",
             core_dot_core__pb2.SubscribeConnectionStateRequest.SerializeToString,
             core_dot_core__pb2.ConnectionStateResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SetMavlinkTimeout(request,
+    def SetMavlinkTimeout(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.core.CoreService/SetMavlinkTimeout',
+            "/mavsdk.rpc.core.CoreService/SetMavlinkTimeout",
             core_dot_core__pb2.SetMavlinkTimeoutRequest.SerializeToString,
             core_dot_core__pb2.SetMavlinkTimeoutResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

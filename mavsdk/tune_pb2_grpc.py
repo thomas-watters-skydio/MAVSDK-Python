@@ -16,10 +16,10 @@ class TuneServiceStub(object):
             channel: A grpc.Channel.
         """
         self.PlayTune = channel.unary_unary(
-                '/mavsdk.rpc.tune.TuneService/PlayTune',
-                request_serializer=tune_dot_tune__pb2.PlayTuneRequest.SerializeToString,
-                response_deserializer=tune_dot_tune__pb2.PlayTuneResponse.FromString,
-                )
+            "/mavsdk.rpc.tune.TuneService/PlayTune",
+            request_serializer=tune_dot_tune__pb2.PlayTuneRequest.SerializeToString,
+            response_deserializer=tune_dot_tune__pb2.PlayTuneResponse.FromString,
+        )
 
 
 class TuneServiceServicer(object):
@@ -30,41 +30,54 @@ class TuneServiceServicer(object):
         """Send a tune to be played by the system.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_TuneServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'PlayTune': grpc.unary_unary_rpc_method_handler(
-                    servicer.PlayTune,
-                    request_deserializer=tune_dot_tune__pb2.PlayTuneRequest.FromString,
-                    response_serializer=tune_dot_tune__pb2.PlayTuneResponse.SerializeToString,
-            ),
+        "PlayTune": grpc.unary_unary_rpc_method_handler(
+            servicer.PlayTune,
+            request_deserializer=tune_dot_tune__pb2.PlayTuneRequest.FromString,
+            response_serializer=tune_dot_tune__pb2.PlayTuneResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.tune.TuneService', rpc_method_handlers)
+        "mavsdk.rpc.tune.TuneService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class TuneService(object):
     """Enable creating and sending a tune to be played on the system.
     """
 
     @staticmethod
-    def PlayTune(request,
+    def PlayTune(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.tune.TuneService/PlayTune',
+            "/mavsdk.rpc.tune.TuneService/PlayTune",
             tune_dot_tune__pb2.PlayTuneRequest.SerializeToString,
             tune_dot_tune__pb2.PlayTuneResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

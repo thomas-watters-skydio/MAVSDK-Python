@@ -26,14 +26,7 @@ class Attitude:
 
      """
 
-    
-
-    def __init__(
-            self,
-            roll_deg,
-            pitch_deg,
-            yaw_deg,
-            thrust_value):
+    def __init__(self, roll_deg, pitch_deg, yaw_deg, thrust_value):
         """ Initializes the Attitude object """
         self.roll_deg = roll_deg
         self.pitch_deg = pitch_deg
@@ -45,23 +38,26 @@ class Attitude:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Attitude object
-            return \
-                (self.roll_deg == to_compare.roll_deg) and \
-                (self.pitch_deg == to_compare.pitch_deg) and \
-                (self.yaw_deg == to_compare.yaw_deg) and \
-                (self.thrust_value == to_compare.thrust_value)
+            return (
+                (self.roll_deg == to_compare.roll_deg)
+                and (self.pitch_deg == to_compare.pitch_deg)
+                and (self.yaw_deg == to_compare.yaw_deg)
+                and (self.thrust_value == to_compare.thrust_value)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Attitude in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "roll_deg: " + str(self.roll_deg),
                 "pitch_deg: " + str(self.pitch_deg),
                 "yaw_deg: " + str(self.yaw_deg),
-                "thrust_value: " + str(self.thrust_value)
-                ])
+                "thrust_value: " + str(self.thrust_value),
+            ]
+        )
 
         return f"Attitude: [{struct_repr}]"
 
@@ -69,47 +65,22 @@ class Attitude:
     def translate_from_rpc(rpcAttitude):
         """ Translates a gRPC struct to the SDK equivalent """
         return Attitude(
-                
-                rpcAttitude.roll_deg,
-                
-                
-                rpcAttitude.pitch_deg,
-                
-                
-                rpcAttitude.yaw_deg,
-                
-                
-                rpcAttitude.thrust_value
-                )
+            rpcAttitude.roll_deg,
+            rpcAttitude.pitch_deg,
+            rpcAttitude.yaw_deg,
+            rpcAttitude.thrust_value,
+        )
 
     def translate_to_rpc(self, rpcAttitude):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAttitude.roll_deg = self.roll_deg
-            
-        
-        
-        
-            
+
         rpcAttitude.pitch_deg = self.pitch_deg
-            
-        
-        
-        
-            
+
         rpcAttitude.yaw_deg = self.yaw_deg
-            
-        
-        
-        
-            
+
         rpcAttitude.thrust_value = self.thrust_value
-            
-        
-        
 
 
 class ActuatorControlGroup:
@@ -124,11 +95,7 @@ class ActuatorControlGroup:
 
      """
 
-    
-
-    def __init__(
-            self,
-            controls):
+    def __init__(self, controls):
         """ Initializes the ActuatorControlGroup object """
         self.controls = controls
 
@@ -137,39 +104,27 @@ class ActuatorControlGroup:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActuatorControlGroup object
-            return \
-                (self.controls == to_compare.controls)
+            return self.controls == to_compare.controls
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActuatorControlGroup in string representation """
-        struct_repr = ", ".join([
-                "controls: " + str(self.controls)
-                ])
+        struct_repr = ", ".join(["controls: " + str(self.controls)])
 
         return f"ActuatorControlGroup: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcActuatorControlGroup):
         """ Translates a gRPC struct to the SDK equivalent """
-        return ActuatorControlGroup(
-                
-                rpcActuatorControlGroup.controls
-                )
+        return ActuatorControlGroup(rpcActuatorControlGroup.controls)
 
     def translate_to_rpc(self, rpcActuatorControlGroup):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         for elem in self.controls:
-          rpcActuatorControlGroup.controls.append(elem)
-            
-        
-        
+            rpcActuatorControlGroup.controls.append(elem)
 
 
 class ActuatorControl:
@@ -197,11 +152,7 @@ class ActuatorControl:
 
      """
 
-    
-
-    def __init__(
-            self,
-            groups):
+    def __init__(self, groups):
         """ Initializes the ActuatorControl object """
         self.groups = groups
 
@@ -210,17 +161,14 @@ class ActuatorControl:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActuatorControl object
-            return \
-                (self.groups == to_compare.groups)
+            return self.groups == to_compare.groups
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActuatorControl in string representation """
-        struct_repr = ", ".join([
-                "groups: " + str(self.groups)
-                ])
+        struct_repr = ", ".join(["groups: " + str(self.groups)])
 
         return f"ActuatorControl: [{struct_repr}]"
 
@@ -228,27 +176,25 @@ class ActuatorControl:
     def translate_from_rpc(rpcActuatorControl):
         """ Translates a gRPC struct to the SDK equivalent """
         return ActuatorControl(
-                
-                list(map(lambda elem: ActuatorControlGroup.translate_from_rpc(elem), rpcActuatorControl.groups))
+            list(
+                map(
+                    lambda elem: ActuatorControlGroup.translate_from_rpc(elem),
+                    rpcActuatorControl.groups,
                 )
+            )
+        )
 
     def translate_to_rpc(self, rpcActuatorControl):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpc_elems_list = []
         for elem in self.groups:
-                
+
             rpc_elem = offboard_pb2.ActuatorControlGroup()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcActuatorControl.groups.extend(rpc_elems_list)
-            
-        
-        
 
 
 class AttitudeRate:
@@ -271,14 +217,7 @@ class AttitudeRate:
 
      """
 
-    
-
-    def __init__(
-            self,
-            roll_deg_s,
-            pitch_deg_s,
-            yaw_deg_s,
-            thrust_value):
+    def __init__(self, roll_deg_s, pitch_deg_s, yaw_deg_s, thrust_value):
         """ Initializes the AttitudeRate object """
         self.roll_deg_s = roll_deg_s
         self.pitch_deg_s = pitch_deg_s
@@ -290,23 +229,26 @@ class AttitudeRate:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AttitudeRate object
-            return \
-                (self.roll_deg_s == to_compare.roll_deg_s) and \
-                (self.pitch_deg_s == to_compare.pitch_deg_s) and \
-                (self.yaw_deg_s == to_compare.yaw_deg_s) and \
-                (self.thrust_value == to_compare.thrust_value)
+            return (
+                (self.roll_deg_s == to_compare.roll_deg_s)
+                and (self.pitch_deg_s == to_compare.pitch_deg_s)
+                and (self.yaw_deg_s == to_compare.yaw_deg_s)
+                and (self.thrust_value == to_compare.thrust_value)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AttitudeRate in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "roll_deg_s: " + str(self.roll_deg_s),
                 "pitch_deg_s: " + str(self.pitch_deg_s),
                 "yaw_deg_s: " + str(self.yaw_deg_s),
-                "thrust_value: " + str(self.thrust_value)
-                ])
+                "thrust_value: " + str(self.thrust_value),
+            ]
+        )
 
         return f"AttitudeRate: [{struct_repr}]"
 
@@ -314,47 +256,22 @@ class AttitudeRate:
     def translate_from_rpc(rpcAttitudeRate):
         """ Translates a gRPC struct to the SDK equivalent """
         return AttitudeRate(
-                
-                rpcAttitudeRate.roll_deg_s,
-                
-                
-                rpcAttitudeRate.pitch_deg_s,
-                
-                
-                rpcAttitudeRate.yaw_deg_s,
-                
-                
-                rpcAttitudeRate.thrust_value
-                )
+            rpcAttitudeRate.roll_deg_s,
+            rpcAttitudeRate.pitch_deg_s,
+            rpcAttitudeRate.yaw_deg_s,
+            rpcAttitudeRate.thrust_value,
+        )
 
     def translate_to_rpc(self, rpcAttitudeRate):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAttitudeRate.roll_deg_s = self.roll_deg_s
-            
-        
-        
-        
-            
+
         rpcAttitudeRate.pitch_deg_s = self.pitch_deg_s
-            
-        
-        
-        
-            
+
         rpcAttitudeRate.yaw_deg_s = self.yaw_deg_s
-            
-        
-        
-        
-            
+
         rpcAttitudeRate.thrust_value = self.thrust_value
-            
-        
-        
 
 
 class PositionNedYaw:
@@ -377,14 +294,7 @@ class PositionNedYaw:
 
      """
 
-    
-
-    def __init__(
-            self,
-            north_m,
-            east_m,
-            down_m,
-            yaw_deg):
+    def __init__(self, north_m, east_m, down_m, yaw_deg):
         """ Initializes the PositionNedYaw object """
         self.north_m = north_m
         self.east_m = east_m
@@ -396,23 +306,26 @@ class PositionNedYaw:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # PositionNedYaw object
-            return \
-                (self.north_m == to_compare.north_m) and \
-                (self.east_m == to_compare.east_m) and \
-                (self.down_m == to_compare.down_m) and \
-                (self.yaw_deg == to_compare.yaw_deg)
+            return (
+                (self.north_m == to_compare.north_m)
+                and (self.east_m == to_compare.east_m)
+                and (self.down_m == to_compare.down_m)
+                and (self.yaw_deg == to_compare.yaw_deg)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ PositionNedYaw in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "north_m: " + str(self.north_m),
                 "east_m: " + str(self.east_m),
                 "down_m: " + str(self.down_m),
-                "yaw_deg: " + str(self.yaw_deg)
-                ])
+                "yaw_deg: " + str(self.yaw_deg),
+            ]
+        )
 
         return f"PositionNedYaw: [{struct_repr}]"
 
@@ -420,47 +333,22 @@ class PositionNedYaw:
     def translate_from_rpc(rpcPositionNedYaw):
         """ Translates a gRPC struct to the SDK equivalent """
         return PositionNedYaw(
-                
-                rpcPositionNedYaw.north_m,
-                
-                
-                rpcPositionNedYaw.east_m,
-                
-                
-                rpcPositionNedYaw.down_m,
-                
-                
-                rpcPositionNedYaw.yaw_deg
-                )
+            rpcPositionNedYaw.north_m,
+            rpcPositionNedYaw.east_m,
+            rpcPositionNedYaw.down_m,
+            rpcPositionNedYaw.yaw_deg,
+        )
 
     def translate_to_rpc(self, rpcPositionNedYaw):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPositionNedYaw.north_m = self.north_m
-            
-        
-        
-        
-            
+
         rpcPositionNedYaw.east_m = self.east_m
-            
-        
-        
-        
-            
+
         rpcPositionNedYaw.down_m = self.down_m
-            
-        
-        
-        
-            
+
         rpcPositionNedYaw.yaw_deg = self.yaw_deg
-            
-        
-        
 
 
 class PositionGlobalYaw:
@@ -486,8 +374,6 @@ class PositionGlobalYaw:
 
      """
 
-    
-    
     class AltitudeType(Enum):
         """
          Possible altitude options
@@ -505,7 +391,6 @@ class PositionGlobalYaw:
 
          """
 
-        
         REL_HOME = 0
         AMSL = 1
         AGL = 2
@@ -530,15 +415,8 @@ class PositionGlobalYaw:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            lat_deg,
-            lon_deg,
-            alt_m,
-            yaw_deg,
-            altitude_type):
+    def __init__(self, lat_deg, lon_deg, alt_m, yaw_deg, altitude_type):
         """ Initializes the PositionGlobalYaw object """
         self.lat_deg = lat_deg
         self.lon_deg = lon_deg
@@ -551,25 +429,28 @@ class PositionGlobalYaw:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # PositionGlobalYaw object
-            return \
-                (self.lat_deg == to_compare.lat_deg) and \
-                (self.lon_deg == to_compare.lon_deg) and \
-                (self.alt_m == to_compare.alt_m) and \
-                (self.yaw_deg == to_compare.yaw_deg) and \
-                (self.altitude_type == to_compare.altitude_type)
+            return (
+                (self.lat_deg == to_compare.lat_deg)
+                and (self.lon_deg == to_compare.lon_deg)
+                and (self.alt_m == to_compare.alt_m)
+                and (self.yaw_deg == to_compare.yaw_deg)
+                and (self.altitude_type == to_compare.altitude_type)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ PositionGlobalYaw in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "lat_deg: " + str(self.lat_deg),
                 "lon_deg: " + str(self.lon_deg),
                 "alt_m: " + str(self.alt_m),
                 "yaw_deg: " + str(self.yaw_deg),
-                "altitude_type: " + str(self.altitude_type)
-                ])
+                "altitude_type: " + str(self.altitude_type),
+            ]
+        )
 
         return f"PositionGlobalYaw: [{struct_repr}]"
 
@@ -577,56 +458,25 @@ class PositionGlobalYaw:
     def translate_from_rpc(rpcPositionGlobalYaw):
         """ Translates a gRPC struct to the SDK equivalent """
         return PositionGlobalYaw(
-                
-                rpcPositionGlobalYaw.lat_deg,
-                
-                
-                rpcPositionGlobalYaw.lon_deg,
-                
-                
-                rpcPositionGlobalYaw.alt_m,
-                
-                
-                rpcPositionGlobalYaw.yaw_deg,
-                
-                
-                PositionGlobalYaw.AltitudeType.translate_from_rpc(rpcPositionGlobalYaw.altitude_type)
-                )
+            rpcPositionGlobalYaw.lat_deg,
+            rpcPositionGlobalYaw.lon_deg,
+            rpcPositionGlobalYaw.alt_m,
+            rpcPositionGlobalYaw.yaw_deg,
+            PositionGlobalYaw.AltitudeType.translate_from_rpc(rpcPositionGlobalYaw.altitude_type),
+        )
 
     def translate_to_rpc(self, rpcPositionGlobalYaw):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPositionGlobalYaw.lat_deg = self.lat_deg
-            
-        
-        
-        
-            
+
         rpcPositionGlobalYaw.lon_deg = self.lon_deg
-            
-        
-        
-        
-            
+
         rpcPositionGlobalYaw.alt_m = self.alt_m
-            
-        
-        
-        
-            
+
         rpcPositionGlobalYaw.yaw_deg = self.yaw_deg
-            
-        
-        
-        
-            
+
         rpcPositionGlobalYaw.altitude_type = self.altitude_type.translate_to_rpc()
-            
-        
-        
 
 
 class VelocityBodyYawspeed:
@@ -649,14 +499,7 @@ class VelocityBodyYawspeed:
 
      """
 
-    
-
-    def __init__(
-            self,
-            forward_m_s,
-            right_m_s,
-            down_m_s,
-            yawspeed_deg_s):
+    def __init__(self, forward_m_s, right_m_s, down_m_s, yawspeed_deg_s):
         """ Initializes the VelocityBodyYawspeed object """
         self.forward_m_s = forward_m_s
         self.right_m_s = right_m_s
@@ -668,23 +511,26 @@ class VelocityBodyYawspeed:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # VelocityBodyYawspeed object
-            return \
-                (self.forward_m_s == to_compare.forward_m_s) and \
-                (self.right_m_s == to_compare.right_m_s) and \
-                (self.down_m_s == to_compare.down_m_s) and \
-                (self.yawspeed_deg_s == to_compare.yawspeed_deg_s)
+            return (
+                (self.forward_m_s == to_compare.forward_m_s)
+                and (self.right_m_s == to_compare.right_m_s)
+                and (self.down_m_s == to_compare.down_m_s)
+                and (self.yawspeed_deg_s == to_compare.yawspeed_deg_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ VelocityBodyYawspeed in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "forward_m_s: " + str(self.forward_m_s),
                 "right_m_s: " + str(self.right_m_s),
                 "down_m_s: " + str(self.down_m_s),
-                "yawspeed_deg_s: " + str(self.yawspeed_deg_s)
-                ])
+                "yawspeed_deg_s: " + str(self.yawspeed_deg_s),
+            ]
+        )
 
         return f"VelocityBodyYawspeed: [{struct_repr}]"
 
@@ -692,47 +538,22 @@ class VelocityBodyYawspeed:
     def translate_from_rpc(rpcVelocityBodyYawspeed):
         """ Translates a gRPC struct to the SDK equivalent """
         return VelocityBodyYawspeed(
-                
-                rpcVelocityBodyYawspeed.forward_m_s,
-                
-                
-                rpcVelocityBodyYawspeed.right_m_s,
-                
-                
-                rpcVelocityBodyYawspeed.down_m_s,
-                
-                
-                rpcVelocityBodyYawspeed.yawspeed_deg_s
-                )
+            rpcVelocityBodyYawspeed.forward_m_s,
+            rpcVelocityBodyYawspeed.right_m_s,
+            rpcVelocityBodyYawspeed.down_m_s,
+            rpcVelocityBodyYawspeed.yawspeed_deg_s,
+        )
 
     def translate_to_rpc(self, rpcVelocityBodyYawspeed):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcVelocityBodyYawspeed.forward_m_s = self.forward_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityBodyYawspeed.right_m_s = self.right_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityBodyYawspeed.down_m_s = self.down_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityBodyYawspeed.yawspeed_deg_s = self.yawspeed_deg_s
-            
-        
-        
 
 
 class VelocityNedYaw:
@@ -755,14 +576,7 @@ class VelocityNedYaw:
 
      """
 
-    
-
-    def __init__(
-            self,
-            north_m_s,
-            east_m_s,
-            down_m_s,
-            yaw_deg):
+    def __init__(self, north_m_s, east_m_s, down_m_s, yaw_deg):
         """ Initializes the VelocityNedYaw object """
         self.north_m_s = north_m_s
         self.east_m_s = east_m_s
@@ -774,23 +588,26 @@ class VelocityNedYaw:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # VelocityNedYaw object
-            return \
-                (self.north_m_s == to_compare.north_m_s) and \
-                (self.east_m_s == to_compare.east_m_s) and \
-                (self.down_m_s == to_compare.down_m_s) and \
-                (self.yaw_deg == to_compare.yaw_deg)
+            return (
+                (self.north_m_s == to_compare.north_m_s)
+                and (self.east_m_s == to_compare.east_m_s)
+                and (self.down_m_s == to_compare.down_m_s)
+                and (self.yaw_deg == to_compare.yaw_deg)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ VelocityNedYaw in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "north_m_s: " + str(self.north_m_s),
                 "east_m_s: " + str(self.east_m_s),
                 "down_m_s: " + str(self.down_m_s),
-                "yaw_deg: " + str(self.yaw_deg)
-                ])
+                "yaw_deg: " + str(self.yaw_deg),
+            ]
+        )
 
         return f"VelocityNedYaw: [{struct_repr}]"
 
@@ -798,47 +615,22 @@ class VelocityNedYaw:
     def translate_from_rpc(rpcVelocityNedYaw):
         """ Translates a gRPC struct to the SDK equivalent """
         return VelocityNedYaw(
-                
-                rpcVelocityNedYaw.north_m_s,
-                
-                
-                rpcVelocityNedYaw.east_m_s,
-                
-                
-                rpcVelocityNedYaw.down_m_s,
-                
-                
-                rpcVelocityNedYaw.yaw_deg
-                )
+            rpcVelocityNedYaw.north_m_s,
+            rpcVelocityNedYaw.east_m_s,
+            rpcVelocityNedYaw.down_m_s,
+            rpcVelocityNedYaw.yaw_deg,
+        )
 
     def translate_to_rpc(self, rpcVelocityNedYaw):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcVelocityNedYaw.north_m_s = self.north_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityNedYaw.east_m_s = self.east_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityNedYaw.down_m_s = self.down_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityNedYaw.yaw_deg = self.yaw_deg
-            
-        
-        
 
 
 class AccelerationNed:
@@ -858,13 +650,7 @@ class AccelerationNed:
 
      """
 
-    
-
-    def __init__(
-            self,
-            north_m_s2,
-            east_m_s2,
-            down_m_s2):
+    def __init__(self, north_m_s2, east_m_s2, down_m_s2):
         """ Initializes the AccelerationNed object """
         self.north_m_s2 = north_m_s2
         self.east_m_s2 = east_m_s2
@@ -875,21 +661,24 @@ class AccelerationNed:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AccelerationNed object
-            return \
-                (self.north_m_s2 == to_compare.north_m_s2) and \
-                (self.east_m_s2 == to_compare.east_m_s2) and \
-                (self.down_m_s2 == to_compare.down_m_s2)
+            return (
+                (self.north_m_s2 == to_compare.north_m_s2)
+                and (self.east_m_s2 == to_compare.east_m_s2)
+                and (self.down_m_s2 == to_compare.down_m_s2)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AccelerationNed in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "north_m_s2: " + str(self.north_m_s2),
                 "east_m_s2: " + str(self.east_m_s2),
-                "down_m_s2: " + str(self.down_m_s2)
-                ])
+                "down_m_s2: " + str(self.down_m_s2),
+            ]
+        )
 
         return f"AccelerationNed: [{struct_repr}]"
 
@@ -897,38 +686,19 @@ class AccelerationNed:
     def translate_from_rpc(rpcAccelerationNed):
         """ Translates a gRPC struct to the SDK equivalent """
         return AccelerationNed(
-                
-                rpcAccelerationNed.north_m_s2,
-                
-                
-                rpcAccelerationNed.east_m_s2,
-                
-                
-                rpcAccelerationNed.down_m_s2
-                )
+            rpcAccelerationNed.north_m_s2,
+            rpcAccelerationNed.east_m_s2,
+            rpcAccelerationNed.down_m_s2,
+        )
 
     def translate_to_rpc(self, rpcAccelerationNed):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAccelerationNed.north_m_s2 = self.north_m_s2
-            
-        
-        
-        
-            
+
         rpcAccelerationNed.east_m_s2 = self.east_m_s2
-            
-        
-        
-        
-            
+
         rpcAccelerationNed.down_m_s2 = self.down_m_s2
-            
-        
-        
 
 
 class OffboardResult:
@@ -945,8 +715,6 @@ class OffboardResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for offboard requests
@@ -979,7 +747,6 @@ class OffboardResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -1029,12 +796,8 @@ class OffboardResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the OffboardResult object """
         self.result = result
         self.result_str = result_str
@@ -1044,19 +807,16 @@ class OffboardResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # OffboardResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ OffboardResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"OffboardResult: [{struct_repr}]"
 
@@ -1064,30 +824,16 @@ class OffboardResult:
     def translate_from_rpc(rpcOffboardResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return OffboardResult(
-                
-                OffboardResult.Result.translate_from_rpc(rpcOffboardResult.result),
-                
-                
-                rpcOffboardResult.result_str
-                )
+            OffboardResult.Result.translate_from_rpc(rpcOffboardResult.result),
+            rpcOffboardResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcOffboardResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcOffboardResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcOffboardResult.result_str = self.result_str
-            
-        
-        
 
+        rpcOffboardResult.result_str = self.result_str
 
 
 class OffboardError(Exception):
@@ -1124,11 +870,9 @@ class Offboard(AsyncBase):
         """ Setups the api stub """
         self._stub = offboard_pb2_grpc.OffboardServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return OffboardResult.translate_from_rpc(response.offboard_result)
-    
 
     async def start(self):
         """
@@ -1143,12 +887,10 @@ class Offboard(AsyncBase):
         request = offboard_pb2.StartRequest()
         response = await self._stub.Start(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "start()")
-        
 
     async def stop(self):
         """
@@ -1165,12 +907,10 @@ class Offboard(AsyncBase):
         request = offboard_pb2.StopRequest()
         response = await self._stub.Stop(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "stop()")
-        
 
     async def is_active(self):
         """
@@ -1190,10 +930,7 @@ class Offboard(AsyncBase):
         request = offboard_pb2.IsActiveRequest()
         response = await self._stub.IsActive(request)
 
-        
-
         return response.is_active
-        
 
     async def set_attitude(self, attitude):
         """
@@ -1211,18 +948,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetAttitudeRequest()
-        
+
         attitude.translate_to_rpc(request.attitude)
-                
-            
+
         response = await self._stub.SetAttitude(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_attitude()", attitude)
-        
 
     async def set_actuator_control(self, actuator_control):
         """
@@ -1243,18 +977,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetActuatorControlRequest()
-        
+
         actuator_control.translate_to_rpc(request.actuator_control)
-                
-            
+
         response = await self._stub.SetActuatorControl(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_actuator_control()", actuator_control)
-        
 
     async def set_attitude_rate(self, attitude_rate):
         """
@@ -1272,18 +1003,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetAttitudeRateRequest()
-        
+
         attitude_rate.translate_to_rpc(request.attitude_rate)
-                
-            
+
         response = await self._stub.SetAttitudeRate(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_attitude_rate()", attitude_rate)
-        
 
     async def set_position_ned(self, position_ned_yaw):
         """
@@ -1301,18 +1029,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetPositionNedRequest()
-        
+
         position_ned_yaw.translate_to_rpc(request.position_ned_yaw)
-                
-            
+
         response = await self._stub.SetPositionNed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_position_ned()", position_ned_yaw)
-        
 
     async def set_position_global(self, position_global_yaw):
         """
@@ -1330,18 +1055,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetPositionGlobalRequest()
-        
+
         position_global_yaw.translate_to_rpc(request.position_global_yaw)
-                
-            
+
         response = await self._stub.SetPositionGlobal(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_position_global()", position_global_yaw)
-        
 
     async def set_velocity_body(self, velocity_body_yawspeed):
         """
@@ -1359,18 +1081,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetVelocityBodyRequest()
-        
+
         velocity_body_yawspeed.translate_to_rpc(request.velocity_body_yawspeed)
-                
-            
+
         response = await self._stub.SetVelocityBody(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_velocity_body()", velocity_body_yawspeed)
-        
 
     async def set_velocity_ned(self, velocity_ned_yaw):
         """
@@ -1388,18 +1107,15 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetVelocityNedRequest()
-        
+
         velocity_ned_yaw.translate_to_rpc(request.velocity_ned_yaw)
-                
-            
+
         response = await self._stub.SetVelocityNed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_velocity_ned()", velocity_ned_yaw)
-        
 
     async def set_position_velocity_ned(self, position_ned_yaw, velocity_ned_yaw):
         """
@@ -1420,22 +1136,19 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetPositionVelocityNedRequest()
-        
+
         position_ned_yaw.translate_to_rpc(request.position_ned_yaw)
-                
-            
-        
+
         velocity_ned_yaw.translate_to_rpc(request.velocity_ned_yaw)
-                
-            
+
         response = await self._stub.SetPositionVelocityNed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
-            raise OffboardError(result, "set_position_velocity_ned()", position_ned_yaw, velocity_ned_yaw)
-        
+            raise OffboardError(
+                result, "set_position_velocity_ned()", position_ned_yaw, velocity_ned_yaw
+            )
 
     async def set_acceleration_ned(self, acceleration_ned):
         """
@@ -1453,15 +1166,12 @@ class Offboard(AsyncBase):
         """
 
         request = offboard_pb2.SetAccelerationNedRequest()
-        
+
         acceleration_ned.translate_to_rpc(request.acceleration_ned)
-                
-            
+
         response = await self._stub.SetAccelerationNed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != OffboardResult.Result.SUCCESS:
             raise OffboardError(result, "set_acceleration_ned()", acceleration_ned)
-        

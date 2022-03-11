@@ -17,25 +17,25 @@ class MissionRawServerServiceStub(object):
             channel: A grpc.Channel.
         """
         self.SubscribeIncomingMission = channel.unary_stream(
-                '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeIncomingMission',
-                request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeIncomingMissionRequest.SerializeToString,
-                response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.IncomingMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeIncomingMission",
+            request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeIncomingMissionRequest.SerializeToString,
+            response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.IncomingMissionResponse.FromString,
+        )
         self.SubscribeCurrentItemChanged = channel.unary_stream(
-                '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeCurrentItemChanged',
-                request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeCurrentItemChangedRequest.SerializeToString,
-                response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.CurrentItemChangedResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeCurrentItemChanged",
+            request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeCurrentItemChangedRequest.SerializeToString,
+            response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.CurrentItemChangedResponse.FromString,
+        )
         self.SetCurrentItemComplete = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetCurrentItemComplete',
-                request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteRequest.SerializeToString,
-                response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetCurrentItemComplete",
+            request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteRequest.SerializeToString,
+            response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteResponse.FromString,
+        )
         self.SubscribeClearAll = channel.unary_stream(
-                '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeClearAll',
-                request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeClearAllRequest.SerializeToString,
-                response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.ClearAllResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeClearAll",
+            request_serializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeClearAllRequest.SerializeToString,
+            response_deserializer=mission__raw__server_dot_mission__raw__server__pb2.ClearAllResponse.FromString,
+        )
 
 
 class MissionRawServerServiceServicer(object):
@@ -48,132 +48,181 @@ class MissionRawServerServiceServicer(object):
         Subscribe to when a new mission is uploaded (asynchronous).
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SubscribeCurrentItemChanged(self, request, context):
         """
         Subscribe to when a new current item is set
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SetCurrentItemComplete(self, request, context):
         """
         Set Current item as completed
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SubscribeClearAll(self, request, context):
         """
         Subscribe when a MISSION_CLEAR_ALL is received
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_MissionRawServerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SubscribeIncomingMission': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeIncomingMission,
-                    request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeIncomingMissionRequest.FromString,
-                    response_serializer=mission__raw__server_dot_mission__raw__server__pb2.IncomingMissionResponse.SerializeToString,
-            ),
-            'SubscribeCurrentItemChanged': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeCurrentItemChanged,
-                    request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeCurrentItemChangedRequest.FromString,
-                    response_serializer=mission__raw__server_dot_mission__raw__server__pb2.CurrentItemChangedResponse.SerializeToString,
-            ),
-            'SetCurrentItemComplete': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetCurrentItemComplete,
-                    request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteRequest.FromString,
-                    response_serializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteResponse.SerializeToString,
-            ),
-            'SubscribeClearAll': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeClearAll,
-                    request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeClearAllRequest.FromString,
-                    response_serializer=mission__raw__server_dot_mission__raw__server__pb2.ClearAllResponse.SerializeToString,
-            ),
+        "SubscribeIncomingMission": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeIncomingMission,
+            request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeIncomingMissionRequest.FromString,
+            response_serializer=mission__raw__server_dot_mission__raw__server__pb2.IncomingMissionResponse.SerializeToString,
+        ),
+        "SubscribeCurrentItemChanged": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeCurrentItemChanged,
+            request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeCurrentItemChangedRequest.FromString,
+            response_serializer=mission__raw__server_dot_mission__raw__server__pb2.CurrentItemChangedResponse.SerializeToString,
+        ),
+        "SetCurrentItemComplete": grpc.unary_unary_rpc_method_handler(
+            servicer.SetCurrentItemComplete,
+            request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteRequest.FromString,
+            response_serializer=mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteResponse.SerializeToString,
+        ),
+        "SubscribeClearAll": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeClearAll,
+            request_deserializer=mission__raw__server_dot_mission__raw__server__pb2.SubscribeClearAllRequest.FromString,
+            response_serializer=mission__raw__server_dot_mission__raw__server__pb2.ClearAllResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.mission_raw_server.MissionRawServerService', rpc_method_handlers)
+        "mavsdk.rpc.mission_raw_server.MissionRawServerService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class MissionRawServerService(object):
     """Acts as a vehicle and receives incoming missions from GCS (in raw MAVLINK format). 
     Provides current mission item state, so the server can progress through missions.
     """
 
     @staticmethod
-    def SubscribeIncomingMission(request,
+    def SubscribeIncomingMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeIncomingMission',
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeIncomingMission",
             mission__raw__server_dot_mission__raw__server__pb2.SubscribeIncomingMissionRequest.SerializeToString,
             mission__raw__server_dot_mission__raw__server__pb2.IncomingMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SubscribeCurrentItemChanged(request,
+    def SubscribeCurrentItemChanged(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeCurrentItemChanged',
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeCurrentItemChanged",
             mission__raw__server_dot_mission__raw__server__pb2.SubscribeCurrentItemChangedRequest.SerializeToString,
             mission__raw__server_dot_mission__raw__server__pb2.CurrentItemChangedResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SetCurrentItemComplete(request,
+    def SetCurrentItemComplete(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetCurrentItemComplete',
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetCurrentItemComplete",
             mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteRequest.SerializeToString,
             mission__raw__server_dot_mission__raw__server__pb2.SetCurrentItemCompleteResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SubscribeClearAll(request,
+    def SubscribeClearAll(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeClearAll',
+            "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeClearAll",
             mission__raw__server_dot_mission__raw__server__pb2.SubscribeClearAllRequest.SerializeToString,
             mission__raw__server_dot_mission__raw__server__pb2.ClearAllResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

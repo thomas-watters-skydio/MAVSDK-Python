@@ -77,7 +77,6 @@ class SongElement(Enum):
 
      """
 
-    
     STYLE_LEGATO = 0
     STYLE_NORMAL = 1
     STYLE_STACCATO = 2
@@ -208,12 +207,7 @@ class TuneDescription:
 
      """
 
-    
-
-    def __init__(
-            self,
-            song_elements,
-            tempo):
+    def __init__(self, song_elements, tempo):
         """ Initializes the TuneDescription object """
         self.song_elements = song_elements
         self.tempo = tempo
@@ -223,19 +217,18 @@ class TuneDescription:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TuneDescription object
-            return \
-                (self.song_elements == to_compare.song_elements) and \
-                (self.tempo == to_compare.tempo)
+            return (self.song_elements == to_compare.song_elements) and (
+                self.tempo == to_compare.tempo
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TuneDescription in string representation """
-        struct_repr = ", ".join([
-                "song_elements: " + str(self.song_elements),
-                "tempo: " + str(self.tempo)
-                ])
+        struct_repr = ", ".join(
+            ["song_elements: " + str(self.song_elements), "tempo: " + str(self.tempo)]
+        )
 
         return f"TuneDescription: [{struct_repr}]"
 
@@ -243,34 +236,26 @@ class TuneDescription:
     def translate_from_rpc(rpcTuneDescription):
         """ Translates a gRPC struct to the SDK equivalent """
         return TuneDescription(
-                
-                list(map(lambda elem: SongElement.translate_from_rpc(elem), rpcTuneDescription.song_elements)),
-                
-                
-                rpcTuneDescription.tempo
+            list(
+                map(
+                    lambda elem: SongElement.translate_from_rpc(elem),
+                    rpcTuneDescription.song_elements,
                 )
+            ),
+            rpcTuneDescription.tempo,
+        )
 
     def translate_to_rpc(self, rpcTuneDescription):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpc_elems_list = []
         for elem in self.song_elements:
-                
+
             rpc_elems_list.append(elem.translate_to_rpc())
-                
+
         rpcTuneDescription.song_elements.extend(rpc_elems_list)
-            
-        
-        
-        
-            
+
         rpcTuneDescription.tempo = self.tempo
-            
-        
-        
 
 
 class TuneResult:
@@ -287,8 +272,6 @@ class TuneResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for tune requests.
@@ -315,7 +298,6 @@ class TuneResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         INVALID_TEMPO = 2
@@ -355,12 +337,8 @@ class TuneResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the TuneResult object """
         self.result = result
         self.result_str = result_str
@@ -370,19 +348,16 @@ class TuneResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TuneResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TuneResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"TuneResult: [{struct_repr}]"
 
@@ -390,30 +365,15 @@ class TuneResult:
     def translate_from_rpc(rpcTuneResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return TuneResult(
-                
-                TuneResult.Result.translate_from_rpc(rpcTuneResult.result),
-                
-                
-                rpcTuneResult.result_str
-                )
+            TuneResult.Result.translate_from_rpc(rpcTuneResult.result), rpcTuneResult.result_str
+        )
 
     def translate_to_rpc(self, rpcTuneResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTuneResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcTuneResult.result_str = self.result_str
-            
-        
-        
 
+        rpcTuneResult.result_str = self.result_str
 
 
 class TuneError(Exception):
@@ -442,11 +402,9 @@ class Tune(AsyncBase):
         """ Setups the api stub """
         self._stub = tune_pb2_grpc.TuneServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return TuneResult.translate_from_rpc(response.tune_result)
-    
 
     async def play_tune(self, tune_description):
         """
@@ -464,15 +422,12 @@ class Tune(AsyncBase):
         """
 
         request = tune_pb2.PlayTuneRequest()
-        
+
         tune_description.translate_to_rpc(request.tune_description)
-                
-            
+
         response = await self._stub.PlayTune(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TuneResult.Result.SUCCESS:
             raise TuneError(result, "play_tune()", tune_description)
-        

@@ -18,15 +18,15 @@ class TransponderServiceStub(object):
             channel: A grpc.Channel.
         """
         self.SubscribeTransponder = channel.unary_stream(
-                '/mavsdk.rpc.transponder.TransponderService/SubscribeTransponder',
-                request_serializer=transponder_dot_transponder__pb2.SubscribeTransponderRequest.SerializeToString,
-                response_deserializer=transponder_dot_transponder__pb2.TransponderResponse.FromString,
-                )
+            "/mavsdk.rpc.transponder.TransponderService/SubscribeTransponder",
+            request_serializer=transponder_dot_transponder__pb2.SubscribeTransponderRequest.SerializeToString,
+            response_deserializer=transponder_dot_transponder__pb2.TransponderResponse.FromString,
+        )
         self.SetRateTransponder = channel.unary_unary(
-                '/mavsdk.rpc.transponder.TransponderService/SetRateTransponder',
-                request_serializer=transponder_dot_transponder__pb2.SetRateTransponderRequest.SerializeToString,
-                response_deserializer=transponder_dot_transponder__pb2.SetRateTransponderResponse.FromString,
-                )
+            "/mavsdk.rpc.transponder.TransponderService/SetRateTransponder",
+            request_serializer=transponder_dot_transponder__pb2.SetRateTransponderRequest.SerializeToString,
+            response_deserializer=transponder_dot_transponder__pb2.SetRateTransponderResponse.FromString,
+        )
 
 
 class TransponderServiceServicer(object):
@@ -39,36 +39,37 @@ class TransponderServiceServicer(object):
         """Subscribe to 'transponder' updates.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SetRateTransponder(self, request, context):
         """Set rate to 'transponder' updates.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_TransponderServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SubscribeTransponder': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeTransponder,
-                    request_deserializer=transponder_dot_transponder__pb2.SubscribeTransponderRequest.FromString,
-                    response_serializer=transponder_dot_transponder__pb2.TransponderResponse.SerializeToString,
-            ),
-            'SetRateTransponder': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetRateTransponder,
-                    request_deserializer=transponder_dot_transponder__pb2.SetRateTransponderRequest.FromString,
-                    response_serializer=transponder_dot_transponder__pb2.SetRateTransponderResponse.SerializeToString,
-            ),
+        "SubscribeTransponder": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeTransponder,
+            request_deserializer=transponder_dot_transponder__pb2.SubscribeTransponderRequest.FromString,
+            response_serializer=transponder_dot_transponder__pb2.TransponderResponse.SerializeToString,
+        ),
+        "SetRateTransponder": grpc.unary_unary_rpc_method_handler(
+            servicer.SetRateTransponder,
+            request_deserializer=transponder_dot_transponder__pb2.SetRateTransponderRequest.FromString,
+            response_serializer=transponder_dot_transponder__pb2.SetRateTransponderResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.transponder.TransponderService', rpc_method_handlers)
+        "mavsdk.rpc.transponder.TransponderService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class TransponderService(object):
     """
     Allow users to get ADS-B information
@@ -76,35 +77,59 @@ class TransponderService(object):
     """
 
     @staticmethod
-    def SubscribeTransponder(request,
+    def SubscribeTransponder(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.transponder.TransponderService/SubscribeTransponder',
+            "/mavsdk.rpc.transponder.TransponderService/SubscribeTransponder",
             transponder_dot_transponder__pb2.SubscribeTransponderRequest.SerializeToString,
             transponder_dot_transponder__pb2.TransponderResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SetRateTransponder(request,
+    def SetRateTransponder(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.transponder.TransponderService/SetRateTransponder',
+            "/mavsdk.rpc.transponder.TransponderService/SetRateTransponder",
             transponder_dot_transponder__pb2.SetRateTransponderRequest.SerializeToString,
             transponder_dot_transponder__pb2.SetRateTransponderResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

@@ -31,3 +31,7 @@ Plugins
    telemetry_server
    action_server
    mission_raw_server
+   command
+   component_information
+   component_information_server
+   poi

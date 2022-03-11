@@ -20,12 +20,7 @@ class FlightInfo:
 
      """
 
-    
-
-    def __init__(
-            self,
-            time_boot_ms,
-            flight_uid):
+    def __init__(self, time_boot_ms, flight_uid):
         """ Initializes the FlightInfo object """
         self.time_boot_ms = time_boot_ms
         self.flight_uid = flight_uid
@@ -35,49 +30,32 @@ class FlightInfo:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FlightInfo object
-            return \
-                (self.time_boot_ms == to_compare.time_boot_ms) and \
-                (self.flight_uid == to_compare.flight_uid)
+            return (self.time_boot_ms == to_compare.time_boot_ms) and (
+                self.flight_uid == to_compare.flight_uid
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FlightInfo in string representation """
-        struct_repr = ", ".join([
-                "time_boot_ms: " + str(self.time_boot_ms),
-                "flight_uid: " + str(self.flight_uid)
-                ])
+        struct_repr = ", ".join(
+            ["time_boot_ms: " + str(self.time_boot_ms), "flight_uid: " + str(self.flight_uid)]
+        )
 
         return f"FlightInfo: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcFlightInfo):
         """ Translates a gRPC struct to the SDK equivalent """
-        return FlightInfo(
-                
-                rpcFlightInfo.time_boot_ms,
-                
-                
-                rpcFlightInfo.flight_uid
-                )
+        return FlightInfo(rpcFlightInfo.time_boot_ms, rpcFlightInfo.flight_uid)
 
     def translate_to_rpc(self, rpcFlightInfo):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFlightInfo.time_boot_ms = self.time_boot_ms
-            
-        
-        
-        
-            
+
         rpcFlightInfo.flight_uid = self.flight_uid
-            
-        
-        
 
 
 class Identification:
@@ -94,12 +72,7 @@ class Identification:
 
      """
 
-    
-
-    def __init__(
-            self,
-            hardware_uid,
-            legacy_uid):
+    def __init__(self, hardware_uid, legacy_uid):
         """ Initializes the Identification object """
         self.hardware_uid = hardware_uid
         self.legacy_uid = legacy_uid
@@ -109,49 +82,32 @@ class Identification:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Identification object
-            return \
-                (self.hardware_uid == to_compare.hardware_uid) and \
-                (self.legacy_uid == to_compare.legacy_uid)
+            return (self.hardware_uid == to_compare.hardware_uid) and (
+                self.legacy_uid == to_compare.legacy_uid
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Identification in string representation """
-        struct_repr = ", ".join([
-                "hardware_uid: " + str(self.hardware_uid),
-                "legacy_uid: " + str(self.legacy_uid)
-                ])
+        struct_repr = ", ".join(
+            ["hardware_uid: " + str(self.hardware_uid), "legacy_uid: " + str(self.legacy_uid)]
+        )
 
         return f"Identification: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcIdentification):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Identification(
-                
-                rpcIdentification.hardware_uid,
-                
-                
-                rpcIdentification.legacy_uid
-                )
+        return Identification(rpcIdentification.hardware_uid, rpcIdentification.legacy_uid)
 
     def translate_to_rpc(self, rpcIdentification):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcIdentification.hardware_uid = self.hardware_uid
-            
-        
-        
-        
-            
+
         rpcIdentification.legacy_uid = self.legacy_uid
-            
-        
-        
 
 
 class Product:
@@ -174,14 +130,7 @@ class Product:
 
      """
 
-    
-
-    def __init__(
-            self,
-            vendor_id,
-            vendor_name,
-            product_id,
-            product_name):
+    def __init__(self, vendor_id, vendor_name, product_id, product_name):
         """ Initializes the Product object """
         self.vendor_id = vendor_id
         self.vendor_name = vendor_name
@@ -193,23 +142,26 @@ class Product:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Product object
-            return \
-                (self.vendor_id == to_compare.vendor_id) and \
-                (self.vendor_name == to_compare.vendor_name) and \
-                (self.product_id == to_compare.product_id) and \
-                (self.product_name == to_compare.product_name)
+            return (
+                (self.vendor_id == to_compare.vendor_id)
+                and (self.vendor_name == to_compare.vendor_name)
+                and (self.product_id == to_compare.product_id)
+                and (self.product_name == to_compare.product_name)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Product in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "vendor_id: " + str(self.vendor_id),
                 "vendor_name: " + str(self.vendor_name),
                 "product_id: " + str(self.product_id),
-                "product_name: " + str(self.product_name)
-                ])
+                "product_name: " + str(self.product_name),
+            ]
+        )
 
         return f"Product: [{struct_repr}]"
 
@@ -217,47 +169,22 @@ class Product:
     def translate_from_rpc(rpcProduct):
         """ Translates a gRPC struct to the SDK equivalent """
         return Product(
-                
-                rpcProduct.vendor_id,
-                
-                
-                rpcProduct.vendor_name,
-                
-                
-                rpcProduct.product_id,
-                
-                
-                rpcProduct.product_name
-                )
+            rpcProduct.vendor_id,
+            rpcProduct.vendor_name,
+            rpcProduct.product_id,
+            rpcProduct.product_name,
+        )
 
     def translate_to_rpc(self, rpcProduct):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcProduct.vendor_id = self.vendor_id
-            
-        
-        
-        
-            
+
         rpcProduct.vendor_name = self.vendor_name
-            
-        
-        
-        
-            
+
         rpcProduct.product_id = self.product_id
-            
-        
-        
-        
-            
+
         rpcProduct.product_name = self.product_name
-            
-        
-        
 
 
 class Version:
@@ -301,21 +228,20 @@ class Version:
 
      """
 
-    
-
     def __init__(
-            self,
-            flight_sw_major,
-            flight_sw_minor,
-            flight_sw_patch,
-            flight_sw_vendor_major,
-            flight_sw_vendor_minor,
-            flight_sw_vendor_patch,
-            os_sw_major,
-            os_sw_minor,
-            os_sw_patch,
-            flight_sw_git_hash,
-            os_sw_git_hash):
+        self,
+        flight_sw_major,
+        flight_sw_minor,
+        flight_sw_patch,
+        flight_sw_vendor_major,
+        flight_sw_vendor_minor,
+        flight_sw_vendor_patch,
+        os_sw_major,
+        os_sw_minor,
+        os_sw_patch,
+        flight_sw_git_hash,
+        os_sw_git_hash,
+    ):
         """ Initializes the Version object """
         self.flight_sw_major = flight_sw_major
         self.flight_sw_minor = flight_sw_minor
@@ -334,25 +260,27 @@ class Version:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Version object
-            return \
-                (self.flight_sw_major == to_compare.flight_sw_major) and \
-                (self.flight_sw_minor == to_compare.flight_sw_minor) and \
-                (self.flight_sw_patch == to_compare.flight_sw_patch) and \
-                (self.flight_sw_vendor_major == to_compare.flight_sw_vendor_major) and \
-                (self.flight_sw_vendor_minor == to_compare.flight_sw_vendor_minor) and \
-                (self.flight_sw_vendor_patch == to_compare.flight_sw_vendor_patch) and \
-                (self.os_sw_major == to_compare.os_sw_major) and \
-                (self.os_sw_minor == to_compare.os_sw_minor) and \
-                (self.os_sw_patch == to_compare.os_sw_patch) and \
-                (self.flight_sw_git_hash == to_compare.flight_sw_git_hash) and \
-                (self.os_sw_git_hash == to_compare.os_sw_git_hash)
+            return (
+                (self.flight_sw_major == to_compare.flight_sw_major)
+                and (self.flight_sw_minor == to_compare.flight_sw_minor)
+                and (self.flight_sw_patch == to_compare.flight_sw_patch)
+                and (self.flight_sw_vendor_major == to_compare.flight_sw_vendor_major)
+                and (self.flight_sw_vendor_minor == to_compare.flight_sw_vendor_minor)
+                and (self.flight_sw_vendor_patch == to_compare.flight_sw_vendor_patch)
+                and (self.os_sw_major == to_compare.os_sw_major)
+                and (self.os_sw_minor == to_compare.os_sw_minor)
+                and (self.os_sw_patch == to_compare.os_sw_patch)
+                and (self.flight_sw_git_hash == to_compare.flight_sw_git_hash)
+                and (self.os_sw_git_hash == to_compare.os_sw_git_hash)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Version in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "flight_sw_major: " + str(self.flight_sw_major),
                 "flight_sw_minor: " + str(self.flight_sw_minor),
                 "flight_sw_patch: " + str(self.flight_sw_patch),
@@ -363,8 +291,9 @@ class Version:
                 "os_sw_minor: " + str(self.os_sw_minor),
                 "os_sw_patch: " + str(self.os_sw_patch),
                 "flight_sw_git_hash: " + str(self.flight_sw_git_hash),
-                "os_sw_git_hash: " + str(self.os_sw_git_hash)
-                ])
+                "os_sw_git_hash: " + str(self.os_sw_git_hash),
+            ]
+        )
 
         return f"Version: [{struct_repr}]"
 
@@ -372,110 +301,43 @@ class Version:
     def translate_from_rpc(rpcVersion):
         """ Translates a gRPC struct to the SDK equivalent """
         return Version(
-                
-                rpcVersion.flight_sw_major,
-                
-                
-                rpcVersion.flight_sw_minor,
-                
-                
-                rpcVersion.flight_sw_patch,
-                
-                
-                rpcVersion.flight_sw_vendor_major,
-                
-                
-                rpcVersion.flight_sw_vendor_minor,
-                
-                
-                rpcVersion.flight_sw_vendor_patch,
-                
-                
-                rpcVersion.os_sw_major,
-                
-                
-                rpcVersion.os_sw_minor,
-                
-                
-                rpcVersion.os_sw_patch,
-                
-                
-                rpcVersion.flight_sw_git_hash,
-                
-                
-                rpcVersion.os_sw_git_hash
-                )
+            rpcVersion.flight_sw_major,
+            rpcVersion.flight_sw_minor,
+            rpcVersion.flight_sw_patch,
+            rpcVersion.flight_sw_vendor_major,
+            rpcVersion.flight_sw_vendor_minor,
+            rpcVersion.flight_sw_vendor_patch,
+            rpcVersion.os_sw_major,
+            rpcVersion.os_sw_minor,
+            rpcVersion.os_sw_patch,
+            rpcVersion.flight_sw_git_hash,
+            rpcVersion.os_sw_git_hash,
+        )
 
     def translate_to_rpc(self, rpcVersion):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcVersion.flight_sw_major = self.flight_sw_major
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_minor = self.flight_sw_minor
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_patch = self.flight_sw_patch
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_vendor_major = self.flight_sw_vendor_major
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_vendor_minor = self.flight_sw_vendor_minor
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_vendor_patch = self.flight_sw_vendor_patch
-            
-        
-        
-        
-            
+
         rpcVersion.os_sw_major = self.os_sw_major
-            
-        
-        
-        
-            
+
         rpcVersion.os_sw_minor = self.os_sw_minor
-            
-        
-        
-        
-            
+
         rpcVersion.os_sw_patch = self.os_sw_patch
-            
-        
-        
-        
-            
+
         rpcVersion.flight_sw_git_hash = self.flight_sw_git_hash
-            
-        
-        
-        
-            
+
         rpcVersion.os_sw_git_hash = self.os_sw_git_hash
-            
-        
-        
 
 
 class InfoResult:
@@ -492,8 +354,6 @@ class InfoResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for info requests.
@@ -514,7 +374,6 @@ class InfoResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         INFORMATION_NOT_RECEIVED_YET = 2
@@ -544,12 +403,8 @@ class InfoResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the InfoResult object """
         self.result = result
         self.result_str = result_str
@@ -559,19 +414,16 @@ class InfoResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # InfoResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ InfoResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"InfoResult: [{struct_repr}]"
 
@@ -579,30 +431,15 @@ class InfoResult:
     def translate_from_rpc(rpcInfoResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return InfoResult(
-                
-                InfoResult.Result.translate_from_rpc(rpcInfoResult.result),
-                
-                
-                rpcInfoResult.result_str
-                )
+            InfoResult.Result.translate_from_rpc(rpcInfoResult.result), rpcInfoResult.result_str
+        )
 
     def translate_to_rpc(self, rpcInfoResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcInfoResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcInfoResult.result_str = self.result_str
-            
-        
-        
 
+        rpcInfoResult.result_str = self.result_str
 
 
 class InfoError(Exception):
@@ -631,11 +468,9 @@ class Info(AsyncBase):
         """ Setups the api stub """
         self._stub = info_pb2_grpc.InfoServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return InfoResult.translate_from_rpc(response.info_result)
-    
 
     async def get_flight_information(self):
         """
@@ -655,15 +490,12 @@ class Info(AsyncBase):
         request = info_pb2.GetFlightInformationRequest()
         response = await self._stub.GetFlightInformation(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != InfoResult.Result.SUCCESS:
             raise InfoError(result, "get_flight_information()")
-        
 
         return FlightInfo.translate_from_rpc(response.flight_info)
-            
 
     async def get_identification(self):
         """
@@ -683,15 +515,12 @@ class Info(AsyncBase):
         request = info_pb2.GetIdentificationRequest()
         response = await self._stub.GetIdentification(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != InfoResult.Result.SUCCESS:
             raise InfoError(result, "get_identification()")
-        
 
         return Identification.translate_from_rpc(response.identification)
-            
 
     async def get_product(self):
         """
@@ -711,15 +540,12 @@ class Info(AsyncBase):
         request = info_pb2.GetProductRequest()
         response = await self._stub.GetProduct(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != InfoResult.Result.SUCCESS:
             raise InfoError(result, "get_product()")
-        
 
         return Product.translate_from_rpc(response.product)
-            
 
     async def get_version(self):
         """
@@ -739,15 +565,12 @@ class Info(AsyncBase):
         request = info_pb2.GetVersionRequest()
         response = await self._stub.GetVersion(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != InfoResult.Result.SUCCESS:
             raise InfoError(result, "get_version()")
-        
 
         return Version.translate_from_rpc(response.version)
-            
 
     async def get_speed_factor(self):
         """
@@ -767,12 +590,9 @@ class Info(AsyncBase):
         request = info_pb2.GetSpeedFactorRequest()
         response = await self._stub.GetSpeedFactor(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != InfoResult.Result.SUCCESS:
             raise InfoError(result, "get_speed_factor()")
-        
 
         return response.speed_factor
-        

@@ -4,7 +4,7 @@
 import asyncio
 
 from mavsdk import System
-from mavsdk.offboard import (OffboardError, VelocityNedYaw)
+from mavsdk.offboard import OffboardError, VelocityNedYaw
 
 
 async def run():
@@ -29,8 +29,10 @@ async def run():
     try:
         await drone.offboard.start()
     except OffboardError as error:
-        print(f"Starting offboard mode failed with error code: \
-              {error._result.result}")
+        print(
+            f"Starting offboard mode failed with error code: \
+              {error._result.result}"
+        )
         print("-- Disarming")
         await drone.action.disarm()
         return
@@ -44,8 +46,7 @@ async def run():
     await asyncio.sleep(4)
 
     print("-- Go South 2 m/s, turn to face West")
-    await drone.offboard.set_velocity_ned(
-        VelocityNedYaw(-2.0, 0.0, 0.0, 270.0))
+    await drone.offboard.set_velocity_ned(VelocityNedYaw(-2.0, 0.0, 0.0, 270.0))
     await asyncio.sleep(4)
 
     print("-- Go West 2 m/s, turn to face East")
@@ -68,8 +69,10 @@ async def run():
     try:
         await drone.offboard.stop()
     except OffboardError as error:
-        print(f"Stopping offboard mode failed with error code: \
-              {error._result.result}")
+        print(
+            f"Stopping offboard mode failed with error code: \
+              {error._result.result}"
+        )
 
 
 if __name__ == "__main__":

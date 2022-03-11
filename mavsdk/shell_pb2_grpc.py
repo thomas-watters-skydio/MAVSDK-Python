@@ -17,15 +17,15 @@ class ShellServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Send = channel.unary_unary(
-                '/mavsdk.rpc.shell.ShellService/Send',
-                request_serializer=shell_dot_shell__pb2.SendRequest.SerializeToString,
-                response_deserializer=shell_dot_shell__pb2.SendResponse.FromString,
-                )
+            "/mavsdk.rpc.shell.ShellService/Send",
+            request_serializer=shell_dot_shell__pb2.SendRequest.SerializeToString,
+            response_deserializer=shell_dot_shell__pb2.SendResponse.FromString,
+        )
         self.SubscribeReceive = channel.unary_stream(
-                '/mavsdk.rpc.shell.ShellService/SubscribeReceive',
-                request_serializer=shell_dot_shell__pb2.SubscribeReceiveRequest.SerializeToString,
-                response_deserializer=shell_dot_shell__pb2.ReceiveResponse.FromString,
-                )
+            "/mavsdk.rpc.shell.ShellService/SubscribeReceive",
+            request_serializer=shell_dot_shell__pb2.SubscribeReceiveRequest.SerializeToString,
+            response_deserializer=shell_dot_shell__pb2.ReceiveResponse.FromString,
+        )
 
 
 class ShellServiceServicer(object):
@@ -38,8 +38,8 @@ class ShellServiceServicer(object):
         Send a command line.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SubscribeReceive(self, request, context):
         """
@@ -48,64 +48,89 @@ class ShellServiceServicer(object):
         This subscription needs to be made before a command line is sent, otherwise, no response will be sent.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ShellServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Send': grpc.unary_unary_rpc_method_handler(
-                    servicer.Send,
-                    request_deserializer=shell_dot_shell__pb2.SendRequest.FromString,
-                    response_serializer=shell_dot_shell__pb2.SendResponse.SerializeToString,
-            ),
-            'SubscribeReceive': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeReceive,
-                    request_deserializer=shell_dot_shell__pb2.SubscribeReceiveRequest.FromString,
-                    response_serializer=shell_dot_shell__pb2.ReceiveResponse.SerializeToString,
-            ),
+        "Send": grpc.unary_unary_rpc_method_handler(
+            servicer.Send,
+            request_deserializer=shell_dot_shell__pb2.SendRequest.FromString,
+            response_serializer=shell_dot_shell__pb2.SendResponse.SerializeToString,
+        ),
+        "SubscribeReceive": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeReceive,
+            request_deserializer=shell_dot_shell__pb2.SubscribeReceiveRequest.FromString,
+            response_serializer=shell_dot_shell__pb2.ReceiveResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.shell.ShellService', rpc_method_handlers)
+        "mavsdk.rpc.shell.ShellService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class ShellService(object):
     """*
     Allow to communicate with the vehicle's system shell.
     """
 
     @staticmethod
-    def Send(request,
+    def Send(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.shell.ShellService/Send',
+            "/mavsdk.rpc.shell.ShellService/Send",
             shell_dot_shell__pb2.SendRequest.SerializeToString,
             shell_dot_shell__pb2.SendResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SubscribeReceive(request,
+    def SubscribeReceive(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.shell.ShellService/SubscribeReceive',
+            "/mavsdk.rpc.shell.ShellService/SubscribeReceive",
             shell_dot_shell__pb2.SubscribeReceiveRequest.SerializeToString,
             shell_dot_shell__pb2.ReceiveResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

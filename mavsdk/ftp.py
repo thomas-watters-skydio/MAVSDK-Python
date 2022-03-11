@@ -20,12 +20,7 @@ class ProgressData:
 
      """
 
-    
-
-    def __init__(
-            self,
-            bytes_transferred,
-            total_bytes):
+    def __init__(self, bytes_transferred, total_bytes):
         """ Initializes the ProgressData object """
         self.bytes_transferred = bytes_transferred
         self.total_bytes = total_bytes
@@ -35,49 +30,35 @@ class ProgressData:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ProgressData object
-            return \
-                (self.bytes_transferred == to_compare.bytes_transferred) and \
-                (self.total_bytes == to_compare.total_bytes)
+            return (self.bytes_transferred == to_compare.bytes_transferred) and (
+                self.total_bytes == to_compare.total_bytes
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ProgressData in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "bytes_transferred: " + str(self.bytes_transferred),
-                "total_bytes: " + str(self.total_bytes)
-                ])
+                "total_bytes: " + str(self.total_bytes),
+            ]
+        )
 
         return f"ProgressData: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcProgressData):
         """ Translates a gRPC struct to the SDK equivalent """
-        return ProgressData(
-                
-                rpcProgressData.bytes_transferred,
-                
-                
-                rpcProgressData.total_bytes
-                )
+        return ProgressData(rpcProgressData.bytes_transferred, rpcProgressData.total_bytes)
 
     def translate_to_rpc(self, rpcProgressData):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcProgressData.bytes_transferred = self.bytes_transferred
-            
-        
-        
-        
-            
+
         rpcProgressData.total_bytes = self.total_bytes
-            
-        
-        
 
 
 class FtpResult:
@@ -94,8 +75,6 @@ class FtpResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for FTP commands
@@ -143,7 +122,6 @@ class FtpResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NEXT = 2
@@ -218,12 +196,8 @@ class FtpResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the FtpResult object """
         self.result = result
         self.result_str = result_str
@@ -233,19 +207,16 @@ class FtpResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FtpResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FtpResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"FtpResult: [{struct_repr}]"
 
@@ -253,30 +224,15 @@ class FtpResult:
     def translate_from_rpc(rpcFtpResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return FtpResult(
-                
-                FtpResult.Result.translate_from_rpc(rpcFtpResult.result),
-                
-                
-                rpcFtpResult.result_str
-                )
+            FtpResult.Result.translate_from_rpc(rpcFtpResult.result), rpcFtpResult.result_str
+        )
 
     def translate_to_rpc(self, rpcFtpResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFtpResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcFtpResult.result_str = self.result_str
-            
-        
-        
 
+        rpcFtpResult.result_str = self.result_str
 
 
 class FtpError(Exception):
@@ -305,11 +261,9 @@ class Ftp(AsyncBase):
         """ Setups the api stub """
         self._stub = ftp_pb2_grpc.FtpServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return FtpResult.translate_from_rpc(response.ftp_result)
-    
 
     async def reset(self):
         """
@@ -324,12 +278,10 @@ class Ftp(AsyncBase):
         request = ftp_pb2.ResetRequest()
         response = await self._stub.Reset(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "reset()")
-        
 
     async def download(self, remote_file_path, local_dir):
         """
@@ -361,22 +313,20 @@ class Ftp(AsyncBase):
 
         try:
             async for response in download_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [FtpResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in FtpResult.Result]:
+                if "NEXT" in [return_code.name for return_code in FtpResult.Result]:
                     success_codes.append(FtpResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise FtpError(result, "download()", remote_file_path, local_dir)
 
                 if result.result == FtpResult.Result.SUCCESS:
-                    download_stream.cancel();
+                    download_stream.cancel()
                     return
-                
 
-            
                 yield ProgressData.translate_from_rpc(response.progress_data)
         finally:
             download_stream.cancel()
@@ -411,22 +361,20 @@ class Ftp(AsyncBase):
 
         try:
             async for response in upload_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [FtpResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in FtpResult.Result]:
+                if "NEXT" in [return_code.name for return_code in FtpResult.Result]:
                     success_codes.append(FtpResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise FtpError(result, "upload()", local_file_path, remote_dir)
 
                 if result.result == FtpResult.Result.SUCCESS:
-                    upload_stream.cancel();
+                    upload_stream.cancel()
                     return
-                
 
-            
                 yield ProgressData.translate_from_rpc(response.progress_data)
         finally:
             upload_stream.cancel()
@@ -452,21 +400,17 @@ class Ftp(AsyncBase):
         """
 
         request = ftp_pb2.ListDirectoryRequest()
-        
-            
+
         request.remote_dir = remote_dir
-            
+
         response = await self._stub.ListDirectory(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "list_directory()", remote_dir)
-        
 
         return response.paths
-        
 
     async def create_directory(self, remote_dir):
         """
@@ -487,12 +431,10 @@ class Ftp(AsyncBase):
         request.remote_dir = remote_dir
         response = await self._stub.CreateDirectory(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "create_directory()", remote_dir)
-        
 
     async def remove_directory(self, remote_dir):
         """
@@ -513,12 +455,10 @@ class Ftp(AsyncBase):
         request.remote_dir = remote_dir
         response = await self._stub.RemoveDirectory(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "remove_directory()", remote_dir)
-        
 
     async def remove_file(self, remote_file_path):
         """
@@ -539,12 +479,10 @@ class Ftp(AsyncBase):
         request.remote_file_path = remote_file_path
         response = await self._stub.RemoveFile(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "remove_file()", remote_file_path)
-        
 
     async def rename(self, remote_from_path, remote_to_path):
         """
@@ -569,12 +507,10 @@ class Ftp(AsyncBase):
         request.remote_to_path = remote_to_path
         response = await self._stub.Rename(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "rename()", remote_from_path, remote_to_path)
-        
 
     async def are_files_identical(self, local_file_path, remote_file_path):
         """
@@ -600,25 +536,19 @@ class Ftp(AsyncBase):
         """
 
         request = ftp_pb2.AreFilesIdenticalRequest()
-        
-            
+
         request.local_file_path = local_file_path
-            
-        
-            
+
         request.remote_file_path = remote_file_path
-            
+
         response = await self._stub.AreFilesIdentical(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "are_files_identical()", local_file_path, remote_file_path)
-        
 
         return response.are_identical
-        
 
     async def set_root_directory(self, root_dir):
         """
@@ -639,12 +569,10 @@ class Ftp(AsyncBase):
         request.root_dir = root_dir
         response = await self._stub.SetRootDirectory(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "set_root_directory()", root_dir)
-        
 
     async def set_target_compid(self, compid):
         """
@@ -665,12 +593,10 @@ class Ftp(AsyncBase):
         request.compid = compid
         response = await self._stub.SetTargetCompid(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FtpResult.Result.SUCCESS:
             raise FtpError(result, "set_target_compid()", compid)
-        
 
     async def get_our_compid(self):
         """
@@ -687,7 +613,4 @@ class Ftp(AsyncBase):
         request = ftp_pb2.GetOurCompidRequest()
         response = await self._stub.GetOurCompid(request)
 
-        
-
         return response.compid
-        

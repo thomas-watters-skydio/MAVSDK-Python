@@ -8,7 +8,7 @@
 import asyncio
 
 from mavsdk import System
-from mavsdk.offboard import (Attitude, OffboardError)
+from mavsdk.offboard import Attitude, OffboardError
 
 
 async def run():
@@ -33,8 +33,10 @@ async def run():
     try:
         await drone.offboard.start()
     except OffboardError as error:
-        print(f"Starting offboard mode failed with error code: \
-              {error._result.result}")
+        print(
+            f"Starting offboard mode failed with error code: \
+              {error._result.result}"
+        )
         print("-- Disarming")
         await drone.action.disarm()
         return
@@ -59,8 +61,10 @@ async def run():
     try:
         await drone.offboard.stop()
     except OffboardError as error:
-        print(f"Stopping offboard mode failed with error code: \
-              {error._result.result}")
+        print(
+            f"Stopping offboard mode failed with error code: \
+              {error._result.result}"
+        )
 
     await drone.action.land()
 

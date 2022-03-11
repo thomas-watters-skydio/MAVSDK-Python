@@ -59,7 +59,6 @@ class FailureUnit(Enum):
 
      """
 
-    
     SENSOR_GYRO = 0
     SENSOR_ACCEL = 1
     SENSOR_MAG = 2
@@ -178,7 +177,6 @@ class FailureType(Enum):
 
      """
 
-    
     OK = 0
     OFF = 1
     STUCK = 2
@@ -244,8 +242,6 @@ class FailureResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for failure requests.
@@ -278,7 +274,6 @@ class FailureResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -328,12 +323,8 @@ class FailureResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the FailureResult object """
         self.result = result
         self.result_str = result_str
@@ -343,19 +334,16 @@ class FailureResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FailureResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FailureResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"FailureResult: [{struct_repr}]"
 
@@ -363,30 +351,16 @@ class FailureResult:
     def translate_from_rpc(rpcFailureResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return FailureResult(
-                
-                FailureResult.Result.translate_from_rpc(rpcFailureResult.result),
-                
-                
-                rpcFailureResult.result_str
-                )
+            FailureResult.Result.translate_from_rpc(rpcFailureResult.result),
+            rpcFailureResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcFailureResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFailureResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcFailureResult.result_str = self.result_str
-            
-        
-        
 
+        rpcFailureResult.result_str = self.result_str
 
 
 class FailureError(Exception):
@@ -415,11 +389,9 @@ class Failure(AsyncBase):
         """ Setups the api stub """
         self._stub = failure_pb2_grpc.FailureServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return FailureResult.translate_from_rpc(response.failure_result)
-    
 
     async def inject(self, failure_unit, failure_type, instance):
         """
@@ -443,20 +415,15 @@ class Failure(AsyncBase):
         """
 
         request = failure_pb2.InjectRequest()
-        
+
         request.failure_unit = failure_unit.translate_to_rpc()
-                
-            
-        
+
         request.failure_type = failure_type.translate_to_rpc()
-                
-            
+
         request.instance = instance
         response = await self._stub.Inject(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FailureResult.Result.SUCCESS:
             raise FailureError(result, "inject()", failure_unit, failure_type, instance)
-        

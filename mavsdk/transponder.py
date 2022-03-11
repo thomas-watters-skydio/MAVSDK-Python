@@ -74,7 +74,6 @@ class AdsbEmitterType(Enum):
 
      """
 
-    
     NO_INFO = 0
     LIGHT = 1
     SMALL = 2
@@ -224,20 +223,19 @@ class AdsbVehicle:
 
      """
 
-    
-
     def __init__(
-            self,
-            icao_address,
-            latitude_deg,
-            longitude_deg,
-            absolute_altitude_m,
-            heading_deg,
-            horizontal_velocity_m_s,
-            vertical_velocity_m_s,
-            callsign,
-            emitter_type,
-            squawk):
+        self,
+        icao_address,
+        latitude_deg,
+        longitude_deg,
+        absolute_altitude_m,
+        heading_deg,
+        horizontal_velocity_m_s,
+        vertical_velocity_m_s,
+        callsign,
+        emitter_type,
+        squawk,
+    ):
         """ Initializes the AdsbVehicle object """
         self.icao_address = icao_address
         self.latitude_deg = latitude_deg
@@ -255,24 +253,26 @@ class AdsbVehicle:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AdsbVehicle object
-            return \
-                (self.icao_address == to_compare.icao_address) and \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg) and \
-                (self.absolute_altitude_m == to_compare.absolute_altitude_m) and \
-                (self.heading_deg == to_compare.heading_deg) and \
-                (self.horizontal_velocity_m_s == to_compare.horizontal_velocity_m_s) and \
-                (self.vertical_velocity_m_s == to_compare.vertical_velocity_m_s) and \
-                (self.callsign == to_compare.callsign) and \
-                (self.emitter_type == to_compare.emitter_type) and \
-                (self.squawk == to_compare.squawk)
+            return (
+                (self.icao_address == to_compare.icao_address)
+                and (self.latitude_deg == to_compare.latitude_deg)
+                and (self.longitude_deg == to_compare.longitude_deg)
+                and (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+                and (self.heading_deg == to_compare.heading_deg)
+                and (self.horizontal_velocity_m_s == to_compare.horizontal_velocity_m_s)
+                and (self.vertical_velocity_m_s == to_compare.vertical_velocity_m_s)
+                and (self.callsign == to_compare.callsign)
+                and (self.emitter_type == to_compare.emitter_type)
+                and (self.squawk == to_compare.squawk)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AdsbVehicle in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "icao_address: " + str(self.icao_address),
                 "latitude_deg: " + str(self.latitude_deg),
                 "longitude_deg: " + str(self.longitude_deg),
@@ -282,8 +282,9 @@ class AdsbVehicle:
                 "vertical_velocity_m_s: " + str(self.vertical_velocity_m_s),
                 "callsign: " + str(self.callsign),
                 "emitter_type: " + str(self.emitter_type),
-                "squawk: " + str(self.squawk)
-                ])
+                "squawk: " + str(self.squawk),
+            ]
+        )
 
         return f"AdsbVehicle: [{struct_repr}]"
 
@@ -291,101 +292,40 @@ class AdsbVehicle:
     def translate_from_rpc(rpcAdsbVehicle):
         """ Translates a gRPC struct to the SDK equivalent """
         return AdsbVehicle(
-                
-                rpcAdsbVehicle.icao_address,
-                
-                
-                rpcAdsbVehicle.latitude_deg,
-                
-                
-                rpcAdsbVehicle.longitude_deg,
-                
-                
-                rpcAdsbVehicle.absolute_altitude_m,
-                
-                
-                rpcAdsbVehicle.heading_deg,
-                
-                
-                rpcAdsbVehicle.horizontal_velocity_m_s,
-                
-                
-                rpcAdsbVehicle.vertical_velocity_m_s,
-                
-                
-                rpcAdsbVehicle.callsign,
-                
-                
-                AdsbEmitterType.translate_from_rpc(rpcAdsbVehicle.emitter_type),
-                
-                
-                rpcAdsbVehicle.squawk
-                )
+            rpcAdsbVehicle.icao_address,
+            rpcAdsbVehicle.latitude_deg,
+            rpcAdsbVehicle.longitude_deg,
+            rpcAdsbVehicle.absolute_altitude_m,
+            rpcAdsbVehicle.heading_deg,
+            rpcAdsbVehicle.horizontal_velocity_m_s,
+            rpcAdsbVehicle.vertical_velocity_m_s,
+            rpcAdsbVehicle.callsign,
+            AdsbEmitterType.translate_from_rpc(rpcAdsbVehicle.emitter_type),
+            rpcAdsbVehicle.squawk,
+        )
 
     def translate_to_rpc(self, rpcAdsbVehicle):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAdsbVehicle.icao_address = self.icao_address
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.longitude_deg = self.longitude_deg
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.absolute_altitude_m = self.absolute_altitude_m
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.heading_deg = self.heading_deg
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.horizontal_velocity_m_s = self.horizontal_velocity_m_s
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.vertical_velocity_m_s = self.vertical_velocity_m_s
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.callsign = self.callsign
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.emitter_type = self.emitter_type.translate_to_rpc()
-            
-        
-        
-        
-            
+
         rpcAdsbVehicle.squawk = self.squawk
-            
-        
-        
 
 
 class TransponderResult:
@@ -402,8 +342,6 @@ class TransponderResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for transponder requests.
@@ -433,7 +371,6 @@ class TransponderResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -478,12 +415,8 @@ class TransponderResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the TransponderResult object """
         self.result = result
         self.result_str = result_str
@@ -493,19 +426,16 @@ class TransponderResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TransponderResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TransponderResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"TransponderResult: [{struct_repr}]"
 
@@ -513,30 +443,16 @@ class TransponderResult:
     def translate_from_rpc(rpcTransponderResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return TransponderResult(
-                
-                TransponderResult.Result.translate_from_rpc(rpcTransponderResult.result),
-                
-                
-                rpcTransponderResult.result_str
-                )
+            TransponderResult.Result.translate_from_rpc(rpcTransponderResult.result),
+            rpcTransponderResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcTransponderResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTransponderResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcTransponderResult.result_str = self.result_str
-            
-        
-        
 
+        rpcTransponderResult.result_str = self.result_str
 
 
 class TransponderError(Exception):
@@ -566,11 +482,9 @@ class Transponder(AsyncBase):
         """ Setups the api stub """
         self._stub = transponder_pb2_grpc.TransponderServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return TransponderResult.translate_from_rpc(response.transponder_result)
-    
 
     async def transponder(self):
         """
@@ -589,9 +503,7 @@ class Transponder(AsyncBase):
 
         try:
             async for response in transponder_stream:
-                
 
-            
                 yield AdsbVehicle.translate_from_rpc(response.transponder)
         finally:
             transponder_stream.cancel()
@@ -615,9 +527,7 @@ class Transponder(AsyncBase):
         request.rate_hz = rate_hz
         response = await self._stub.SetRateTransponder(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TransponderResult.Result.SUCCESS:
             raise TransponderError(result, "set_rate_transponder()", rate_hz)
-        

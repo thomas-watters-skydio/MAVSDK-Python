@@ -7,6 +7,7 @@ class AsyncPluginManager:
     """
     Connects to a running mavsdk server or starts one and manages plugins
     """
+
     @classmethod
     async def create(cls, host, port=50051):
 
@@ -27,12 +28,13 @@ class AsyncPluginManager:
 
         #: gRPC channel
         self._channel = aiogrpc.insecure_channel(
-            "{}:{}".format(self.host, self.port),
-            standalone_pool_for_streaming=True
+            "{}:{}".format(self.host, self.port), standalone_pool_for_streaming=True
         )
 
         logger = logging.getLogger(__name__)
-        logger.addHandler(logging.NullHandler())  # Avoid errors when user has not configured logging
+        logger.addHandler(
+            logging.NullHandler()
+        )  # Avoid errors when user has not configured logging
 
         logger.debug("Waiting for mavsdk_server to be ready...")
         await aiogrpc.channel_ready_future(self._channel)

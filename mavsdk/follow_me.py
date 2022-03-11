@@ -26,8 +26,6 @@ class Config:
 
      """
 
-    
-    
     class FollowDirection(Enum):
         """
          Direction relative to the target that the vehicle should follow
@@ -51,7 +49,6 @@ class Config:
 
          """
 
-        
         NONE = 0
         BEHIND = 1
         FRONT = 2
@@ -86,14 +83,8 @@ class Config:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            min_height_m,
-            follow_distance_m,
-            follow_direction,
-            responsiveness):
+    def __init__(self, min_height_m, follow_distance_m, follow_direction, responsiveness):
         """ Initializes the Config object """
         self.min_height_m = min_height_m
         self.follow_distance_m = follow_distance_m
@@ -105,23 +96,26 @@ class Config:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Config object
-            return \
-                (self.min_height_m == to_compare.min_height_m) and \
-                (self.follow_distance_m == to_compare.follow_distance_m) and \
-                (self.follow_direction == to_compare.follow_direction) and \
-                (self.responsiveness == to_compare.responsiveness)
+            return (
+                (self.min_height_m == to_compare.min_height_m)
+                and (self.follow_distance_m == to_compare.follow_distance_m)
+                and (self.follow_direction == to_compare.follow_direction)
+                and (self.responsiveness == to_compare.responsiveness)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Config in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "min_height_m: " + str(self.min_height_m),
                 "follow_distance_m: " + str(self.follow_distance_m),
                 "follow_direction: " + str(self.follow_direction),
-                "responsiveness: " + str(self.responsiveness)
-                ])
+                "responsiveness: " + str(self.responsiveness),
+            ]
+        )
 
         return f"Config: [{struct_repr}]"
 
@@ -129,47 +123,22 @@ class Config:
     def translate_from_rpc(rpcConfig):
         """ Translates a gRPC struct to the SDK equivalent """
         return Config(
-                
-                rpcConfig.min_height_m,
-                
-                
-                rpcConfig.follow_distance_m,
-                
-                
-                Config.FollowDirection.translate_from_rpc(rpcConfig.follow_direction),
-                
-                
-                rpcConfig.responsiveness
-                )
+            rpcConfig.min_height_m,
+            rpcConfig.follow_distance_m,
+            Config.FollowDirection.translate_from_rpc(rpcConfig.follow_direction),
+            rpcConfig.responsiveness,
+        )
 
     def translate_to_rpc(self, rpcConfig):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcConfig.min_height_m = self.min_height_m
-            
-        
-        
-        
-            
+
         rpcConfig.follow_distance_m = self.follow_distance_m
-            
-        
-        
-        
-            
+
         rpcConfig.follow_direction = self.follow_direction.translate_to_rpc()
-            
-        
-        
-        
-            
+
         rpcConfig.responsiveness = self.responsiveness
-            
-        
-        
 
 
 class TargetLocation:
@@ -198,16 +167,15 @@ class TargetLocation:
 
      """
 
-    
-
     def __init__(
-            self,
-            latitude_deg,
-            longitude_deg,
-            absolute_altitude_m,
-            velocity_x_m_s,
-            velocity_y_m_s,
-            velocity_z_m_s):
+        self,
+        latitude_deg,
+        longitude_deg,
+        absolute_altitude_m,
+        velocity_x_m_s,
+        velocity_y_m_s,
+        velocity_z_m_s,
+    ):
         """ Initializes the TargetLocation object """
         self.latitude_deg = latitude_deg
         self.longitude_deg = longitude_deg
@@ -221,27 +189,30 @@ class TargetLocation:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TargetLocation object
-            return \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg) and \
-                (self.absolute_altitude_m == to_compare.absolute_altitude_m) and \
-                (self.velocity_x_m_s == to_compare.velocity_x_m_s) and \
-                (self.velocity_y_m_s == to_compare.velocity_y_m_s) and \
-                (self.velocity_z_m_s == to_compare.velocity_z_m_s)
+            return (
+                (self.latitude_deg == to_compare.latitude_deg)
+                and (self.longitude_deg == to_compare.longitude_deg)
+                and (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+                and (self.velocity_x_m_s == to_compare.velocity_x_m_s)
+                and (self.velocity_y_m_s == to_compare.velocity_y_m_s)
+                and (self.velocity_z_m_s == to_compare.velocity_z_m_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TargetLocation in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "latitude_deg: " + str(self.latitude_deg),
                 "longitude_deg: " + str(self.longitude_deg),
                 "absolute_altitude_m: " + str(self.absolute_altitude_m),
                 "velocity_x_m_s: " + str(self.velocity_x_m_s),
                 "velocity_y_m_s: " + str(self.velocity_y_m_s),
-                "velocity_z_m_s: " + str(self.velocity_z_m_s)
-                ])
+                "velocity_z_m_s: " + str(self.velocity_z_m_s),
+            ]
+        )
 
         return f"TargetLocation: [{struct_repr}]"
 
@@ -249,65 +220,28 @@ class TargetLocation:
     def translate_from_rpc(rpcTargetLocation):
         """ Translates a gRPC struct to the SDK equivalent """
         return TargetLocation(
-                
-                rpcTargetLocation.latitude_deg,
-                
-                
-                rpcTargetLocation.longitude_deg,
-                
-                
-                rpcTargetLocation.absolute_altitude_m,
-                
-                
-                rpcTargetLocation.velocity_x_m_s,
-                
-                
-                rpcTargetLocation.velocity_y_m_s,
-                
-                
-                rpcTargetLocation.velocity_z_m_s
-                )
+            rpcTargetLocation.latitude_deg,
+            rpcTargetLocation.longitude_deg,
+            rpcTargetLocation.absolute_altitude_m,
+            rpcTargetLocation.velocity_x_m_s,
+            rpcTargetLocation.velocity_y_m_s,
+            rpcTargetLocation.velocity_z_m_s,
+        )
 
     def translate_to_rpc(self, rpcTargetLocation):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTargetLocation.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcTargetLocation.longitude_deg = self.longitude_deg
-            
-        
-        
-        
-            
+
         rpcTargetLocation.absolute_altitude_m = self.absolute_altitude_m
-            
-        
-        
-        
-            
+
         rpcTargetLocation.velocity_x_m_s = self.velocity_x_m_s
-            
-        
-        
-        
-            
+
         rpcTargetLocation.velocity_y_m_s = self.velocity_y_m_s
-            
-        
-        
-        
-            
+
         rpcTargetLocation.velocity_z_m_s = self.velocity_z_m_s
-            
-        
-        
 
 
 class FollowMeResult:
@@ -324,8 +258,6 @@ class FollowMeResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for followme operations
@@ -361,7 +293,6 @@ class FollowMeResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -416,12 +347,8 @@ class FollowMeResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the FollowMeResult object """
         self.result = result
         self.result_str = result_str
@@ -431,19 +358,16 @@ class FollowMeResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FollowMeResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FollowMeResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"FollowMeResult: [{struct_repr}]"
 
@@ -451,30 +375,16 @@ class FollowMeResult:
     def translate_from_rpc(rpcFollowMeResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return FollowMeResult(
-                
-                FollowMeResult.Result.translate_from_rpc(rpcFollowMeResult.result),
-                
-                
-                rpcFollowMeResult.result_str
-                )
+            FollowMeResult.Result.translate_from_rpc(rpcFollowMeResult.result),
+            rpcFollowMeResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcFollowMeResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFollowMeResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcFollowMeResult.result_str = self.result_str
-            
-        
-        
 
+        rpcFollowMeResult.result_str = self.result_str
 
 
 class FollowMeError(Exception):
@@ -504,11 +414,9 @@ class FollowMe(AsyncBase):
         """ Setups the api stub """
         self._stub = follow_me_pb2_grpc.FollowMeServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return FollowMeResult.translate_from_rpc(response.follow_me_result)
-    
 
     async def get_config(self):
         """
@@ -525,10 +433,7 @@ class FollowMe(AsyncBase):
         request = follow_me_pb2.GetConfigRequest()
         response = await self._stub.GetConfig(request)
 
-        
-
         return Config.translate_from_rpc(response.config)
-            
 
     async def set_config(self, config):
         """
@@ -546,18 +451,15 @@ class FollowMe(AsyncBase):
         """
 
         request = follow_me_pb2.SetConfigRequest()
-        
+
         config.translate_to_rpc(request.config)
-                
-            
+
         response = await self._stub.SetConfig(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FollowMeResult.Result.SUCCESS:
             raise FollowMeError(result, "set_config()", config)
-        
 
     async def is_active(self):
         """
@@ -574,10 +476,7 @@ class FollowMe(AsyncBase):
         request = follow_me_pb2.IsActiveRequest()
         response = await self._stub.IsActive(request)
 
-        
-
         return response.is_active
-        
 
     async def set_target_location(self, location):
         """
@@ -595,18 +494,15 @@ class FollowMe(AsyncBase):
         """
 
         request = follow_me_pb2.SetTargetLocationRequest()
-        
+
         location.translate_to_rpc(request.location)
-                
-            
+
         response = await self._stub.SetTargetLocation(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FollowMeResult.Result.SUCCESS:
             raise FollowMeError(result, "set_target_location()", location)
-        
 
     async def get_last_location(self):
         """
@@ -623,10 +519,7 @@ class FollowMe(AsyncBase):
         request = follow_me_pb2.GetLastLocationRequest()
         response = await self._stub.GetLastLocation(request)
 
-        
-
         return TargetLocation.translate_from_rpc(response.location)
-            
 
     async def start(self):
         """
@@ -641,12 +534,10 @@ class FollowMe(AsyncBase):
         request = follow_me_pb2.StartRequest()
         response = await self._stub.Start(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FollowMeResult.Result.SUCCESS:
             raise FollowMeError(result, "start()")
-        
 
     async def stop(self):
         """
@@ -661,9 +552,7 @@ class FollowMe(AsyncBase):
         request = follow_me_pb2.StopRequest()
         response = await self._stub.Stop(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != FollowMeResult.Result.SUCCESS:
             raise FollowMeError(result, "stop()")
-        

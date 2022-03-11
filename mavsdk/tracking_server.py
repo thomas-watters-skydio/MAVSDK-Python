@@ -29,7 +29,6 @@ class CommandAnswer(Enum):
 
      """
 
-    
     ACCEPTED = 0
     TEMPORARILY_REJECTED = 1
     DENIED = 2
@@ -83,13 +82,7 @@ class TrackPoint:
 
      """
 
-    
-
-    def __init__(
-            self,
-            point_x,
-            point_y,
-            radius):
+    def __init__(self, point_x, point_y, radius):
         """ Initializes the TrackPoint object """
         self.point_x = point_x
         self.point_y = point_y
@@ -100,60 +93,40 @@ class TrackPoint:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TrackPoint object
-            return \
-                (self.point_x == to_compare.point_x) and \
-                (self.point_y == to_compare.point_y) and \
-                (self.radius == to_compare.radius)
+            return (
+                (self.point_x == to_compare.point_x)
+                and (self.point_y == to_compare.point_y)
+                and (self.radius == to_compare.radius)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TrackPoint in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "point_x: " + str(self.point_x),
                 "point_y: " + str(self.point_y),
-                "radius: " + str(self.radius)
-                ])
+                "radius: " + str(self.radius),
+            ]
+        )
 
         return f"TrackPoint: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcTrackPoint):
         """ Translates a gRPC struct to the SDK equivalent """
-        return TrackPoint(
-                
-                rpcTrackPoint.point_x,
-                
-                
-                rpcTrackPoint.point_y,
-                
-                
-                rpcTrackPoint.radius
-                )
+        return TrackPoint(rpcTrackPoint.point_x, rpcTrackPoint.point_y, rpcTrackPoint.radius)
 
     def translate_to_rpc(self, rpcTrackPoint):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTrackPoint.point_x = self.point_x
-            
-        
-        
-        
-            
+
         rpcTrackPoint.point_y = self.point_y
-            
-        
-        
-        
-            
+
         rpcTrackPoint.radius = self.radius
-            
-        
-        
 
 
 class TrackRectangle:
@@ -176,14 +149,9 @@ class TrackRectangle:
 
      """
 
-    
-
     def __init__(
-            self,
-            top_left_corner_x,
-            top_left_corner_y,
-            bottom_right_corner_x,
-            bottom_right_corner_y):
+        self, top_left_corner_x, top_left_corner_y, bottom_right_corner_x, bottom_right_corner_y
+    ):
         """ Initializes the TrackRectangle object """
         self.top_left_corner_x = top_left_corner_x
         self.top_left_corner_y = top_left_corner_y
@@ -195,23 +163,26 @@ class TrackRectangle:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TrackRectangle object
-            return \
-                (self.top_left_corner_x == to_compare.top_left_corner_x) and \
-                (self.top_left_corner_y == to_compare.top_left_corner_y) and \
-                (self.bottom_right_corner_x == to_compare.bottom_right_corner_x) and \
-                (self.bottom_right_corner_y == to_compare.bottom_right_corner_y)
+            return (
+                (self.top_left_corner_x == to_compare.top_left_corner_x)
+                and (self.top_left_corner_y == to_compare.top_left_corner_y)
+                and (self.bottom_right_corner_x == to_compare.bottom_right_corner_x)
+                and (self.bottom_right_corner_y == to_compare.bottom_right_corner_y)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TrackRectangle in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "top_left_corner_x: " + str(self.top_left_corner_x),
                 "top_left_corner_y: " + str(self.top_left_corner_y),
                 "bottom_right_corner_x: " + str(self.bottom_right_corner_x),
-                "bottom_right_corner_y: " + str(self.bottom_right_corner_y)
-                ])
+                "bottom_right_corner_y: " + str(self.bottom_right_corner_y),
+            ]
+        )
 
         return f"TrackRectangle: [{struct_repr}]"
 
@@ -219,47 +190,22 @@ class TrackRectangle:
     def translate_from_rpc(rpcTrackRectangle):
         """ Translates a gRPC struct to the SDK equivalent """
         return TrackRectangle(
-                
-                rpcTrackRectangle.top_left_corner_x,
-                
-                
-                rpcTrackRectangle.top_left_corner_y,
-                
-                
-                rpcTrackRectangle.bottom_right_corner_x,
-                
-                
-                rpcTrackRectangle.bottom_right_corner_y
-                )
+            rpcTrackRectangle.top_left_corner_x,
+            rpcTrackRectangle.top_left_corner_y,
+            rpcTrackRectangle.bottom_right_corner_x,
+            rpcTrackRectangle.bottom_right_corner_y,
+        )
 
     def translate_to_rpc(self, rpcTrackRectangle):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTrackRectangle.top_left_corner_x = self.top_left_corner_x
-            
-        
-        
-        
-            
+
         rpcTrackRectangle.top_left_corner_y = self.top_left_corner_y
-            
-        
-        
-        
-            
+
         rpcTrackRectangle.bottom_right_corner_x = self.bottom_right_corner_x
-            
-        
-        
-        
-            
+
         rpcTrackRectangle.bottom_right_corner_y = self.bottom_right_corner_y
-            
-        
-        
 
 
 class TrackingServerResult:
@@ -276,8 +222,6 @@ class TrackingServerResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for tracking_server requests.
@@ -298,7 +242,6 @@ class TrackingServerResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -328,12 +271,8 @@ class TrackingServerResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the TrackingServerResult object """
         self.result = result
         self.result_str = result_str
@@ -343,19 +282,16 @@ class TrackingServerResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TrackingServerResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TrackingServerResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"TrackingServerResult: [{struct_repr}]"
 
@@ -363,30 +299,16 @@ class TrackingServerResult:
     def translate_from_rpc(rpcTrackingServerResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return TrackingServerResult(
-                
-                TrackingServerResult.Result.translate_from_rpc(rpcTrackingServerResult.result),
-                
-                
-                rpcTrackingServerResult.result_str
-                )
+            TrackingServerResult.Result.translate_from_rpc(rpcTrackingServerResult.result),
+            rpcTrackingServerResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcTrackingServerResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTrackingServerResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcTrackingServerResult.result_str = self.result_str
-            
-        
-        
 
+        rpcTrackingServerResult.result_str = self.result_str
 
 
 class TrackingServerError(Exception):
@@ -415,11 +337,9 @@ class TrackingServer(AsyncBase):
         """ Setups the api stub """
         self._stub = tracking_server_pb2_grpc.TrackingServerServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return TrackingServerResult.translate_from_rpc(response.tracking_server_result)
-    
 
     async def set_tracking_point_status(self, tracked_point):
         """
@@ -434,13 +354,10 @@ class TrackingServer(AsyncBase):
         """
 
         request = tracking_server_pb2.SetTrackingPointStatusRequest()
-        
-        tracked_point.translate_to_rpc(request.tracked_point)
-                
-            
-        response = await self._stub.SetTrackingPointStatus(request)
 
-        
+        tracked_point.translate_to_rpc(request.tracked_point)
+
+        response = await self._stub.SetTrackingPointStatus(request)
 
     async def set_tracking_rectangle_status(self, tracked_rectangle):
         """
@@ -455,13 +372,10 @@ class TrackingServer(AsyncBase):
         """
 
         request = tracking_server_pb2.SetTrackingRectangleStatusRequest()
-        
-        tracked_rectangle.translate_to_rpc(request.tracked_rectangle)
-                
-            
-        response = await self._stub.SetTrackingRectangleStatus(request)
 
-        
+        tracked_rectangle.translate_to_rpc(request.tracked_rectangle)
+
+        response = await self._stub.SetTrackingRectangleStatus(request)
 
     async def set_tracking_off_status(self):
         """
@@ -472,8 +386,6 @@ class TrackingServer(AsyncBase):
 
         request = tracking_server_pb2.SetTrackingOffStatusRequest()
         response = await self._stub.SetTrackingOffStatus(request)
-
-        
 
     async def tracking_point_command(self):
         """
@@ -492,9 +404,7 @@ class TrackingServer(AsyncBase):
 
         try:
             async for response in tracking_point_command_stream:
-                
 
-            
                 yield TrackPoint.translate_from_rpc(response.track_point)
         finally:
             tracking_point_command_stream.cancel()
@@ -516,9 +426,7 @@ class TrackingServer(AsyncBase):
 
         try:
             async for response in tracking_rectangle_command_stream:
-                
 
-            
                 yield TrackRectangle.translate_from_rpc(response.track_rectangle)
         finally:
             tracking_rectangle_command_stream.cancel()
@@ -540,9 +448,7 @@ class TrackingServer(AsyncBase):
 
         try:
             async for response in tracking_off_command_stream:
-                
 
-            
                 yield response.dummy
         finally:
             tracking_off_command_stream.cancel()
@@ -563,18 +469,15 @@ class TrackingServer(AsyncBase):
         """
 
         request = tracking_server_pb2.RespondTrackingPointCommandRequest()
-        
+
         request.command_answer = command_answer.translate_to_rpc()
-                
-            
+
         response = await self._stub.RespondTrackingPointCommand(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TrackingServerResult.Result.SUCCESS:
             raise TrackingServerError(result, "respond_tracking_point_command()", command_answer)
-        
 
     async def respond_tracking_rectangle_command(self, command_answer):
         """
@@ -592,18 +495,17 @@ class TrackingServer(AsyncBase):
         """
 
         request = tracking_server_pb2.RespondTrackingRectangleCommandRequest()
-        
+
         request.command_answer = command_answer.translate_to_rpc()
-                
-            
+
         response = await self._stub.RespondTrackingRectangleCommand(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TrackingServerResult.Result.SUCCESS:
-            raise TrackingServerError(result, "respond_tracking_rectangle_command()", command_answer)
-        
+            raise TrackingServerError(
+                result, "respond_tracking_rectangle_command()", command_answer
+            )
 
     async def respond_tracking_off_command(self, command_answer):
         """
@@ -621,15 +523,12 @@ class TrackingServer(AsyncBase):
         """
 
         request = tracking_server_pb2.RespondTrackingOffCommandRequest()
-        
+
         request.command_answer = command_answer.translate_to_rpc()
-                
-            
+
         response = await self._stub.RespondTrackingOffCommand(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TrackingServerResult.Result.SUCCESS:
             raise TrackingServerError(result, "respond_tracking_off_command()", command_answer)
-        

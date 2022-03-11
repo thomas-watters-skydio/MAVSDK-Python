@@ -59,7 +59,6 @@ class FlightMode(Enum):
 
      """
 
-    
     UNKNOWN = 0
     READY = 1
     TAKEOFF = 2
@@ -159,13 +158,7 @@ class AllowableFlightModes:
 
      """
 
-    
-
-    def __init__(
-            self,
-            can_auto_mode,
-            can_guided_mode,
-            can_stabilize_mode):
+    def __init__(self, can_auto_mode, can_guided_mode, can_stabilize_mode):
         """ Initializes the AllowableFlightModes object """
         self.can_auto_mode = can_auto_mode
         self.can_guided_mode = can_guided_mode
@@ -176,21 +169,24 @@ class AllowableFlightModes:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AllowableFlightModes object
-            return \
-                (self.can_auto_mode == to_compare.can_auto_mode) and \
-                (self.can_guided_mode == to_compare.can_guided_mode) and \
-                (self.can_stabilize_mode == to_compare.can_stabilize_mode)
+            return (
+                (self.can_auto_mode == to_compare.can_auto_mode)
+                and (self.can_guided_mode == to_compare.can_guided_mode)
+                and (self.can_stabilize_mode == to_compare.can_stabilize_mode)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AllowableFlightModes in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "can_auto_mode: " + str(self.can_auto_mode),
                 "can_guided_mode: " + str(self.can_guided_mode),
-                "can_stabilize_mode: " + str(self.can_stabilize_mode)
-                ])
+                "can_stabilize_mode: " + str(self.can_stabilize_mode),
+            ]
+        )
 
         return f"AllowableFlightModes: [{struct_repr}]"
 
@@ -198,38 +194,19 @@ class AllowableFlightModes:
     def translate_from_rpc(rpcAllowableFlightModes):
         """ Translates a gRPC struct to the SDK equivalent """
         return AllowableFlightModes(
-                
-                rpcAllowableFlightModes.can_auto_mode,
-                
-                
-                rpcAllowableFlightModes.can_guided_mode,
-                
-                
-                rpcAllowableFlightModes.can_stabilize_mode
-                )
+            rpcAllowableFlightModes.can_auto_mode,
+            rpcAllowableFlightModes.can_guided_mode,
+            rpcAllowableFlightModes.can_stabilize_mode,
+        )
 
     def translate_to_rpc(self, rpcAllowableFlightModes):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAllowableFlightModes.can_auto_mode = self.can_auto_mode
-            
-        
-        
-        
-            
+
         rpcAllowableFlightModes.can_guided_mode = self.can_guided_mode
-            
-        
-        
-        
-            
+
         rpcAllowableFlightModes.can_stabilize_mode = self.can_stabilize_mode
-            
-        
-        
 
 
 class ArmDisarm:
@@ -246,12 +223,7 @@ class ArmDisarm:
 
      """
 
-    
-
-    def __init__(
-            self,
-            arm,
-            force):
+    def __init__(self, arm, force):
         """ Initializes the ArmDisarm object """
         self.arm = arm
         self.force = force
@@ -261,49 +233,28 @@ class ArmDisarm:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ArmDisarm object
-            return \
-                (self.arm == to_compare.arm) and \
-                (self.force == to_compare.force)
+            return (self.arm == to_compare.arm) and (self.force == to_compare.force)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ArmDisarm in string representation """
-        struct_repr = ", ".join([
-                "arm: " + str(self.arm),
-                "force: " + str(self.force)
-                ])
+        struct_repr = ", ".join(["arm: " + str(self.arm), "force: " + str(self.force)])
 
         return f"ArmDisarm: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcArmDisarm):
         """ Translates a gRPC struct to the SDK equivalent """
-        return ArmDisarm(
-                
-                rpcArmDisarm.arm,
-                
-                
-                rpcArmDisarm.force
-                )
+        return ArmDisarm(rpcArmDisarm.arm, rpcArmDisarm.force)
 
     def translate_to_rpc(self, rpcArmDisarm):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcArmDisarm.arm = self.arm
-            
-        
-        
-        
-            
+
         rpcArmDisarm.force = self.force
-            
-        
-        
 
 
 class ActionServerResult:
@@ -320,8 +271,6 @@ class ActionServerResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for action requests.
@@ -369,7 +318,6 @@ class ActionServerResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -398,7 +346,9 @@ class ActionServerResult:
             if self == ActionServerResult.Result.COMMAND_DENIED:
                 return action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED
             if self == ActionServerResult.Result.COMMAND_DENIED_LANDED_STATE_UNKNOWN:
-                return action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+                return (
+                    action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+                )
             if self == ActionServerResult.Result.COMMAND_DENIED_NOT_LANDED:
                 return action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_NOT_LANDED
             if self == ActionServerResult.Result.TIMEOUT:
@@ -427,15 +377,27 @@ class ActionServerResult:
                 return ActionServerResult.Result.BUSY
             if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED:
                 return ActionServerResult.Result.COMMAND_DENIED
-            if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN:
+            if (
+                rpc_enum_value
+                == action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+            ):
                 return ActionServerResult.Result.COMMAND_DENIED_LANDED_STATE_UNKNOWN
-            if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_NOT_LANDED:
+            if (
+                rpc_enum_value
+                == action_server_pb2.ActionServerResult.RESULT_COMMAND_DENIED_NOT_LANDED
+            ):
                 return ActionServerResult.Result.COMMAND_DENIED_NOT_LANDED
             if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_TIMEOUT:
                 return ActionServerResult.Result.TIMEOUT
-            if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN:
+            if (
+                rpc_enum_value
+                == action_server_pb2.ActionServerResult.RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN
+            ):
                 return ActionServerResult.Result.VTOL_TRANSITION_SUPPORT_UNKNOWN
-            if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_NO_VTOL_TRANSITION_SUPPORT:
+            if (
+                rpc_enum_value
+                == action_server_pb2.ActionServerResult.RESULT_NO_VTOL_TRANSITION_SUPPORT
+            ):
                 return ActionServerResult.Result.NO_VTOL_TRANSITION_SUPPORT
             if rpc_enum_value == action_server_pb2.ActionServerResult.RESULT_PARAMETER_ERROR:
                 return ActionServerResult.Result.PARAMETER_ERROR
@@ -444,12 +406,8 @@ class ActionServerResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ActionServerResult object """
         self.result = result
         self.result_str = result_str
@@ -459,19 +417,16 @@ class ActionServerResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActionServerResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActionServerResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ActionServerResult: [{struct_repr}]"
 
@@ -479,30 +434,16 @@ class ActionServerResult:
     def translate_from_rpc(rpcActionServerResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ActionServerResult(
-                
-                ActionServerResult.Result.translate_from_rpc(rpcActionServerResult.result),
-                
-                
-                rpcActionServerResult.result_str
-                )
+            ActionServerResult.Result.translate_from_rpc(rpcActionServerResult.result),
+            rpcActionServerResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcActionServerResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcActionServerResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcActionServerResult.result_str = self.result_str
-            
-        
-        
 
+        rpcActionServerResult.result_str = self.result_str
 
 
 class ActionServerError(Exception):
@@ -531,11 +472,9 @@ class ActionServer(AsyncBase):
         """ Setups the api stub """
         self._stub = action_server_pb2_grpc.ActionServerServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ActionServerResult.translate_from_rpc(response.action_server_result)
-    
 
     async def arm_disarm(self):
         """
@@ -556,22 +495,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in arm_disarm_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "arm_disarm()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    arm_disarm_stream.cancel();
+                    arm_disarm_stream.cancel()
                     return
-                
 
-            
                 yield ArmDisarm.translate_from_rpc(response.arm)
         finally:
             arm_disarm_stream.cancel()
@@ -595,22 +532,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in flight_mode_change_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "flight_mode_change()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    flight_mode_change_stream.cancel();
+                    flight_mode_change_stream.cancel()
                     return
-                
 
-            
                 yield FlightMode.translate_from_rpc(response.flight_mode)
         finally:
             flight_mode_change_stream.cancel()
@@ -634,22 +569,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in takeoff_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "takeoff()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    takeoff_stream.cancel();
+                    takeoff_stream.cancel()
                     return
-                
 
-            
                 yield response.takeoff
         finally:
             takeoff_stream.cancel()
@@ -673,22 +606,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in land_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "land()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    land_stream.cancel();
+                    land_stream.cancel()
                     return
-                
 
-            
                 yield response.land
         finally:
             land_stream.cancel()
@@ -712,22 +643,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in reboot_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "reboot()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    reboot_stream.cancel();
+                    reboot_stream.cancel()
                     return
-                
 
-            
                 yield response.reboot
         finally:
             reboot_stream.cancel()
@@ -751,22 +680,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in shutdown_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "shutdown()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    shutdown_stream.cancel();
+                    shutdown_stream.cancel()
                     return
-                
 
-            
                 yield response.shutdown
         finally:
             shutdown_stream.cancel()
@@ -790,22 +717,20 @@ class ActionServer(AsyncBase):
 
         try:
             async for response in terminate_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [ActionServerResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in ActionServerResult.Result]:
+                if "NEXT" in [return_code.name for return_code in ActionServerResult.Result]:
                     success_codes.append(ActionServerResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise ActionServerError(result, "terminate()")
 
                 if result.result == ActionServerResult.Result.SUCCESS:
-                    terminate_stream.cancel();
+                    terminate_stream.cancel()
                     return
-                
 
-            
                 yield response.terminate
         finally:
             terminate_stream.cancel()
@@ -829,12 +754,10 @@ class ActionServer(AsyncBase):
         request.allow_takeoff = allow_takeoff
         response = await self._stub.SetAllowTakeoff(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionServerResult.Result.SUCCESS:
             raise ActionServerError(result, "set_allow_takeoff()", allow_takeoff)
-        
 
     async def set_armable(self, armable, force_armable):
         """
@@ -859,12 +782,10 @@ class ActionServer(AsyncBase):
         request.force_armable = force_armable
         response = await self._stub.SetArmable(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionServerResult.Result.SUCCESS:
             raise ActionServerError(result, "set_armable()", armable, force_armable)
-        
 
     async def set_disarmable(self, disarmable, force_disarmable):
         """
@@ -889,12 +810,10 @@ class ActionServer(AsyncBase):
         request.force_disarmable = force_disarmable
         response = await self._stub.SetDisarmable(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionServerResult.Result.SUCCESS:
             raise ActionServerError(result, "set_disarmable()", disarmable, force_disarmable)
-        
 
     async def set_allowable_flight_modes(self, flight_modes):
         """
@@ -911,18 +830,15 @@ class ActionServer(AsyncBase):
         """
 
         request = action_server_pb2.SetAllowableFlightModesRequest()
-        
+
         flight_modes.translate_to_rpc(request.flight_modes)
-                
-            
+
         response = await self._stub.SetAllowableFlightModes(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionServerResult.Result.SUCCESS:
             raise ActionServerError(result, "set_allowable_flight_modes()", flight_modes)
-        
 
     async def get_allowable_flight_modes(self):
         """
@@ -938,7 +854,4 @@ class ActionServer(AsyncBase):
         request = action_server_pb2.GetAllowableFlightModesRequest()
         response = await self._stub.GetAllowableFlightModes(request)
 
-        
-
         return AllowableFlightModes.translate_from_rpc(response.flight_modes)
-            

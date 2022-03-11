@@ -17,11 +17,7 @@ class ProgressData:
 
      """
 
-    
-
-    def __init__(
-            self,
-            progress):
+    def __init__(self, progress):
         """ Initializes the ProgressData object """
         self.progress = progress
 
@@ -30,38 +26,26 @@ class ProgressData:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ProgressData object
-            return \
-                (self.progress == to_compare.progress)
+            return self.progress == to_compare.progress
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ProgressData in string representation """
-        struct_repr = ", ".join([
-                "progress: " + str(self.progress)
-                ])
+        struct_repr = ", ".join(["progress: " + str(self.progress)])
 
         return f"ProgressData: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcProgressData):
         """ Translates a gRPC struct to the SDK equivalent """
-        return ProgressData(
-                
-                rpcProgressData.progress
-                )
+        return ProgressData(rpcProgressData.progress)
 
     def translate_to_rpc(self, rpcProgressData):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcProgressData.progress = self.progress
-            
-        
-        
 
 
 class Entry:
@@ -81,13 +65,7 @@ class Entry:
 
      """
 
-    
-
-    def __init__(
-            self,
-            id,
-            date,
-            size_bytes):
+    def __init__(self, id, date, size_bytes):
         """ Initializes the Entry object """
         self.id = id
         self.date = date
@@ -98,60 +76,40 @@ class Entry:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Entry object
-            return \
-                (self.id == to_compare.id) and \
-                (self.date == to_compare.date) and \
-                (self.size_bytes == to_compare.size_bytes)
+            return (
+                (self.id == to_compare.id)
+                and (self.date == to_compare.date)
+                and (self.size_bytes == to_compare.size_bytes)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Entry in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "id: " + str(self.id),
                 "date: " + str(self.date),
-                "size_bytes: " + str(self.size_bytes)
-                ])
+                "size_bytes: " + str(self.size_bytes),
+            ]
+        )
 
         return f"Entry: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcEntry):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Entry(
-                
-                rpcEntry.id,
-                
-                
-                rpcEntry.date,
-                
-                
-                rpcEntry.size_bytes
-                )
+        return Entry(rpcEntry.id, rpcEntry.date, rpcEntry.size_bytes)
 
     def translate_to_rpc(self, rpcEntry):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcEntry.id = self.id
-            
-        
-        
-        
-            
+
         rpcEntry.date = self.date
-            
-        
-        
-        
-            
+
         rpcEntry.size_bytes = self.size_bytes
-            
-        
-        
 
 
 class LogFilesResult:
@@ -168,8 +126,6 @@ class LogFilesResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for calibration commands
@@ -202,7 +158,6 @@ class LogFilesResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NEXT = 2
@@ -252,12 +207,8 @@ class LogFilesResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the LogFilesResult object """
         self.result = result
         self.result_str = result_str
@@ -267,19 +218,16 @@ class LogFilesResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # LogFilesResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ LogFilesResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"LogFilesResult: [{struct_repr}]"
 
@@ -287,30 +235,16 @@ class LogFilesResult:
     def translate_from_rpc(rpcLogFilesResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return LogFilesResult(
-                
-                LogFilesResult.Result.translate_from_rpc(rpcLogFilesResult.result),
-                
-                
-                rpcLogFilesResult.result_str
-                )
+            LogFilesResult.Result.translate_from_rpc(rpcLogFilesResult.result),
+            rpcLogFilesResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcLogFilesResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcLogFilesResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcLogFilesResult.result_str = self.result_str
-            
-        
-        
 
+        rpcLogFilesResult.result_str = self.result_str
 
 
 class LogFilesError(Exception):
@@ -340,11 +274,9 @@ class LogFiles(AsyncBase):
         """ Setups the api stub """
         self._stub = log_files_pb2_grpc.LogFilesServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return LogFilesResult.translate_from_rpc(response.log_files_result)
-    
 
     async def get_entries(self):
         """
@@ -364,19 +296,16 @@ class LogFiles(AsyncBase):
         request = log_files_pb2.GetEntriesRequest()
         response = await self._stub.GetEntries(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != LogFilesResult.Result.SUCCESS:
             raise LogFilesError(result, "get_entries()")
-        
 
         entries = []
         for entries_rpc in response.entries:
             entries.append(Entry.translate_from_rpc(entries_rpc))
 
         return entries
-            
 
     async def download_log_file(self, entry, path):
         """
@@ -402,31 +331,28 @@ class LogFiles(AsyncBase):
         """
 
         request = log_files_pb2.SubscribeDownloadLogFileRequest()
-        
+
         entry.translate_to_rpc(request.entry)
-                
-            
+
         request.path = path
         download_log_file_stream = self._stub.SubscribeDownloadLogFile(request)
 
         try:
             async for response in download_log_file_stream:
-                
+
                 result = self._extract_result(response)
 
                 success_codes = [LogFilesResult.Result.SUCCESS]
-                if 'NEXT' in [return_code.name for return_code in LogFilesResult.Result]:
+                if "NEXT" in [return_code.name for return_code in LogFilesResult.Result]:
                     success_codes.append(LogFilesResult.Result.NEXT)
 
                 if result.result not in success_codes:
                     raise LogFilesError(result, "download_log_file()", entry, path)
 
                 if result.result == LogFilesResult.Result.SUCCESS:
-                    download_log_file_stream.cancel();
+                    download_log_file_stream.cancel()
                     return
-                
 
-            
                 yield ProgressData.translate_from_rpc(response.progress)
         finally:
             download_log_file_stream.cancel()

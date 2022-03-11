@@ -20,12 +20,7 @@ class Point:
 
      """
 
-    
-
-    def __init__(
-            self,
-            latitude_deg,
-            longitude_deg):
+    def __init__(self, latitude_deg, longitude_deg):
         """ Initializes the Point object """
         self.latitude_deg = latitude_deg
         self.longitude_deg = longitude_deg
@@ -35,49 +30,32 @@ class Point:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Point object
-            return \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg)
+            return (self.latitude_deg == to_compare.latitude_deg) and (
+                self.longitude_deg == to_compare.longitude_deg
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Point in string representation """
-        struct_repr = ", ".join([
-                "latitude_deg: " + str(self.latitude_deg),
-                "longitude_deg: " + str(self.longitude_deg)
-                ])
+        struct_repr = ", ".join(
+            ["latitude_deg: " + str(self.latitude_deg), "longitude_deg: " + str(self.longitude_deg)]
+        )
 
         return f"Point: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcPoint):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Point(
-                
-                rpcPoint.latitude_deg,
-                
-                
-                rpcPoint.longitude_deg
-                )
+        return Point(rpcPoint.latitude_deg, rpcPoint.longitude_deg)
 
     def translate_to_rpc(self, rpcPoint):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPoint.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcPoint.longitude_deg = self.longitude_deg
-            
-        
-        
 
 
 class Polygon:
@@ -94,8 +72,6 @@ class Polygon:
 
      """
 
-    
-    
     class FenceType(Enum):
         """
          Geofence polygon types.
@@ -110,7 +86,6 @@ class Polygon:
 
          """
 
-        
         INCLUSION = 0
         EXCLUSION = 1
 
@@ -130,12 +105,8 @@ class Polygon:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            points,
-            fence_type):
+    def __init__(self, points, fence_type):
         """ Initializes the Polygon object """
         self.points = points
         self.fence_type = fence_type
@@ -145,19 +116,16 @@ class Polygon:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Polygon object
-            return \
-                (self.points == to_compare.points) and \
-                (self.fence_type == to_compare.fence_type)
+            return (self.points == to_compare.points) and (self.fence_type == to_compare.fence_type)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Polygon in string representation """
-        struct_repr = ", ".join([
-                "points: " + str(self.points),
-                "fence_type: " + str(self.fence_type)
-                ])
+        struct_repr = ", ".join(
+            ["points: " + str(self.points), "fence_type: " + str(self.fence_type)]
+        )
 
         return f"Polygon: [{struct_repr}]"
 
@@ -165,36 +133,23 @@ class Polygon:
     def translate_from_rpc(rpcPolygon):
         """ Translates a gRPC struct to the SDK equivalent """
         return Polygon(
-                
-                list(map(lambda elem: Point.translate_from_rpc(elem), rpcPolygon.points)),
-                
-                
-                Polygon.FenceType.translate_from_rpc(rpcPolygon.fence_type)
-                )
+            list(map(lambda elem: Point.translate_from_rpc(elem), rpcPolygon.points)),
+            Polygon.FenceType.translate_from_rpc(rpcPolygon.fence_type),
+        )
 
     def translate_to_rpc(self, rpcPolygon):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpc_elems_list = []
         for elem in self.points:
-                
+
             rpc_elem = geofence_pb2.Point()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcPolygon.points.extend(rpc_elems_list)
-            
-        
-        
-        
-            
+
         rpcPolygon.fence_type = self.fence_type.translate_to_rpc()
-            
-        
-        
 
 
 class GeofenceResult:
@@ -211,8 +166,6 @@ class GeofenceResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for geofence requests.
@@ -245,7 +198,6 @@ class GeofenceResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         ERROR = 2
@@ -295,12 +247,8 @@ class GeofenceResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the GeofenceResult object """
         self.result = result
         self.result_str = result_str
@@ -310,19 +258,16 @@ class GeofenceResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # GeofenceResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ GeofenceResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"GeofenceResult: [{struct_repr}]"
 
@@ -330,30 +275,16 @@ class GeofenceResult:
     def translate_from_rpc(rpcGeofenceResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return GeofenceResult(
-                
-                GeofenceResult.Result.translate_from_rpc(rpcGeofenceResult.result),
-                
-                
-                rpcGeofenceResult.result_str
-                )
+            GeofenceResult.Result.translate_from_rpc(rpcGeofenceResult.result),
+            rpcGeofenceResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcGeofenceResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcGeofenceResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcGeofenceResult.result_str = self.result_str
-            
-        
-        
 
+        rpcGeofenceResult.result_str = self.result_str
 
 
 class GeofenceError(Exception):
@@ -382,11 +313,9 @@ class Geofence(AsyncBase):
         """ Setups the api stub """
         self._stub = geofence_pb2_grpc.GeofenceServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return GeofenceResult.translate_from_rpc(response.geofence_result)
-    
 
     async def upload_geofence(self, polygons):
         """
@@ -407,25 +336,22 @@ class Geofence(AsyncBase):
         """
 
         request = geofence_pb2.UploadGeofenceRequest()
-        
+
         rpc_elems_list = []
         for elem in polygons:
-                    
+
             rpc_elem = geofence_pb2.Polygon()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                    
+
         request.polygons.extend(rpc_elems_list)
-                
-            
+
         response = await self._stub.UploadGeofence(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GeofenceResult.Result.SUCCESS:
             raise GeofenceError(result, "upload_geofence()", polygons)
-        
 
     async def clear_geofence(self):
         """
@@ -440,9 +366,7 @@ class Geofence(AsyncBase):
         request = geofence_pb2.ClearGeofenceRequest()
         response = await self._stub.ClearGeofence(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GeofenceResult.Result.SUCCESS:
             raise GeofenceError(result, "clear_geofence()")
-        

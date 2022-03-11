@@ -20,7 +20,6 @@ class GimbalMode(Enum):
 
      """
 
-    
     YAW_FOLLOW = 0
     YAW_LOCK = 1
 
@@ -59,7 +58,6 @@ class ControlMode(Enum):
 
      """
 
-    
     NONE = 0
     PRIMARY = 1
     SECONDARY = 2
@@ -109,15 +107,14 @@ class ControlStatus:
 
      """
 
-    
-
     def __init__(
-            self,
-            control_mode,
-            sysid_primary_control,
-            compid_primary_control,
-            sysid_secondary_control,
-            compid_secondary_control):
+        self,
+        control_mode,
+        sysid_primary_control,
+        compid_primary_control,
+        sysid_secondary_control,
+        compid_secondary_control,
+    ):
         """ Initializes the ControlStatus object """
         self.control_mode = control_mode
         self.sysid_primary_control = sysid_primary_control
@@ -130,25 +127,28 @@ class ControlStatus:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ControlStatus object
-            return \
-                (self.control_mode == to_compare.control_mode) and \
-                (self.sysid_primary_control == to_compare.sysid_primary_control) and \
-                (self.compid_primary_control == to_compare.compid_primary_control) and \
-                (self.sysid_secondary_control == to_compare.sysid_secondary_control) and \
-                (self.compid_secondary_control == to_compare.compid_secondary_control)
+            return (
+                (self.control_mode == to_compare.control_mode)
+                and (self.sysid_primary_control == to_compare.sysid_primary_control)
+                and (self.compid_primary_control == to_compare.compid_primary_control)
+                and (self.sysid_secondary_control == to_compare.sysid_secondary_control)
+                and (self.compid_secondary_control == to_compare.compid_secondary_control)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ControlStatus in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "control_mode: " + str(self.control_mode),
                 "sysid_primary_control: " + str(self.sysid_primary_control),
                 "compid_primary_control: " + str(self.compid_primary_control),
                 "sysid_secondary_control: " + str(self.sysid_secondary_control),
-                "compid_secondary_control: " + str(self.compid_secondary_control)
-                ])
+                "compid_secondary_control: " + str(self.compid_secondary_control),
+            ]
+        )
 
         return f"ControlStatus: [{struct_repr}]"
 
@@ -156,56 +156,25 @@ class ControlStatus:
     def translate_from_rpc(rpcControlStatus):
         """ Translates a gRPC struct to the SDK equivalent """
         return ControlStatus(
-                
-                ControlMode.translate_from_rpc(rpcControlStatus.control_mode),
-                
-                
-                rpcControlStatus.sysid_primary_control,
-                
-                
-                rpcControlStatus.compid_primary_control,
-                
-                
-                rpcControlStatus.sysid_secondary_control,
-                
-                
-                rpcControlStatus.compid_secondary_control
-                )
+            ControlMode.translate_from_rpc(rpcControlStatus.control_mode),
+            rpcControlStatus.sysid_primary_control,
+            rpcControlStatus.compid_primary_control,
+            rpcControlStatus.sysid_secondary_control,
+            rpcControlStatus.compid_secondary_control,
+        )
 
     def translate_to_rpc(self, rpcControlStatus):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcControlStatus.control_mode = self.control_mode.translate_to_rpc()
-            
-        
-        
-        
-            
+
         rpcControlStatus.sysid_primary_control = self.sysid_primary_control
-            
-        
-        
-        
-            
+
         rpcControlStatus.compid_primary_control = self.compid_primary_control
-            
-        
-        
-        
-            
+
         rpcControlStatus.sysid_secondary_control = self.sysid_secondary_control
-            
-        
-        
-        
-            
+
         rpcControlStatus.compid_secondary_control = self.compid_secondary_control
-            
-        
-        
 
 
 class GimbalResult:
@@ -222,8 +191,6 @@ class GimbalResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for gimbal commands.
@@ -250,7 +217,6 @@ class GimbalResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         ERROR = 2
@@ -290,12 +256,8 @@ class GimbalResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the GimbalResult object """
         self.result = result
         self.result_str = result_str
@@ -305,19 +267,16 @@ class GimbalResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # GimbalResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ GimbalResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"GimbalResult: [{struct_repr}]"
 
@@ -325,30 +284,16 @@ class GimbalResult:
     def translate_from_rpc(rpcGimbalResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return GimbalResult(
-                
-                GimbalResult.Result.translate_from_rpc(rpcGimbalResult.result),
-                
-                
-                rpcGimbalResult.result_str
-                )
+            GimbalResult.Result.translate_from_rpc(rpcGimbalResult.result),
+            rpcGimbalResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcGimbalResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcGimbalResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcGimbalResult.result_str = self.result_str
-            
-        
-        
 
+        rpcGimbalResult.result_str = self.result_str
 
 
 class GimbalError(Exception):
@@ -377,11 +322,9 @@ class Gimbal(AsyncBase):
         """ Setups the api stub """
         self._stub = gimbal_pb2_grpc.GimbalServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return GimbalResult.translate_from_rpc(response.gimbal_result)
-    
 
     async def set_pitch_and_yaw(self, pitch_deg, yaw_deg):
         """
@@ -410,12 +353,10 @@ class Gimbal(AsyncBase):
         request.yaw_deg = yaw_deg
         response = await self._stub.SetPitchAndYaw(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
             raise GimbalError(result, "set_pitch_and_yaw()", pitch_deg, yaw_deg)
-        
 
     async def set_pitch_rate_and_yaw_rate(self, pitch_rate_deg_s, yaw_rate_deg_s):
         """
@@ -444,12 +385,12 @@ class Gimbal(AsyncBase):
         request.yaw_rate_deg_s = yaw_rate_deg_s
         response = await self._stub.SetPitchRateAndYawRate(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
-            raise GimbalError(result, "set_pitch_rate_and_yaw_rate()", pitch_rate_deg_s, yaw_rate_deg_s)
-        
+            raise GimbalError(
+                result, "set_pitch_rate_and_yaw_rate()", pitch_rate_deg_s, yaw_rate_deg_s
+            )
 
     async def set_mode(self, gimbal_mode):
         """
@@ -471,18 +412,15 @@ class Gimbal(AsyncBase):
         """
 
         request = gimbal_pb2.SetModeRequest()
-        
+
         request.gimbal_mode = gimbal_mode.translate_to_rpc()
-                
-            
+
         response = await self._stub.SetMode(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
             raise GimbalError(result, "set_mode()", gimbal_mode)
-        
 
     async def set_roi_location(self, latitude_deg, longitude_deg, altitude_m):
         """
@@ -517,12 +455,10 @@ class Gimbal(AsyncBase):
         request.altitude_m = altitude_m
         response = await self._stub.SetRoiLocation(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
             raise GimbalError(result, "set_roi_location()", latitude_deg, longitude_deg, altitude_m)
-        
 
     async def take_control(self, control_mode):
         """
@@ -548,18 +484,15 @@ class Gimbal(AsyncBase):
         """
 
         request = gimbal_pb2.TakeControlRequest()
-        
+
         request.control_mode = control_mode.translate_to_rpc()
-                
-            
+
         response = await self._stub.TakeControl(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
             raise GimbalError(result, "take_control()", control_mode)
-        
 
     async def release_control(self):
         """
@@ -576,12 +509,10 @@ class Gimbal(AsyncBase):
         request = gimbal_pb2.ReleaseControlRequest()
         response = await self._stub.ReleaseControl(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != GimbalResult.Result.SUCCESS:
             raise GimbalError(result, "release_control()")
-        
 
     async def control(self):
         """
@@ -604,9 +535,7 @@ class Gimbal(AsyncBase):
 
         try:
             async for response in control_stream:
-                
 
-            
                 yield ControlStatus.translate_from_rpc(response.control_status)
         finally:
             control_stream.cancel()

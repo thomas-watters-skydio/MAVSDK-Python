@@ -16,60 +16,60 @@ class MissionRawServiceStub(object):
             channel: A grpc.Channel.
         """
         self.UploadMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/UploadMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.UploadMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.UploadMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/UploadMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.UploadMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.UploadMissionResponse.FromString,
+        )
         self.CancelMissionUpload = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionUpload',
-                request_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionUpload",
+            request_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadResponse.FromString,
+        )
         self.DownloadMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/DownloadMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.DownloadMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.DownloadMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/DownloadMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.DownloadMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.DownloadMissionResponse.FromString,
+        )
         self.CancelMissionDownload = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionDownload',
-                request_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionDownload",
+            request_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadResponse.FromString,
+        )
         self.StartMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/StartMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.StartMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.StartMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/StartMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.StartMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.StartMissionResponse.FromString,
+        )
         self.PauseMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/PauseMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.PauseMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.PauseMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/PauseMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.PauseMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.PauseMissionResponse.FromString,
+        )
         self.ClearMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/ClearMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.ClearMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.ClearMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/ClearMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.ClearMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.ClearMissionResponse.FromString,
+        )
         self.SetCurrentMissionItem = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/SetCurrentMissionItem',
-                request_serializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/SetCurrentMissionItem",
+            request_serializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemResponse.FromString,
+        )
         self.SubscribeMissionProgress = channel.unary_stream(
-                '/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionProgress',
-                request_serializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionProgressRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.MissionProgressResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionProgress",
+            request_serializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionProgressRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.MissionProgressResponse.FromString,
+        )
         self.SubscribeMissionChanged = channel.unary_stream(
-                '/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionChanged',
-                request_serializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionChangedRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.MissionChangedResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionChanged",
+            request_serializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionChangedRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.MissionChangedResponse.FromString,
+        )
         self.ImportQgroundcontrolMission = channel.unary_unary(
-                '/mavsdk.rpc.mission_raw.MissionRawService/ImportQgroundcontrolMission',
-                request_serializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionRequest.SerializeToString,
-                response_deserializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionResponse.FromString,
-                )
+            "/mavsdk.rpc.mission_raw.MissionRawService/ImportQgroundcontrolMission",
+            request_serializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionRequest.SerializeToString,
+            response_deserializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionResponse.FromString,
+        )
 
 
 class MissionRawServiceServicer(object):
@@ -84,32 +84,32 @@ class MissionRawServiceServicer(object):
         can be started and executed even if the connection is lost.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CancelMissionUpload(self, request, context):
         """
         Cancel an ongoing mission upload.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DownloadMission(self, request, context):
         """
         Download a list of raw mission items from the system (asynchronous).
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CancelMissionDownload(self, request, context):
         """
         Cancel an ongoing mission download.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def StartMission(self, request, context):
         """
@@ -118,8 +118,8 @@ class MissionRawServiceServicer(object):
         A mission must be uploaded to the vehicle before this can be called.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def PauseMission(self, request, context):
         """
@@ -131,16 +131,16 @@ class MissionRawServiceServicer(object):
         around the location where it paused.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def ClearMission(self, request, context):
         """
         Clear the mission saved on the vehicle.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SetCurrentMissionItem(self, request, context):
         """
@@ -150,16 +150,16 @@ class MissionRawServiceServicer(object):
         to a specific index of a raw mission item, the mission will be set to this item.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SubscribeMissionProgress(self, request, context):
         """
         Subscribe to mission progress updates.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def SubscribeMissionChanged(self, request, context):
         """*
@@ -171,8 +171,8 @@ class MissionRawServiceServicer(object):
         @param callback Callback to notify about change.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def ImportQgroundcontrolMission(self, request, context):
         """
@@ -185,261 +185,394 @@ class MissionRawServiceServicer(object):
         - Structure Scan
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_MissionRawServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'UploadMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.UploadMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.UploadMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.UploadMissionResponse.SerializeToString,
-            ),
-            'CancelMissionUpload': grpc.unary_unary_rpc_method_handler(
-                    servicer.CancelMissionUpload,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadResponse.SerializeToString,
-            ),
-            'DownloadMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.DownloadMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.DownloadMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.DownloadMissionResponse.SerializeToString,
-            ),
-            'CancelMissionDownload': grpc.unary_unary_rpc_method_handler(
-                    servicer.CancelMissionDownload,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadResponse.SerializeToString,
-            ),
-            'StartMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.StartMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.StartMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.StartMissionResponse.SerializeToString,
-            ),
-            'PauseMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.PauseMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.PauseMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.PauseMissionResponse.SerializeToString,
-            ),
-            'ClearMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.ClearMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.ClearMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.ClearMissionResponse.SerializeToString,
-            ),
-            'SetCurrentMissionItem': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetCurrentMissionItem,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemResponse.SerializeToString,
-            ),
-            'SubscribeMissionProgress': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeMissionProgress,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionProgressRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.MissionProgressResponse.SerializeToString,
-            ),
-            'SubscribeMissionChanged': grpc.unary_stream_rpc_method_handler(
-                    servicer.SubscribeMissionChanged,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionChangedRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.MissionChangedResponse.SerializeToString,
-            ),
-            'ImportQgroundcontrolMission': grpc.unary_unary_rpc_method_handler(
-                    servicer.ImportQgroundcontrolMission,
-                    request_deserializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionRequest.FromString,
-                    response_serializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionResponse.SerializeToString,
-            ),
+        "UploadMission": grpc.unary_unary_rpc_method_handler(
+            servicer.UploadMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.UploadMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.UploadMissionResponse.SerializeToString,
+        ),
+        "CancelMissionUpload": grpc.unary_unary_rpc_method_handler(
+            servicer.CancelMissionUpload,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionUploadResponse.SerializeToString,
+        ),
+        "DownloadMission": grpc.unary_unary_rpc_method_handler(
+            servicer.DownloadMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.DownloadMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.DownloadMissionResponse.SerializeToString,
+        ),
+        "CancelMissionDownload": grpc.unary_unary_rpc_method_handler(
+            servicer.CancelMissionDownload,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.CancelMissionDownloadResponse.SerializeToString,
+        ),
+        "StartMission": grpc.unary_unary_rpc_method_handler(
+            servicer.StartMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.StartMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.StartMissionResponse.SerializeToString,
+        ),
+        "PauseMission": grpc.unary_unary_rpc_method_handler(
+            servicer.PauseMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.PauseMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.PauseMissionResponse.SerializeToString,
+        ),
+        "ClearMission": grpc.unary_unary_rpc_method_handler(
+            servicer.ClearMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.ClearMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.ClearMissionResponse.SerializeToString,
+        ),
+        "SetCurrentMissionItem": grpc.unary_unary_rpc_method_handler(
+            servicer.SetCurrentMissionItem,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemResponse.SerializeToString,
+        ),
+        "SubscribeMissionProgress": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeMissionProgress,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionProgressRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.MissionProgressResponse.SerializeToString,
+        ),
+        "SubscribeMissionChanged": grpc.unary_stream_rpc_method_handler(
+            servicer.SubscribeMissionChanged,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.SubscribeMissionChangedRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.MissionChangedResponse.SerializeToString,
+        ),
+        "ImportQgroundcontrolMission": grpc.unary_unary_rpc_method_handler(
+            servicer.ImportQgroundcontrolMission,
+            request_deserializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionRequest.FromString,
+            response_serializer=mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mavsdk.rpc.mission_raw.MissionRawService', rpc_method_handlers)
+        "mavsdk.rpc.mission_raw.MissionRawService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class MissionRawService(object):
     """Enable raw missions as exposed by MAVLink.
     """
 
     @staticmethod
-    def UploadMission(request,
+    def UploadMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/UploadMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/UploadMission",
             mission__raw_dot_mission__raw__pb2.UploadMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.UploadMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CancelMissionUpload(request,
+    def CancelMissionUpload(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionUpload',
+            "/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionUpload",
             mission__raw_dot_mission__raw__pb2.CancelMissionUploadRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.CancelMissionUploadResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def DownloadMission(request,
+    def DownloadMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/DownloadMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/DownloadMission",
             mission__raw_dot_mission__raw__pb2.DownloadMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.DownloadMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CancelMissionDownload(request,
+    def CancelMissionDownload(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionDownload',
+            "/mavsdk.rpc.mission_raw.MissionRawService/CancelMissionDownload",
             mission__raw_dot_mission__raw__pb2.CancelMissionDownloadRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.CancelMissionDownloadResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def StartMission(request,
+    def StartMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/StartMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/StartMission",
             mission__raw_dot_mission__raw__pb2.StartMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.StartMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def PauseMission(request,
+    def PauseMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/PauseMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/PauseMission",
             mission__raw_dot_mission__raw__pb2.PauseMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.PauseMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def ClearMission(request,
+    def ClearMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/ClearMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/ClearMission",
             mission__raw_dot_mission__raw__pb2.ClearMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.ClearMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SetCurrentMissionItem(request,
+    def SetCurrentMissionItem(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/SetCurrentMissionItem',
+            "/mavsdk.rpc.mission_raw.MissionRawService/SetCurrentMissionItem",
             mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.SetCurrentMissionItemResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SubscribeMissionProgress(request,
+    def SubscribeMissionProgress(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionProgress',
+            "/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionProgress",
             mission__raw_dot_mission__raw__pb2.SubscribeMissionProgressRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.MissionProgressResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def SubscribeMissionChanged(request,
+    def SubscribeMissionChanged(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionChanged',
+            "/mavsdk.rpc.mission_raw.MissionRawService/SubscribeMissionChanged",
             mission__raw_dot_mission__raw__pb2.SubscribeMissionChangedRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.MissionChangedResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def ImportQgroundcontrolMission(request,
+    def ImportQgroundcontrolMission(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mavsdk.rpc.mission_raw.MissionRawService/ImportQgroundcontrolMission',
+            "/mavsdk.rpc.mission_raw.MissionRawService/ImportQgroundcontrolMission",
             mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionRequest.SerializeToString,
             mission__raw_dot_mission__raw__pb2.ImportQgroundcontrolMissionResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

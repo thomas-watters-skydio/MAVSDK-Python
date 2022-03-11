@@ -17,11 +17,7 @@ class ConnectionState:
 
      """
 
-    
-
-    def __init__(
-            self,
-            is_connected):
+    def __init__(self, is_connected):
         """ Initializes the ConnectionState object """
         self.is_connected = is_connected
 
@@ -30,40 +26,26 @@ class ConnectionState:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ConnectionState object
-            return \
-                (self.is_connected == to_compare.is_connected)
+            return self.is_connected == to_compare.is_connected
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ConnectionState in string representation """
-        struct_repr = ", ".join([
-                "is_connected: " + str(self.is_connected)
-                ])
+        struct_repr = ", ".join(["is_connected: " + str(self.is_connected)])
 
         return f"ConnectionState: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcConnectionState):
         """ Translates a gRPC struct to the SDK equivalent """
-        return ConnectionState(
-                
-                rpcConnectionState.is_connected
-                )
+        return ConnectionState(rpcConnectionState.is_connected)
 
     def translate_to_rpc(self, rpcConnectionState):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcConnectionState.is_connected = self.is_connected
-            
-        
-        
-
-
 
 
 class Core(AsyncBase):
@@ -79,8 +61,6 @@ class Core(AsyncBase):
     def _setup_stub(self, channel):
         """ Setups the api stub """
         self._stub = core_pb2_grpc.CoreServiceStub(channel)
-
-    
 
     async def connection_state(self):
         """
@@ -99,9 +79,7 @@ class Core(AsyncBase):
 
         try:
             async for response in connection_state_stream:
-                
 
-            
                 yield ConnectionState.translate_from_rpc(response.connection_state)
         finally:
             connection_state_stream.cancel()
@@ -126,5 +104,3 @@ class Core(AsyncBase):
         request = core_pb2.SetMavlinkTimeoutRequest()
         request.timeout_s = timeout_s
         response = await self._stub.SetMavlinkTimeout(request)
-
-        

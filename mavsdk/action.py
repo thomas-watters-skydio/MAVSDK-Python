@@ -29,7 +29,6 @@ class OrbitYawBehavior(Enum):
 
      """
 
-    
     HOLD_FRONT_TO_CIRCLE_CENTER = 0
     HOLD_INITIAL_HEADING = 1
     UNCONTROLLED = 2
@@ -80,8 +79,6 @@ class ActionResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for action requests.
@@ -124,9 +121,11 @@ class ActionResult:
          PARAMETER_ERROR
               Error getting or setting parameter
 
+         UNSUPPORTED
+              Action not supported
+
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -139,6 +138,7 @@ class ActionResult:
         VTOL_TRANSITION_SUPPORT_UNKNOWN = 9
         NO_VTOL_TRANSITION_SUPPORT = 10
         PARAMETER_ERROR = 11
+        UNSUPPORTED = 12
 
         def translate_to_rpc(self):
             if self == ActionResult.Result.UNKNOWN:
@@ -165,6 +165,8 @@ class ActionResult:
                 return action_pb2.ActionResult.RESULT_NO_VTOL_TRANSITION_SUPPORT
             if self == ActionResult.Result.PARAMETER_ERROR:
                 return action_pb2.ActionResult.RESULT_PARAMETER_ERROR
+            if self == ActionResult.Result.UNSUPPORTED:
+                return action_pb2.ActionResult.RESULT_UNSUPPORTED
 
         @staticmethod
         def translate_from_rpc(rpc_enum_value):
@@ -193,15 +195,13 @@ class ActionResult:
                 return ActionResult.Result.NO_VTOL_TRANSITION_SUPPORT
             if rpc_enum_value == action_pb2.ActionResult.RESULT_PARAMETER_ERROR:
                 return ActionResult.Result.PARAMETER_ERROR
+            if rpc_enum_value == action_pb2.ActionResult.RESULT_UNSUPPORTED:
+                return ActionResult.Result.UNSUPPORTED
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ActionResult object """
         self.result = result
         self.result_str = result_str
@@ -211,19 +211,16 @@ class ActionResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActionResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActionResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ActionResult: [{struct_repr}]"
 
@@ -231,30 +228,16 @@ class ActionResult:
     def translate_from_rpc(rpcActionResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ActionResult(
-                
-                ActionResult.Result.translate_from_rpc(rpcActionResult.result),
-                
-                
-                rpcActionResult.result_str
-                )
+            ActionResult.Result.translate_from_rpc(rpcActionResult.result),
+            rpcActionResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcActionResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcActionResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcActionResult.result_str = self.result_str
-            
-        
-        
 
+        rpcActionResult.result_str = self.result_str
 
 
 class ActionError(Exception):
@@ -283,11 +266,9 @@ class Action(AsyncBase):
         """ Setups the api stub """
         self._stub = action_pb2_grpc.ActionServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ActionResult.translate_from_rpc(response.action_result)
-    
 
     async def arm(self):
         """
@@ -305,12 +286,10 @@ class Action(AsyncBase):
         request = action_pb2.ArmRequest()
         response = await self._stub.Arm(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "arm()")
-        
 
     async def disarm(self):
         """
@@ -328,12 +307,10 @@ class Action(AsyncBase):
         request = action_pb2.DisarmRequest()
         response = await self._stub.Disarm(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "disarm()")
-        
 
     async def takeoff(self):
         """
@@ -353,12 +330,10 @@ class Action(AsyncBase):
         request = action_pb2.TakeoffRequest()
         response = await self._stub.Takeoff(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "takeoff()")
-        
 
     async def land(self):
         """
@@ -375,12 +350,10 @@ class Action(AsyncBase):
         request = action_pb2.LandRequest()
         response = await self._stub.Land(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "land()")
-        
 
     async def reboot(self):
         """
@@ -397,12 +370,10 @@ class Action(AsyncBase):
         request = action_pb2.RebootRequest()
         response = await self._stub.Reboot(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "reboot()")
-        
 
     async def shutdown(self):
         """
@@ -421,12 +392,10 @@ class Action(AsyncBase):
         request = action_pb2.ShutdownRequest()
         response = await self._stub.Shutdown(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "shutdown()")
-        
 
     async def terminate(self):
         """
@@ -443,12 +412,10 @@ class Action(AsyncBase):
         request = action_pb2.TerminateRequest()
         response = await self._stub.Terminate(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "terminate()")
-        
 
     async def kill(self):
         """
@@ -466,12 +433,10 @@ class Action(AsyncBase):
         request = action_pb2.KillRequest()
         response = await self._stub.Kill(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "kill()")
-        
 
     async def return_to_launch(self):
         """
@@ -490,12 +455,10 @@ class Action(AsyncBase):
         request = action_pb2.ReturnToLaunchRequest()
         response = await self._stub.ReturnToLaunch(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "return_to_launch()")
-        
 
     async def goto_location(self, latitude_deg, longitude_deg, absolute_altitude_m, yaw_deg):
         """
@@ -533,14 +496,16 @@ class Action(AsyncBase):
         request.yaw_deg = yaw_deg
         response = await self._stub.GotoLocation(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
-            raise ActionError(result, "goto_location()", latitude_deg, longitude_deg, absolute_altitude_m, yaw_deg)
-        
+            raise ActionError(
+                result, "goto_location()", latitude_deg, longitude_deg, absolute_altitude_m, yaw_deg
+            )
 
-    async def do_orbit(self, radius_m, velocity_ms, yaw_behavior, latitude_deg, longitude_deg, absolute_altitude_m):
+    async def do_orbit(
+        self, radius_m, velocity_ms, yaw_behavior, latitude_deg, longitude_deg, absolute_altitude_m
+    ):
         """
          Send command do orbit to the drone.
 
@@ -575,21 +540,27 @@ class Action(AsyncBase):
         request = action_pb2.DoOrbitRequest()
         request.radius_m = radius_m
         request.velocity_ms = velocity_ms
-        
+
         request.yaw_behavior = yaw_behavior.translate_to_rpc()
-                
-            
+
         request.latitude_deg = latitude_deg
         request.longitude_deg = longitude_deg
         request.absolute_altitude_m = absolute_altitude_m
         response = await self._stub.DoOrbit(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
-            raise ActionError(result, "do_orbit()", radius_m, velocity_ms, yaw_behavior, latitude_deg, longitude_deg, absolute_altitude_m)
-        
+            raise ActionError(
+                result,
+                "do_orbit()",
+                radius_m,
+                velocity_ms,
+                yaw_behavior,
+                latitude_deg,
+                longitude_deg,
+                absolute_altitude_m,
+            )
 
     async def hold(self):
         """
@@ -610,12 +581,10 @@ class Action(AsyncBase):
         request = action_pb2.HoldRequest()
         response = await self._stub.Hold(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "hold()")
-        
 
     async def set_actuator(self, index, value):
         """
@@ -640,12 +609,10 @@ class Action(AsyncBase):
         request.value = value
         response = await self._stub.SetActuator(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "set_actuator()", index, value)
-        
 
     async def transition_to_fixedwing(self):
         """
@@ -664,12 +631,10 @@ class Action(AsyncBase):
         request = action_pb2.TransitionToFixedwingRequest()
         response = await self._stub.TransitionToFixedwing(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "transition_to_fixedwing()")
-        
 
     async def transition_to_multicopter(self):
         """
@@ -688,12 +653,10 @@ class Action(AsyncBase):
         request = action_pb2.TransitionToMulticopterRequest()
         response = await self._stub.TransitionToMulticopter(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "transition_to_multicopter()")
-        
 
     async def get_takeoff_altitude(self):
         """
@@ -713,15 +676,12 @@ class Action(AsyncBase):
         request = action_pb2.GetTakeoffAltitudeRequest()
         response = await self._stub.GetTakeoffAltitude(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "get_takeoff_altitude()")
-        
 
         return response.altitude
-        
 
     async def set_takeoff_altitude(self, altitude):
         """
@@ -742,12 +702,10 @@ class Action(AsyncBase):
         request.altitude = altitude
         response = await self._stub.SetTakeoffAltitude(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "set_takeoff_altitude()", altitude)
-        
 
     async def get_maximum_speed(self):
         """
@@ -767,15 +725,12 @@ class Action(AsyncBase):
         request = action_pb2.GetMaximumSpeedRequest()
         response = await self._stub.GetMaximumSpeed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "get_maximum_speed()")
-        
 
         return response.speed
-        
 
     async def set_maximum_speed(self, speed):
         """
@@ -796,12 +751,10 @@ class Action(AsyncBase):
         request.speed = speed
         response = await self._stub.SetMaximumSpeed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "set_maximum_speed()", speed)
-        
 
     async def get_return_to_launch_altitude(self):
         """
@@ -821,15 +774,12 @@ class Action(AsyncBase):
         request = action_pb2.GetReturnToLaunchAltitudeRequest()
         response = await self._stub.GetReturnToLaunchAltitude(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "get_return_to_launch_altitude()")
-        
 
         return response.relative_altitude_m
-        
 
     async def set_return_to_launch_altitude(self, relative_altitude_m):
         """
@@ -850,9 +800,7 @@ class Action(AsyncBase):
         request.relative_altitude_m = relative_altitude_m
         response = await self._stub.SetReturnToLaunchAltitude(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ActionResult.Result.SUCCESS:
             raise ActionError(result, "set_return_to_launch_altitude()", relative_altitude_m)
-        

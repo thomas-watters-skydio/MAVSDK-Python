@@ -4,6 +4,7 @@ import asyncio
 from mavsdk import System
 from mavsdk.gimbal import GimbalMode, ControlMode
 
+
 async def run():
     # Init the drone
     drone = System()

@@ -35,7 +35,6 @@ class FixType(Enum):
 
      """
 
-    
     NO_GPS = 0
     NO_FIX = 1
     FIX_2D = 2
@@ -105,7 +104,6 @@ class VtolState(Enum):
 
      """
 
-    
     UNDEFINED = 0
     TRANSITION_TO_FW = 1
     TRANSITION_TO_MC = 2
@@ -174,7 +172,6 @@ class StatusTextType(Enum):
 
      """
 
-    
     DEBUG = 0
     INFO = 1
     NOTICE = 2
@@ -249,7 +246,6 @@ class LandedState(Enum):
 
      """
 
-    
     UNKNOWN = 0
     ON_GROUND = 1
     IN_AIR = 2
@@ -306,14 +302,7 @@ class Position:
 
      """
 
-    
-
-    def __init__(
-            self,
-            latitude_deg,
-            longitude_deg,
-            absolute_altitude_m,
-            relative_altitude_m):
+    def __init__(self, latitude_deg, longitude_deg, absolute_altitude_m, relative_altitude_m):
         """ Initializes the Position object """
         self.latitude_deg = latitude_deg
         self.longitude_deg = longitude_deg
@@ -325,23 +314,26 @@ class Position:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Position object
-            return \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg) and \
-                (self.absolute_altitude_m == to_compare.absolute_altitude_m) and \
-                (self.relative_altitude_m == to_compare.relative_altitude_m)
+            return (
+                (self.latitude_deg == to_compare.latitude_deg)
+                and (self.longitude_deg == to_compare.longitude_deg)
+                and (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+                and (self.relative_altitude_m == to_compare.relative_altitude_m)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Position in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "latitude_deg: " + str(self.latitude_deg),
                 "longitude_deg: " + str(self.longitude_deg),
                 "absolute_altitude_m: " + str(self.absolute_altitude_m),
-                "relative_altitude_m: " + str(self.relative_altitude_m)
-                ])
+                "relative_altitude_m: " + str(self.relative_altitude_m),
+            ]
+        )
 
         return f"Position: [{struct_repr}]"
 
@@ -349,47 +341,22 @@ class Position:
     def translate_from_rpc(rpcPosition):
         """ Translates a gRPC struct to the SDK equivalent """
         return Position(
-                
-                rpcPosition.latitude_deg,
-                
-                
-                rpcPosition.longitude_deg,
-                
-                
-                rpcPosition.absolute_altitude_m,
-                
-                
-                rpcPosition.relative_altitude_m
-                )
+            rpcPosition.latitude_deg,
+            rpcPosition.longitude_deg,
+            rpcPosition.absolute_altitude_m,
+            rpcPosition.relative_altitude_m,
+        )
 
     def translate_to_rpc(self, rpcPosition):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPosition.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcPosition.longitude_deg = self.longitude_deg
-            
-        
-        
-        
-            
+
         rpcPosition.absolute_altitude_m = self.absolute_altitude_m
-            
-        
-        
-        
-            
+
         rpcPosition.relative_altitude_m = self.relative_altitude_m
-            
-        
-        
 
 
 class Heading:
@@ -403,11 +370,7 @@ class Heading:
 
      """
 
-    
-
-    def __init__(
-            self,
-            heading_deg):
+    def __init__(self, heading_deg):
         """ Initializes the Heading object """
         self.heading_deg = heading_deg
 
@@ -416,38 +379,26 @@ class Heading:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Heading object
-            return \
-                (self.heading_deg == to_compare.heading_deg)
+            return self.heading_deg == to_compare.heading_deg
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Heading in string representation """
-        struct_repr = ", ".join([
-                "heading_deg: " + str(self.heading_deg)
-                ])
+        struct_repr = ", ".join(["heading_deg: " + str(self.heading_deg)])
 
         return f"Heading: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcHeading):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Heading(
-                
-                rpcHeading.heading_deg
-                )
+        return Heading(rpcHeading.heading_deg)
 
     def translate_to_rpc(self, rpcHeading):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcHeading.heading_deg = self.heading_deg
-            
-        
-        
 
 
 class Quaternion:
@@ -480,15 +431,7 @@ class Quaternion:
 
      """
 
-    
-
-    def __init__(
-            self,
-            w,
-            x,
-            y,
-            z,
-            timestamp_us):
+    def __init__(self, w, x, y, z, timestamp_us):
         """ Initializes the Quaternion object """
         self.w = w
         self.x = x
@@ -501,25 +444,28 @@ class Quaternion:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Quaternion object
-            return \
-                (self.w == to_compare.w) and \
-                (self.x == to_compare.x) and \
-                (self.y == to_compare.y) and \
-                (self.z == to_compare.z) and \
-                (self.timestamp_us == to_compare.timestamp_us)
+            return (
+                (self.w == to_compare.w)
+                and (self.x == to_compare.x)
+                and (self.y == to_compare.y)
+                and (self.z == to_compare.z)
+                and (self.timestamp_us == to_compare.timestamp_us)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Quaternion in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "w: " + str(self.w),
                 "x: " + str(self.x),
                 "y: " + str(self.y),
                 "z: " + str(self.z),
-                "timestamp_us: " + str(self.timestamp_us)
-                ])
+                "timestamp_us: " + str(self.timestamp_us),
+            ]
+        )
 
         return f"Quaternion: [{struct_repr}]"
 
@@ -527,56 +473,25 @@ class Quaternion:
     def translate_from_rpc(rpcQuaternion):
         """ Translates a gRPC struct to the SDK equivalent """
         return Quaternion(
-                
-                rpcQuaternion.w,
-                
-                
-                rpcQuaternion.x,
-                
-                
-                rpcQuaternion.y,
-                
-                
-                rpcQuaternion.z,
-                
-                
-                rpcQuaternion.timestamp_us
-                )
+            rpcQuaternion.w,
+            rpcQuaternion.x,
+            rpcQuaternion.y,
+            rpcQuaternion.z,
+            rpcQuaternion.timestamp_us,
+        )
 
     def translate_to_rpc(self, rpcQuaternion):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcQuaternion.w = self.w
-            
-        
-        
-        
-            
+
         rpcQuaternion.x = self.x
-            
-        
-        
-        
-            
+
         rpcQuaternion.y = self.y
-            
-        
-        
-        
-            
+
         rpcQuaternion.z = self.z
-            
-        
-        
-        
-            
+
         rpcQuaternion.timestamp_us = self.timestamp_us
-            
-        
-        
 
 
 class EulerAngle:
@@ -604,14 +519,7 @@ class EulerAngle:
 
      """
 
-    
-
-    def __init__(
-            self,
-            roll_deg,
-            pitch_deg,
-            yaw_deg,
-            timestamp_us):
+    def __init__(self, roll_deg, pitch_deg, yaw_deg, timestamp_us):
         """ Initializes the EulerAngle object """
         self.roll_deg = roll_deg
         self.pitch_deg = pitch_deg
@@ -623,23 +531,26 @@ class EulerAngle:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # EulerAngle object
-            return \
-                (self.roll_deg == to_compare.roll_deg) and \
-                (self.pitch_deg == to_compare.pitch_deg) and \
-                (self.yaw_deg == to_compare.yaw_deg) and \
-                (self.timestamp_us == to_compare.timestamp_us)
+            return (
+                (self.roll_deg == to_compare.roll_deg)
+                and (self.pitch_deg == to_compare.pitch_deg)
+                and (self.yaw_deg == to_compare.yaw_deg)
+                and (self.timestamp_us == to_compare.timestamp_us)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ EulerAngle in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "roll_deg: " + str(self.roll_deg),
                 "pitch_deg: " + str(self.pitch_deg),
                 "yaw_deg: " + str(self.yaw_deg),
-                "timestamp_us: " + str(self.timestamp_us)
-                ])
+                "timestamp_us: " + str(self.timestamp_us),
+            ]
+        )
 
         return f"EulerAngle: [{struct_repr}]"
 
@@ -647,47 +558,22 @@ class EulerAngle:
     def translate_from_rpc(rpcEulerAngle):
         """ Translates a gRPC struct to the SDK equivalent """
         return EulerAngle(
-                
-                rpcEulerAngle.roll_deg,
-                
-                
-                rpcEulerAngle.pitch_deg,
-                
-                
-                rpcEulerAngle.yaw_deg,
-                
-                
-                rpcEulerAngle.timestamp_us
-                )
+            rpcEulerAngle.roll_deg,
+            rpcEulerAngle.pitch_deg,
+            rpcEulerAngle.yaw_deg,
+            rpcEulerAngle.timestamp_us,
+        )
 
     def translate_to_rpc(self, rpcEulerAngle):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcEulerAngle.roll_deg = self.roll_deg
-            
-        
-        
-        
-            
+
         rpcEulerAngle.pitch_deg = self.pitch_deg
-            
-        
-        
-        
-            
+
         rpcEulerAngle.yaw_deg = self.yaw_deg
-            
-        
-        
-        
-            
+
         rpcEulerAngle.timestamp_us = self.timestamp_us
-            
-        
-        
 
 
 class AngularVelocityBody:
@@ -707,13 +593,7 @@ class AngularVelocityBody:
 
      """
 
-    
-
-    def __init__(
-            self,
-            roll_rad_s,
-            pitch_rad_s,
-            yaw_rad_s):
+    def __init__(self, roll_rad_s, pitch_rad_s, yaw_rad_s):
         """ Initializes the AngularVelocityBody object """
         self.roll_rad_s = roll_rad_s
         self.pitch_rad_s = pitch_rad_s
@@ -724,21 +604,24 @@ class AngularVelocityBody:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AngularVelocityBody object
-            return \
-                (self.roll_rad_s == to_compare.roll_rad_s) and \
-                (self.pitch_rad_s == to_compare.pitch_rad_s) and \
-                (self.yaw_rad_s == to_compare.yaw_rad_s)
+            return (
+                (self.roll_rad_s == to_compare.roll_rad_s)
+                and (self.pitch_rad_s == to_compare.pitch_rad_s)
+                and (self.yaw_rad_s == to_compare.yaw_rad_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AngularVelocityBody in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "roll_rad_s: " + str(self.roll_rad_s),
                 "pitch_rad_s: " + str(self.pitch_rad_s),
-                "yaw_rad_s: " + str(self.yaw_rad_s)
-                ])
+                "yaw_rad_s: " + str(self.yaw_rad_s),
+            ]
+        )
 
         return f"AngularVelocityBody: [{struct_repr}]"
 
@@ -746,38 +629,19 @@ class AngularVelocityBody:
     def translate_from_rpc(rpcAngularVelocityBody):
         """ Translates a gRPC struct to the SDK equivalent """
         return AngularVelocityBody(
-                
-                rpcAngularVelocityBody.roll_rad_s,
-                
-                
-                rpcAngularVelocityBody.pitch_rad_s,
-                
-                
-                rpcAngularVelocityBody.yaw_rad_s
-                )
+            rpcAngularVelocityBody.roll_rad_s,
+            rpcAngularVelocityBody.pitch_rad_s,
+            rpcAngularVelocityBody.yaw_rad_s,
+        )
 
     def translate_to_rpc(self, rpcAngularVelocityBody):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAngularVelocityBody.roll_rad_s = self.roll_rad_s
-            
-        
-        
-        
-            
+
         rpcAngularVelocityBody.pitch_rad_s = self.pitch_rad_s
-            
-        
-        
-        
-            
+
         rpcAngularVelocityBody.yaw_rad_s = self.yaw_rad_s
-            
-        
-        
 
 
 class GpsInfo:
@@ -794,12 +658,7 @@ class GpsInfo:
 
      """
 
-    
-
-    def __init__(
-            self,
-            num_satellites,
-            fix_type):
+    def __init__(self, num_satellites, fix_type):
         """ Initializes the GpsInfo object """
         self.num_satellites = num_satellites
         self.fix_type = fix_type
@@ -809,49 +668,32 @@ class GpsInfo:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # GpsInfo object
-            return \
-                (self.num_satellites == to_compare.num_satellites) and \
-                (self.fix_type == to_compare.fix_type)
+            return (self.num_satellites == to_compare.num_satellites) and (
+                self.fix_type == to_compare.fix_type
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ GpsInfo in string representation """
-        struct_repr = ", ".join([
-                "num_satellites: " + str(self.num_satellites),
-                "fix_type: " + str(self.fix_type)
-                ])
+        struct_repr = ", ".join(
+            ["num_satellites: " + str(self.num_satellites), "fix_type: " + str(self.fix_type)]
+        )
 
         return f"GpsInfo: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcGpsInfo):
         """ Translates a gRPC struct to the SDK equivalent """
-        return GpsInfo(
-                
-                rpcGpsInfo.num_satellites,
-                
-                
-                FixType.translate_from_rpc(rpcGpsInfo.fix_type)
-                )
+        return GpsInfo(rpcGpsInfo.num_satellites, FixType.translate_from_rpc(rpcGpsInfo.fix_type))
 
     def translate_to_rpc(self, rpcGpsInfo):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcGpsInfo.num_satellites = self.num_satellites
-            
-        
-        
-        
-            
+
         rpcGpsInfo.fix_type = self.fix_type.translate_to_rpc()
-            
-        
-        
 
 
 class RawGps:
@@ -907,24 +749,23 @@ class RawGps:
 
      """
 
-    
-
     def __init__(
-            self,
-            timestamp_us,
-            latitude_deg,
-            longitude_deg,
-            absolute_altitude_m,
-            hdop,
-            vdop,
-            velocity_m_s,
-            cog_deg,
-            altitude_ellipsoid_m,
-            horizontal_uncertainty_m,
-            vertical_uncertainty_m,
-            velocity_uncertainty_m_s,
-            heading_uncertainty_deg,
-            yaw_deg):
+        self,
+        timestamp_us,
+        latitude_deg,
+        longitude_deg,
+        absolute_altitude_m,
+        hdop,
+        vdop,
+        velocity_m_s,
+        cog_deg,
+        altitude_ellipsoid_m,
+        horizontal_uncertainty_m,
+        vertical_uncertainty_m,
+        velocity_uncertainty_m_s,
+        heading_uncertainty_deg,
+        yaw_deg,
+    ):
         """ Initializes the RawGps object """
         self.timestamp_us = timestamp_us
         self.latitude_deg = latitude_deg
@@ -946,28 +787,30 @@ class RawGps:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # RawGps object
-            return \
-                (self.timestamp_us == to_compare.timestamp_us) and \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg) and \
-                (self.absolute_altitude_m == to_compare.absolute_altitude_m) and \
-                (self.hdop == to_compare.hdop) and \
-                (self.vdop == to_compare.vdop) and \
-                (self.velocity_m_s == to_compare.velocity_m_s) and \
-                (self.cog_deg == to_compare.cog_deg) and \
-                (self.altitude_ellipsoid_m == to_compare.altitude_ellipsoid_m) and \
-                (self.horizontal_uncertainty_m == to_compare.horizontal_uncertainty_m) and \
-                (self.vertical_uncertainty_m == to_compare.vertical_uncertainty_m) and \
-                (self.velocity_uncertainty_m_s == to_compare.velocity_uncertainty_m_s) and \
-                (self.heading_uncertainty_deg == to_compare.heading_uncertainty_deg) and \
-                (self.yaw_deg == to_compare.yaw_deg)
+            return (
+                (self.timestamp_us == to_compare.timestamp_us)
+                and (self.latitude_deg == to_compare.latitude_deg)
+                and (self.longitude_deg == to_compare.longitude_deg)
+                and (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+                and (self.hdop == to_compare.hdop)
+                and (self.vdop == to_compare.vdop)
+                and (self.velocity_m_s == to_compare.velocity_m_s)
+                and (self.cog_deg == to_compare.cog_deg)
+                and (self.altitude_ellipsoid_m == to_compare.altitude_ellipsoid_m)
+                and (self.horizontal_uncertainty_m == to_compare.horizontal_uncertainty_m)
+                and (self.vertical_uncertainty_m == to_compare.vertical_uncertainty_m)
+                and (self.velocity_uncertainty_m_s == to_compare.velocity_uncertainty_m_s)
+                and (self.heading_uncertainty_deg == to_compare.heading_uncertainty_deg)
+                and (self.yaw_deg == to_compare.yaw_deg)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ RawGps in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "timestamp_us: " + str(self.timestamp_us),
                 "latitude_deg: " + str(self.latitude_deg),
                 "longitude_deg: " + str(self.longitude_deg),
@@ -981,8 +824,9 @@ class RawGps:
                 "vertical_uncertainty_m: " + str(self.vertical_uncertainty_m),
                 "velocity_uncertainty_m_s: " + str(self.velocity_uncertainty_m_s),
                 "heading_uncertainty_deg: " + str(self.heading_uncertainty_deg),
-                "yaw_deg: " + str(self.yaw_deg)
-                ])
+                "yaw_deg: " + str(self.yaw_deg),
+            ]
+        )
 
         return f"RawGps: [{struct_repr}]"
 
@@ -990,137 +834,52 @@ class RawGps:
     def translate_from_rpc(rpcRawGps):
         """ Translates a gRPC struct to the SDK equivalent """
         return RawGps(
-                
-                rpcRawGps.timestamp_us,
-                
-                
-                rpcRawGps.latitude_deg,
-                
-                
-                rpcRawGps.longitude_deg,
-                
-                
-                rpcRawGps.absolute_altitude_m,
-                
-                
-                rpcRawGps.hdop,
-                
-                
-                rpcRawGps.vdop,
-                
-                
-                rpcRawGps.velocity_m_s,
-                
-                
-                rpcRawGps.cog_deg,
-                
-                
-                rpcRawGps.altitude_ellipsoid_m,
-                
-                
-                rpcRawGps.horizontal_uncertainty_m,
-                
-                
-                rpcRawGps.vertical_uncertainty_m,
-                
-                
-                rpcRawGps.velocity_uncertainty_m_s,
-                
-                
-                rpcRawGps.heading_uncertainty_deg,
-                
-                
-                rpcRawGps.yaw_deg
-                )
+            rpcRawGps.timestamp_us,
+            rpcRawGps.latitude_deg,
+            rpcRawGps.longitude_deg,
+            rpcRawGps.absolute_altitude_m,
+            rpcRawGps.hdop,
+            rpcRawGps.vdop,
+            rpcRawGps.velocity_m_s,
+            rpcRawGps.cog_deg,
+            rpcRawGps.altitude_ellipsoid_m,
+            rpcRawGps.horizontal_uncertainty_m,
+            rpcRawGps.vertical_uncertainty_m,
+            rpcRawGps.velocity_uncertainty_m_s,
+            rpcRawGps.heading_uncertainty_deg,
+            rpcRawGps.yaw_deg,
+        )
 
     def translate_to_rpc(self, rpcRawGps):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcRawGps.timestamp_us = self.timestamp_us
-            
-        
-        
-        
-            
+
         rpcRawGps.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcRawGps.longitude_deg = self.longitude_deg
-            
-        
-        
-        
-            
+
         rpcRawGps.absolute_altitude_m = self.absolute_altitude_m
-            
-        
-        
-        
-            
+
         rpcRawGps.hdop = self.hdop
-            
-        
-        
-        
-            
+
         rpcRawGps.vdop = self.vdop
-            
-        
-        
-        
-            
+
         rpcRawGps.velocity_m_s = self.velocity_m_s
-            
-        
-        
-        
-            
+
         rpcRawGps.cog_deg = self.cog_deg
-            
-        
-        
-        
-            
+
         rpcRawGps.altitude_ellipsoid_m = self.altitude_ellipsoid_m
-            
-        
-        
-        
-            
+
         rpcRawGps.horizontal_uncertainty_m = self.horizontal_uncertainty_m
-            
-        
-        
-        
-            
+
         rpcRawGps.vertical_uncertainty_m = self.vertical_uncertainty_m
-            
-        
-        
-        
-            
+
         rpcRawGps.velocity_uncertainty_m_s = self.velocity_uncertainty_m_s
-            
-        
-        
-        
-            
+
         rpcRawGps.heading_uncertainty_deg = self.heading_uncertainty_deg
-            
-        
-        
-        
-            
+
         rpcRawGps.yaw_deg = self.yaw_deg
-            
-        
-        
 
 
 class Battery:
@@ -1137,12 +896,7 @@ class Battery:
 
      """
 
-    
-
-    def __init__(
-            self,
-            voltage_v,
-            remaining_percent):
+    def __init__(self, voltage_v, remaining_percent):
         """ Initializes the Battery object """
         self.voltage_v = voltage_v
         self.remaining_percent = remaining_percent
@@ -1152,49 +906,35 @@ class Battery:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Battery object
-            return \
-                (self.voltage_v == to_compare.voltage_v) and \
-                (self.remaining_percent == to_compare.remaining_percent)
+            return (self.voltage_v == to_compare.voltage_v) and (
+                self.remaining_percent == to_compare.remaining_percent
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Battery in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "voltage_v: " + str(self.voltage_v),
-                "remaining_percent: " + str(self.remaining_percent)
-                ])
+                "remaining_percent: " + str(self.remaining_percent),
+            ]
+        )
 
         return f"Battery: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcBattery):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Battery(
-                
-                rpcBattery.voltage_v,
-                
-                
-                rpcBattery.remaining_percent
-                )
+        return Battery(rpcBattery.voltage_v, rpcBattery.remaining_percent)
 
     def translate_to_rpc(self, rpcBattery):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcBattery.voltage_v = self.voltage_v
-            
-        
-        
-        
-            
+
         rpcBattery.remaining_percent = self.remaining_percent
-            
-        
-        
 
 
 class RcStatus:
@@ -1214,13 +954,7 @@ class RcStatus:
 
      """
 
-    
-
-    def __init__(
-            self,
-            was_available_once,
-            is_available,
-            signal_strength_percent):
+    def __init__(self, was_available_once, is_available, signal_strength_percent):
         """ Initializes the RcStatus object """
         self.was_available_once = was_available_once
         self.is_available = is_available
@@ -1231,21 +965,24 @@ class RcStatus:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # RcStatus object
-            return \
-                (self.was_available_once == to_compare.was_available_once) and \
-                (self.is_available == to_compare.is_available) and \
-                (self.signal_strength_percent == to_compare.signal_strength_percent)
+            return (
+                (self.was_available_once == to_compare.was_available_once)
+                and (self.is_available == to_compare.is_available)
+                and (self.signal_strength_percent == to_compare.signal_strength_percent)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ RcStatus in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "was_available_once: " + str(self.was_available_once),
                 "is_available: " + str(self.is_available),
-                "signal_strength_percent: " + str(self.signal_strength_percent)
-                ])
+                "signal_strength_percent: " + str(self.signal_strength_percent),
+            ]
+        )
 
         return f"RcStatus: [{struct_repr}]"
 
@@ -1253,38 +990,19 @@ class RcStatus:
     def translate_from_rpc(rpcRcStatus):
         """ Translates a gRPC struct to the SDK equivalent """
         return RcStatus(
-                
-                rpcRcStatus.was_available_once,
-                
-                
-                rpcRcStatus.is_available,
-                
-                
-                rpcRcStatus.signal_strength_percent
-                )
+            rpcRcStatus.was_available_once,
+            rpcRcStatus.is_available,
+            rpcRcStatus.signal_strength_percent,
+        )
 
     def translate_to_rpc(self, rpcRcStatus):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcRcStatus.was_available_once = self.was_available_once
-            
-        
-        
-        
-            
+
         rpcRcStatus.is_available = self.is_available
-            
-        
-        
-        
-            
+
         rpcRcStatus.signal_strength_percent = self.signal_strength_percent
-            
-        
-        
 
 
 class StatusText:
@@ -1301,12 +1019,7 @@ class StatusText:
 
      """
 
-    
-
-    def __init__(
-            self,
-            type,
-            text):
+    def __init__(self, type, text):
         """ Initializes the StatusText object """
         self.type = type
         self.text = text
@@ -1316,49 +1029,28 @@ class StatusText:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # StatusText object
-            return \
-                (self.type == to_compare.type) and \
-                (self.text == to_compare.text)
+            return (self.type == to_compare.type) and (self.text == to_compare.text)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ StatusText in string representation """
-        struct_repr = ", ".join([
-                "type: " + str(self.type),
-                "text: " + str(self.text)
-                ])
+        struct_repr = ", ".join(["type: " + str(self.type), "text: " + str(self.text)])
 
         return f"StatusText: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcStatusText):
         """ Translates a gRPC struct to the SDK equivalent """
-        return StatusText(
-                
-                StatusTextType.translate_from_rpc(rpcStatusText.type),
-                
-                
-                rpcStatusText.text
-                )
+        return StatusText(StatusTextType.translate_from_rpc(rpcStatusText.type), rpcStatusText.text)
 
     def translate_to_rpc(self, rpcStatusText):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcStatusText.type = self.type.translate_to_rpc()
-            
-        
-        
-        
-            
+
         rpcStatusText.text = self.text
-            
-        
-        
 
 
 class ActuatorControlTarget:
@@ -1375,12 +1067,7 @@ class ActuatorControlTarget:
 
      """
 
-    
-
-    def __init__(
-            self,
-            group,
-            controls):
+    def __init__(self, group, controls):
         """ Initializes the ActuatorControlTarget object """
         self.group = group
         self.controls = controls
@@ -1390,19 +1077,14 @@ class ActuatorControlTarget:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActuatorControlTarget object
-            return \
-                (self.group == to_compare.group) and \
-                (self.controls == to_compare.controls)
+            return (self.group == to_compare.group) and (self.controls == to_compare.controls)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActuatorControlTarget in string representation """
-        struct_repr = ", ".join([
-                "group: " + str(self.group),
-                "controls: " + str(self.controls)
-                ])
+        struct_repr = ", ".join(["group: " + str(self.group), "controls: " + str(self.controls)])
 
         return f"ActuatorControlTarget: [{struct_repr}]"
 
@@ -1410,30 +1092,16 @@ class ActuatorControlTarget:
     def translate_from_rpc(rpcActuatorControlTarget):
         """ Translates a gRPC struct to the SDK equivalent """
         return ActuatorControlTarget(
-                
-                rpcActuatorControlTarget.group,
-                
-                
-                rpcActuatorControlTarget.controls
-                )
+            rpcActuatorControlTarget.group, rpcActuatorControlTarget.controls
+        )
 
     def translate_to_rpc(self, rpcActuatorControlTarget):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcActuatorControlTarget.group = self.group
-            
-        
-        
-        
-            
+
         for elem in self.controls:
-          rpcActuatorControlTarget.controls.append(elem)
-            
-        
-        
+            rpcActuatorControlTarget.controls.append(elem)
 
 
 class ActuatorOutputStatus:
@@ -1450,12 +1118,7 @@ class ActuatorOutputStatus:
 
      """
 
-    
-
-    def __init__(
-            self,
-            active,
-            actuator):
+    def __init__(self, active, actuator):
         """ Initializes the ActuatorOutputStatus object """
         self.active = active
         self.actuator = actuator
@@ -1465,19 +1128,14 @@ class ActuatorOutputStatus:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ActuatorOutputStatus object
-            return \
-                (self.active == to_compare.active) and \
-                (self.actuator == to_compare.actuator)
+            return (self.active == to_compare.active) and (self.actuator == to_compare.actuator)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ActuatorOutputStatus in string representation """
-        struct_repr = ", ".join([
-                "active: " + str(self.active),
-                "actuator: " + str(self.actuator)
-                ])
+        struct_repr = ", ".join(["active: " + str(self.active), "actuator: " + str(self.actuator)])
 
         return f"ActuatorOutputStatus: [{struct_repr}]"
 
@@ -1485,30 +1143,16 @@ class ActuatorOutputStatus:
     def translate_from_rpc(rpcActuatorOutputStatus):
         """ Translates a gRPC struct to the SDK equivalent """
         return ActuatorOutputStatus(
-                
-                rpcActuatorOutputStatus.active,
-                
-                
-                rpcActuatorOutputStatus.actuator
-                )
+            rpcActuatorOutputStatus.active, rpcActuatorOutputStatus.actuator
+        )
 
     def translate_to_rpc(self, rpcActuatorOutputStatus):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcActuatorOutputStatus.active = self.active
-            
-        
-        
-        
-            
+
         for elem in self.actuator:
-          rpcActuatorOutputStatus.actuator.append(elem)
-            
-        
-        
+            rpcActuatorOutputStatus.actuator.append(elem)
 
 
 class Covariance:
@@ -1526,11 +1170,7 @@ class Covariance:
 
      """
 
-    
-
-    def __init__(
-            self,
-            covariance_matrix):
+    def __init__(self, covariance_matrix):
         """ Initializes the Covariance object """
         self.covariance_matrix = covariance_matrix
 
@@ -1539,39 +1179,27 @@ class Covariance:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Covariance object
-            return \
-                (self.covariance_matrix == to_compare.covariance_matrix)
+            return self.covariance_matrix == to_compare.covariance_matrix
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Covariance in string representation """
-        struct_repr = ", ".join([
-                "covariance_matrix: " + str(self.covariance_matrix)
-                ])
+        struct_repr = ", ".join(["covariance_matrix: " + str(self.covariance_matrix)])
 
         return f"Covariance: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcCovariance):
         """ Translates a gRPC struct to the SDK equivalent """
-        return Covariance(
-                
-                rpcCovariance.covariance_matrix
-                )
+        return Covariance(rpcCovariance.covariance_matrix)
 
     def translate_to_rpc(self, rpcCovariance):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         for elem in self.covariance_matrix:
-          rpcCovariance.covariance_matrix.append(elem)
-            
-        
-        
+            rpcCovariance.covariance_matrix.append(elem)
 
 
 class VelocityBody:
@@ -1591,13 +1219,7 @@ class VelocityBody:
 
      """
 
-    
-
-    def __init__(
-            self,
-            x_m_s,
-            y_m_s,
-            z_m_s):
+    def __init__(self, x_m_s, y_m_s, z_m_s):
         """ Initializes the VelocityBody object """
         self.x_m_s = x_m_s
         self.y_m_s = y_m_s
@@ -1608,60 +1230,36 @@ class VelocityBody:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # VelocityBody object
-            return \
-                (self.x_m_s == to_compare.x_m_s) and \
-                (self.y_m_s == to_compare.y_m_s) and \
-                (self.z_m_s == to_compare.z_m_s)
+            return (
+                (self.x_m_s == to_compare.x_m_s)
+                and (self.y_m_s == to_compare.y_m_s)
+                and (self.z_m_s == to_compare.z_m_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ VelocityBody in string representation """
-        struct_repr = ", ".join([
-                "x_m_s: " + str(self.x_m_s),
-                "y_m_s: " + str(self.y_m_s),
-                "z_m_s: " + str(self.z_m_s)
-                ])
+        struct_repr = ", ".join(
+            ["x_m_s: " + str(self.x_m_s), "y_m_s: " + str(self.y_m_s), "z_m_s: " + str(self.z_m_s)]
+        )
 
         return f"VelocityBody: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcVelocityBody):
         """ Translates a gRPC struct to the SDK equivalent """
-        return VelocityBody(
-                
-                rpcVelocityBody.x_m_s,
-                
-                
-                rpcVelocityBody.y_m_s,
-                
-                
-                rpcVelocityBody.z_m_s
-                )
+        return VelocityBody(rpcVelocityBody.x_m_s, rpcVelocityBody.y_m_s, rpcVelocityBody.z_m_s)
 
     def translate_to_rpc(self, rpcVelocityBody):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcVelocityBody.x_m_s = self.x_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityBody.y_m_s = self.y_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityBody.z_m_s = self.z_m_s
-            
-        
-        
 
 
 class PositionBody:
@@ -1681,13 +1279,7 @@ class PositionBody:
 
      """
 
-    
-
-    def __init__(
-            self,
-            x_m,
-            y_m,
-            z_m):
+    def __init__(self, x_m, y_m, z_m):
         """ Initializes the PositionBody object """
         self.x_m = x_m
         self.y_m = y_m
@@ -1698,60 +1290,36 @@ class PositionBody:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # PositionBody object
-            return \
-                (self.x_m == to_compare.x_m) and \
-                (self.y_m == to_compare.y_m) and \
-                (self.z_m == to_compare.z_m)
+            return (
+                (self.x_m == to_compare.x_m)
+                and (self.y_m == to_compare.y_m)
+                and (self.z_m == to_compare.z_m)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ PositionBody in string representation """
-        struct_repr = ", ".join([
-                "x_m: " + str(self.x_m),
-                "y_m: " + str(self.y_m),
-                "z_m: " + str(self.z_m)
-                ])
+        struct_repr = ", ".join(
+            ["x_m: " + str(self.x_m), "y_m: " + str(self.y_m), "z_m: " + str(self.z_m)]
+        )
 
         return f"PositionBody: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcPositionBody):
         """ Translates a gRPC struct to the SDK equivalent """
-        return PositionBody(
-                
-                rpcPositionBody.x_m,
-                
-                
-                rpcPositionBody.y_m,
-                
-                
-                rpcPositionBody.z_m
-                )
+        return PositionBody(rpcPositionBody.x_m, rpcPositionBody.y_m, rpcPositionBody.z_m)
 
     def translate_to_rpc(self, rpcPositionBody):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPositionBody.x_m = self.x_m
-            
-        
-        
-        
-            
+
         rpcPositionBody.y_m = self.y_m
-            
-        
-        
-        
-            
+
         rpcPositionBody.z_m = self.z_m
-            
-        
-        
 
 
 class Odometry:
@@ -1789,8 +1357,6 @@ class Odometry:
 
      """
 
-    
-    
     class MavFrame(Enum):
         """
          Mavlink frame id
@@ -1811,7 +1377,6 @@ class Odometry:
 
          """
 
-        
         UNDEF = 0
         BODY_NED = 1
         VISION_NED = 2
@@ -1841,19 +1406,19 @@ class Odometry:
 
         def __str__(self):
             return self.name
-    
 
     def __init__(
-            self,
-            time_usec,
-            frame_id,
-            child_frame_id,
-            position_body,
-            q,
-            velocity_body,
-            angular_velocity_body,
-            pose_covariance,
-            velocity_covariance):
+        self,
+        time_usec,
+        frame_id,
+        child_frame_id,
+        position_body,
+        q,
+        velocity_body,
+        angular_velocity_body,
+        pose_covariance,
+        velocity_covariance,
+    ):
         """ Initializes the Odometry object """
         self.time_usec = time_usec
         self.frame_id = frame_id
@@ -1870,23 +1435,25 @@ class Odometry:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Odometry object
-            return \
-                (self.time_usec == to_compare.time_usec) and \
-                (self.frame_id == to_compare.frame_id) and \
-                (self.child_frame_id == to_compare.child_frame_id) and \
-                (self.position_body == to_compare.position_body) and \
-                (self.q == to_compare.q) and \
-                (self.velocity_body == to_compare.velocity_body) and \
-                (self.angular_velocity_body == to_compare.angular_velocity_body) and \
-                (self.pose_covariance == to_compare.pose_covariance) and \
-                (self.velocity_covariance == to_compare.velocity_covariance)
+            return (
+                (self.time_usec == to_compare.time_usec)
+                and (self.frame_id == to_compare.frame_id)
+                and (self.child_frame_id == to_compare.child_frame_id)
+                and (self.position_body == to_compare.position_body)
+                and (self.q == to_compare.q)
+                and (self.velocity_body == to_compare.velocity_body)
+                and (self.angular_velocity_body == to_compare.angular_velocity_body)
+                and (self.pose_covariance == to_compare.pose_covariance)
+                and (self.velocity_covariance == to_compare.velocity_covariance)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Odometry in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "time_usec: " + str(self.time_usec),
                 "frame_id: " + str(self.frame_id),
                 "child_frame_id: " + str(self.child_frame_id),
@@ -1895,8 +1462,9 @@ class Odometry:
                 "velocity_body: " + str(self.velocity_body),
                 "angular_velocity_body: " + str(self.angular_velocity_body),
                 "pose_covariance: " + str(self.pose_covariance),
-                "velocity_covariance: " + str(self.velocity_covariance)
-                ])
+                "velocity_covariance: " + str(self.velocity_covariance),
+            ]
+        )
 
         return f"Odometry: [{struct_repr}]"
 
@@ -1904,92 +1472,37 @@ class Odometry:
     def translate_from_rpc(rpcOdometry):
         """ Translates a gRPC struct to the SDK equivalent """
         return Odometry(
-                
-                rpcOdometry.time_usec,
-                
-                
-                Odometry.MavFrame.translate_from_rpc(rpcOdometry.frame_id),
-                
-                
-                Odometry.MavFrame.translate_from_rpc(rpcOdometry.child_frame_id),
-                
-                
-                PositionBody.translate_from_rpc(rpcOdometry.position_body),
-                
-                
-                Quaternion.translate_from_rpc(rpcOdometry.q),
-                
-                
-                VelocityBody.translate_from_rpc(rpcOdometry.velocity_body),
-                
-                
-                AngularVelocityBody.translate_from_rpc(rpcOdometry.angular_velocity_body),
-                
-                
-                Covariance.translate_from_rpc(rpcOdometry.pose_covariance),
-                
-                
-                Covariance.translate_from_rpc(rpcOdometry.velocity_covariance)
-                )
+            rpcOdometry.time_usec,
+            Odometry.MavFrame.translate_from_rpc(rpcOdometry.frame_id),
+            Odometry.MavFrame.translate_from_rpc(rpcOdometry.child_frame_id),
+            PositionBody.translate_from_rpc(rpcOdometry.position_body),
+            Quaternion.translate_from_rpc(rpcOdometry.q),
+            VelocityBody.translate_from_rpc(rpcOdometry.velocity_body),
+            AngularVelocityBody.translate_from_rpc(rpcOdometry.angular_velocity_body),
+            Covariance.translate_from_rpc(rpcOdometry.pose_covariance),
+            Covariance.translate_from_rpc(rpcOdometry.velocity_covariance),
+        )
 
     def translate_to_rpc(self, rpcOdometry):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcOdometry.time_usec = self.time_usec
-            
-        
-        
-        
-            
+
         rpcOdometry.frame_id = self.frame_id.translate_to_rpc()
-            
-        
-        
-        
-            
+
         rpcOdometry.child_frame_id = self.child_frame_id.translate_to_rpc()
-            
-        
-        
-        
-            
+
         self.position_body.translate_to_rpc(rpcOdometry.position_body)
-            
-        
-        
-        
-            
+
         self.q.translate_to_rpc(rpcOdometry.q)
-            
-        
-        
-        
-            
+
         self.velocity_body.translate_to_rpc(rpcOdometry.velocity_body)
-            
-        
-        
-        
-            
+
         self.angular_velocity_body.translate_to_rpc(rpcOdometry.angular_velocity_body)
-            
-        
-        
-        
-            
+
         self.pose_covariance.translate_to_rpc(rpcOdometry.pose_covariance)
-            
-        
-        
-        
-            
+
         self.velocity_covariance.translate_to_rpc(rpcOdometry.velocity_covariance)
-            
-        
-        
 
 
 class DistanceSensor:
@@ -2009,13 +1522,7 @@ class DistanceSensor:
 
      """
 
-    
-
-    def __init__(
-            self,
-            minimum_distance_m,
-            maximum_distance_m,
-            current_distance_m):
+    def __init__(self, minimum_distance_m, maximum_distance_m, current_distance_m):
         """ Initializes the DistanceSensor object """
         self.minimum_distance_m = minimum_distance_m
         self.maximum_distance_m = maximum_distance_m
@@ -2026,21 +1533,24 @@ class DistanceSensor:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # DistanceSensor object
-            return \
-                (self.minimum_distance_m == to_compare.minimum_distance_m) and \
-                (self.maximum_distance_m == to_compare.maximum_distance_m) and \
-                (self.current_distance_m == to_compare.current_distance_m)
+            return (
+                (self.minimum_distance_m == to_compare.minimum_distance_m)
+                and (self.maximum_distance_m == to_compare.maximum_distance_m)
+                and (self.current_distance_m == to_compare.current_distance_m)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ DistanceSensor in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "minimum_distance_m: " + str(self.minimum_distance_m),
                 "maximum_distance_m: " + str(self.maximum_distance_m),
-                "current_distance_m: " + str(self.current_distance_m)
-                ])
+                "current_distance_m: " + str(self.current_distance_m),
+            ]
+        )
 
         return f"DistanceSensor: [{struct_repr}]"
 
@@ -2048,38 +1558,19 @@ class DistanceSensor:
     def translate_from_rpc(rpcDistanceSensor):
         """ Translates a gRPC struct to the SDK equivalent """
         return DistanceSensor(
-                
-                rpcDistanceSensor.minimum_distance_m,
-                
-                
-                rpcDistanceSensor.maximum_distance_m,
-                
-                
-                rpcDistanceSensor.current_distance_m
-                )
+            rpcDistanceSensor.minimum_distance_m,
+            rpcDistanceSensor.maximum_distance_m,
+            rpcDistanceSensor.current_distance_m,
+        )
 
     def translate_to_rpc(self, rpcDistanceSensor):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcDistanceSensor.minimum_distance_m = self.minimum_distance_m
-            
-        
-        
-        
-            
+
         rpcDistanceSensor.maximum_distance_m = self.maximum_distance_m
-            
-        
-        
-        
-            
+
         rpcDistanceSensor.current_distance_m = self.current_distance_m
-            
-        
-        
 
 
 class ScaledPressure:
@@ -2105,15 +1596,14 @@ class ScaledPressure:
 
      """
 
-    
-
     def __init__(
-            self,
-            timestamp_us,
-            absolute_pressure_hpa,
-            differential_pressure_hpa,
-            temperature_deg,
-            differential_pressure_temperature_deg):
+        self,
+        timestamp_us,
+        absolute_pressure_hpa,
+        differential_pressure_hpa,
+        temperature_deg,
+        differential_pressure_temperature_deg,
+    ):
         """ Initializes the ScaledPressure object """
         self.timestamp_us = timestamp_us
         self.absolute_pressure_hpa = absolute_pressure_hpa
@@ -2126,25 +1616,32 @@ class ScaledPressure:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ScaledPressure object
-            return \
-                (self.timestamp_us == to_compare.timestamp_us) and \
-                (self.absolute_pressure_hpa == to_compare.absolute_pressure_hpa) and \
-                (self.differential_pressure_hpa == to_compare.differential_pressure_hpa) and \
-                (self.temperature_deg == to_compare.temperature_deg) and \
-                (self.differential_pressure_temperature_deg == to_compare.differential_pressure_temperature_deg)
+            return (
+                (self.timestamp_us == to_compare.timestamp_us)
+                and (self.absolute_pressure_hpa == to_compare.absolute_pressure_hpa)
+                and (self.differential_pressure_hpa == to_compare.differential_pressure_hpa)
+                and (self.temperature_deg == to_compare.temperature_deg)
+                and (
+                    self.differential_pressure_temperature_deg
+                    == to_compare.differential_pressure_temperature_deg
+                )
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ScaledPressure in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "timestamp_us: " + str(self.timestamp_us),
                 "absolute_pressure_hpa: " + str(self.absolute_pressure_hpa),
                 "differential_pressure_hpa: " + str(self.differential_pressure_hpa),
                 "temperature_deg: " + str(self.temperature_deg),
-                "differential_pressure_temperature_deg: " + str(self.differential_pressure_temperature_deg)
-                ])
+                "differential_pressure_temperature_deg: "
+                + str(self.differential_pressure_temperature_deg),
+            ]
+        )
 
         return f"ScaledPressure: [{struct_repr}]"
 
@@ -2152,56 +1649,27 @@ class ScaledPressure:
     def translate_from_rpc(rpcScaledPressure):
         """ Translates a gRPC struct to the SDK equivalent """
         return ScaledPressure(
-                
-                rpcScaledPressure.timestamp_us,
-                
-                
-                rpcScaledPressure.absolute_pressure_hpa,
-                
-                
-                rpcScaledPressure.differential_pressure_hpa,
-                
-                
-                rpcScaledPressure.temperature_deg,
-                
-                
-                rpcScaledPressure.differential_pressure_temperature_deg
-                )
+            rpcScaledPressure.timestamp_us,
+            rpcScaledPressure.absolute_pressure_hpa,
+            rpcScaledPressure.differential_pressure_hpa,
+            rpcScaledPressure.temperature_deg,
+            rpcScaledPressure.differential_pressure_temperature_deg,
+        )
 
     def translate_to_rpc(self, rpcScaledPressure):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcScaledPressure.timestamp_us = self.timestamp_us
-            
-        
-        
-        
-            
+
         rpcScaledPressure.absolute_pressure_hpa = self.absolute_pressure_hpa
-            
-        
-        
-        
-            
+
         rpcScaledPressure.differential_pressure_hpa = self.differential_pressure_hpa
-            
-        
-        
-        
-            
+
         rpcScaledPressure.temperature_deg = self.temperature_deg
-            
-        
-        
-        
-            
-        rpcScaledPressure.differential_pressure_temperature_deg = self.differential_pressure_temperature_deg
-            
-        
-        
+
+        rpcScaledPressure.differential_pressure_temperature_deg = (
+            self.differential_pressure_temperature_deg
+        )
 
 
 class PositionNed:
@@ -2221,13 +1689,7 @@ class PositionNed:
 
      """
 
-    
-
-    def __init__(
-            self,
-            north_m,
-            east_m,
-            down_m):
+    def __init__(self, north_m, east_m, down_m):
         """ Initializes the PositionNed object """
         self.north_m = north_m
         self.east_m = east_m
@@ -2238,60 +1700,40 @@ class PositionNed:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # PositionNed object
-            return \
-                (self.north_m == to_compare.north_m) and \
-                (self.east_m == to_compare.east_m) and \
-                (self.down_m == to_compare.down_m)
+            return (
+                (self.north_m == to_compare.north_m)
+                and (self.east_m == to_compare.east_m)
+                and (self.down_m == to_compare.down_m)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ PositionNed in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "north_m: " + str(self.north_m),
                 "east_m: " + str(self.east_m),
-                "down_m: " + str(self.down_m)
-                ])
+                "down_m: " + str(self.down_m),
+            ]
+        )
 
         return f"PositionNed: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcPositionNed):
         """ Translates a gRPC struct to the SDK equivalent """
-        return PositionNed(
-                
-                rpcPositionNed.north_m,
-                
-                
-                rpcPositionNed.east_m,
-                
-                
-                rpcPositionNed.down_m
-                )
+        return PositionNed(rpcPositionNed.north_m, rpcPositionNed.east_m, rpcPositionNed.down_m)
 
     def translate_to_rpc(self, rpcPositionNed):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcPositionNed.north_m = self.north_m
-            
-        
-        
-        
-            
+
         rpcPositionNed.east_m = self.east_m
-            
-        
-        
-        
-            
+
         rpcPositionNed.down_m = self.down_m
-            
-        
-        
 
 
 class VelocityNed:
@@ -2311,13 +1753,7 @@ class VelocityNed:
 
      """
 
-    
-
-    def __init__(
-            self,
-            north_m_s,
-            east_m_s,
-            down_m_s):
+    def __init__(self, north_m_s, east_m_s, down_m_s):
         """ Initializes the VelocityNed object """
         self.north_m_s = north_m_s
         self.east_m_s = east_m_s
@@ -2328,21 +1764,24 @@ class VelocityNed:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # VelocityNed object
-            return \
-                (self.north_m_s == to_compare.north_m_s) and \
-                (self.east_m_s == to_compare.east_m_s) and \
-                (self.down_m_s == to_compare.down_m_s)
+            return (
+                (self.north_m_s == to_compare.north_m_s)
+                and (self.east_m_s == to_compare.east_m_s)
+                and (self.down_m_s == to_compare.down_m_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ VelocityNed in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "north_m_s: " + str(self.north_m_s),
                 "east_m_s: " + str(self.east_m_s),
-                "down_m_s: " + str(self.down_m_s)
-                ])
+                "down_m_s: " + str(self.down_m_s),
+            ]
+        )
 
         return f"VelocityNed: [{struct_repr}]"
 
@@ -2350,38 +1789,17 @@ class VelocityNed:
     def translate_from_rpc(rpcVelocityNed):
         """ Translates a gRPC struct to the SDK equivalent """
         return VelocityNed(
-                
-                rpcVelocityNed.north_m_s,
-                
-                
-                rpcVelocityNed.east_m_s,
-                
-                
-                rpcVelocityNed.down_m_s
-                )
+            rpcVelocityNed.north_m_s, rpcVelocityNed.east_m_s, rpcVelocityNed.down_m_s
+        )
 
     def translate_to_rpc(self, rpcVelocityNed):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcVelocityNed.north_m_s = self.north_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityNed.east_m_s = self.east_m_s
-            
-        
-        
-        
-            
+
         rpcVelocityNed.down_m_s = self.down_m_s
-            
-        
-        
 
 
 class PositionVelocityNed:
@@ -2398,12 +1816,7 @@ class PositionVelocityNed:
 
      """
 
-    
-
-    def __init__(
-            self,
-            position,
-            velocity):
+    def __init__(self, position, velocity):
         """ Initializes the PositionVelocityNed object """
         self.position = position
         self.velocity = velocity
@@ -2413,19 +1826,16 @@ class PositionVelocityNed:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # PositionVelocityNed object
-            return \
-                (self.position == to_compare.position) and \
-                (self.velocity == to_compare.velocity)
+            return (self.position == to_compare.position) and (self.velocity == to_compare.velocity)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ PositionVelocityNed in string representation """
-        struct_repr = ", ".join([
-                "position: " + str(self.position),
-                "velocity: " + str(self.velocity)
-                ])
+        struct_repr = ", ".join(
+            ["position: " + str(self.position), "velocity: " + str(self.velocity)]
+        )
 
         return f"PositionVelocityNed: [{struct_repr}]"
 
@@ -2433,29 +1843,16 @@ class PositionVelocityNed:
     def translate_from_rpc(rpcPositionVelocityNed):
         """ Translates a gRPC struct to the SDK equivalent """
         return PositionVelocityNed(
-                
-                PositionNed.translate_from_rpc(rpcPositionVelocityNed.position),
-                
-                
-                VelocityNed.translate_from_rpc(rpcPositionVelocityNed.velocity)
-                )
+            PositionNed.translate_from_rpc(rpcPositionVelocityNed.position),
+            VelocityNed.translate_from_rpc(rpcPositionVelocityNed.velocity),
+        )
 
     def translate_to_rpc(self, rpcPositionVelocityNed):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         self.position.translate_to_rpc(rpcPositionVelocityNed.position)
-            
-        
-        
-        
-            
+
         self.velocity.translate_to_rpc(rpcPositionVelocityNed.velocity)
-            
-        
-        
 
 
 class GroundTruth:
@@ -2475,13 +1872,7 @@ class GroundTruth:
 
      """
 
-    
-
-    def __init__(
-            self,
-            latitude_deg,
-            longitude_deg,
-            absolute_altitude_m):
+    def __init__(self, latitude_deg, longitude_deg, absolute_altitude_m):
         """ Initializes the GroundTruth object """
         self.latitude_deg = latitude_deg
         self.longitude_deg = longitude_deg
@@ -2492,21 +1883,24 @@ class GroundTruth:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # GroundTruth object
-            return \
-                (self.latitude_deg == to_compare.latitude_deg) and \
-                (self.longitude_deg == to_compare.longitude_deg) and \
-                (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+            return (
+                (self.latitude_deg == to_compare.latitude_deg)
+                and (self.longitude_deg == to_compare.longitude_deg)
+                and (self.absolute_altitude_m == to_compare.absolute_altitude_m)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ GroundTruth in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "latitude_deg: " + str(self.latitude_deg),
                 "longitude_deg: " + str(self.longitude_deg),
-                "absolute_altitude_m: " + str(self.absolute_altitude_m)
-                ])
+                "absolute_altitude_m: " + str(self.absolute_altitude_m),
+            ]
+        )
 
         return f"GroundTruth: [{struct_repr}]"
 
@@ -2514,38 +1908,19 @@ class GroundTruth:
     def translate_from_rpc(rpcGroundTruth):
         """ Translates a gRPC struct to the SDK equivalent """
         return GroundTruth(
-                
-                rpcGroundTruth.latitude_deg,
-                
-                
-                rpcGroundTruth.longitude_deg,
-                
-                
-                rpcGroundTruth.absolute_altitude_m
-                )
+            rpcGroundTruth.latitude_deg,
+            rpcGroundTruth.longitude_deg,
+            rpcGroundTruth.absolute_altitude_m,
+        )
 
     def translate_to_rpc(self, rpcGroundTruth):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcGroundTruth.latitude_deg = self.latitude_deg
-            
-        
-        
-        
-            
+
         rpcGroundTruth.longitude_deg = self.longitude_deg
-            
-        
-        
-        
-            
+
         rpcGroundTruth.absolute_altitude_m = self.absolute_altitude_m
-            
-        
-        
 
 
 class FixedwingMetrics:
@@ -2565,13 +1940,7 @@ class FixedwingMetrics:
 
      """
 
-    
-
-    def __init__(
-            self,
-            airspeed_m_s,
-            throttle_percentage,
-            climb_rate_m_s):
+    def __init__(self, airspeed_m_s, throttle_percentage, climb_rate_m_s):
         """ Initializes the FixedwingMetrics object """
         self.airspeed_m_s = airspeed_m_s
         self.throttle_percentage = throttle_percentage
@@ -2582,21 +1951,24 @@ class FixedwingMetrics:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FixedwingMetrics object
-            return \
-                (self.airspeed_m_s == to_compare.airspeed_m_s) and \
-                (self.throttle_percentage == to_compare.throttle_percentage) and \
-                (self.climb_rate_m_s == to_compare.climb_rate_m_s)
+            return (
+                (self.airspeed_m_s == to_compare.airspeed_m_s)
+                and (self.throttle_percentage == to_compare.throttle_percentage)
+                and (self.climb_rate_m_s == to_compare.climb_rate_m_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FixedwingMetrics in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "airspeed_m_s: " + str(self.airspeed_m_s),
                 "throttle_percentage: " + str(self.throttle_percentage),
-                "climb_rate_m_s: " + str(self.climb_rate_m_s)
-                ])
+                "climb_rate_m_s: " + str(self.climb_rate_m_s),
+            ]
+        )
 
         return f"FixedwingMetrics: [{struct_repr}]"
 
@@ -2604,38 +1976,19 @@ class FixedwingMetrics:
     def translate_from_rpc(rpcFixedwingMetrics):
         """ Translates a gRPC struct to the SDK equivalent """
         return FixedwingMetrics(
-                
-                rpcFixedwingMetrics.airspeed_m_s,
-                
-                
-                rpcFixedwingMetrics.throttle_percentage,
-                
-                
-                rpcFixedwingMetrics.climb_rate_m_s
-                )
+            rpcFixedwingMetrics.airspeed_m_s,
+            rpcFixedwingMetrics.throttle_percentage,
+            rpcFixedwingMetrics.climb_rate_m_s,
+        )
 
     def translate_to_rpc(self, rpcFixedwingMetrics):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFixedwingMetrics.airspeed_m_s = self.airspeed_m_s
-            
-        
-        
-        
-            
+
         rpcFixedwingMetrics.throttle_percentage = self.throttle_percentage
-            
-        
-        
-        
-            
+
         rpcFixedwingMetrics.climb_rate_m_s = self.climb_rate_m_s
-            
-        
-        
 
 
 class AccelerationFrd:
@@ -2655,13 +2008,7 @@ class AccelerationFrd:
 
      """
 
-    
-
-    def __init__(
-            self,
-            forward_m_s2,
-            right_m_s2,
-            down_m_s2):
+    def __init__(self, forward_m_s2, right_m_s2, down_m_s2):
         """ Initializes the AccelerationFrd object """
         self.forward_m_s2 = forward_m_s2
         self.right_m_s2 = right_m_s2
@@ -2672,21 +2019,24 @@ class AccelerationFrd:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AccelerationFrd object
-            return \
-                (self.forward_m_s2 == to_compare.forward_m_s2) and \
-                (self.right_m_s2 == to_compare.right_m_s2) and \
-                (self.down_m_s2 == to_compare.down_m_s2)
+            return (
+                (self.forward_m_s2 == to_compare.forward_m_s2)
+                and (self.right_m_s2 == to_compare.right_m_s2)
+                and (self.down_m_s2 == to_compare.down_m_s2)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AccelerationFrd in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "forward_m_s2: " + str(self.forward_m_s2),
                 "right_m_s2: " + str(self.right_m_s2),
-                "down_m_s2: " + str(self.down_m_s2)
-                ])
+                "down_m_s2: " + str(self.down_m_s2),
+            ]
+        )
 
         return f"AccelerationFrd: [{struct_repr}]"
 
@@ -2694,38 +2044,19 @@ class AccelerationFrd:
     def translate_from_rpc(rpcAccelerationFrd):
         """ Translates a gRPC struct to the SDK equivalent """
         return AccelerationFrd(
-                
-                rpcAccelerationFrd.forward_m_s2,
-                
-                
-                rpcAccelerationFrd.right_m_s2,
-                
-                
-                rpcAccelerationFrd.down_m_s2
-                )
+            rpcAccelerationFrd.forward_m_s2,
+            rpcAccelerationFrd.right_m_s2,
+            rpcAccelerationFrd.down_m_s2,
+        )
 
     def translate_to_rpc(self, rpcAccelerationFrd):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAccelerationFrd.forward_m_s2 = self.forward_m_s2
-            
-        
-        
-        
-            
+
         rpcAccelerationFrd.right_m_s2 = self.right_m_s2
-            
-        
-        
-        
-            
+
         rpcAccelerationFrd.down_m_s2 = self.down_m_s2
-            
-        
-        
 
 
 class AngularVelocityFrd:
@@ -2745,13 +2076,7 @@ class AngularVelocityFrd:
 
      """
 
-    
-
-    def __init__(
-            self,
-            forward_rad_s,
-            right_rad_s,
-            down_rad_s):
+    def __init__(self, forward_rad_s, right_rad_s, down_rad_s):
         """ Initializes the AngularVelocityFrd object """
         self.forward_rad_s = forward_rad_s
         self.right_rad_s = right_rad_s
@@ -2762,21 +2087,24 @@ class AngularVelocityFrd:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AngularVelocityFrd object
-            return \
-                (self.forward_rad_s == to_compare.forward_rad_s) and \
-                (self.right_rad_s == to_compare.right_rad_s) and \
-                (self.down_rad_s == to_compare.down_rad_s)
+            return (
+                (self.forward_rad_s == to_compare.forward_rad_s)
+                and (self.right_rad_s == to_compare.right_rad_s)
+                and (self.down_rad_s == to_compare.down_rad_s)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AngularVelocityFrd in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "forward_rad_s: " + str(self.forward_rad_s),
                 "right_rad_s: " + str(self.right_rad_s),
-                "down_rad_s: " + str(self.down_rad_s)
-                ])
+                "down_rad_s: " + str(self.down_rad_s),
+            ]
+        )
 
         return f"AngularVelocityFrd: [{struct_repr}]"
 
@@ -2784,38 +2112,19 @@ class AngularVelocityFrd:
     def translate_from_rpc(rpcAngularVelocityFrd):
         """ Translates a gRPC struct to the SDK equivalent """
         return AngularVelocityFrd(
-                
-                rpcAngularVelocityFrd.forward_rad_s,
-                
-                
-                rpcAngularVelocityFrd.right_rad_s,
-                
-                
-                rpcAngularVelocityFrd.down_rad_s
-                )
+            rpcAngularVelocityFrd.forward_rad_s,
+            rpcAngularVelocityFrd.right_rad_s,
+            rpcAngularVelocityFrd.down_rad_s,
+        )
 
     def translate_to_rpc(self, rpcAngularVelocityFrd):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcAngularVelocityFrd.forward_rad_s = self.forward_rad_s
-            
-        
-        
-        
-            
+
         rpcAngularVelocityFrd.right_rad_s = self.right_rad_s
-            
-        
-        
-        
-            
+
         rpcAngularVelocityFrd.down_rad_s = self.down_rad_s
-            
-        
-        
 
 
 class MagneticFieldFrd:
@@ -2835,13 +2144,7 @@ class MagneticFieldFrd:
 
      """
 
-    
-
-    def __init__(
-            self,
-            forward_gauss,
-            right_gauss,
-            down_gauss):
+    def __init__(self, forward_gauss, right_gauss, down_gauss):
         """ Initializes the MagneticFieldFrd object """
         self.forward_gauss = forward_gauss
         self.right_gauss = right_gauss
@@ -2852,21 +2155,24 @@ class MagneticFieldFrd:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # MagneticFieldFrd object
-            return \
-                (self.forward_gauss == to_compare.forward_gauss) and \
-                (self.right_gauss == to_compare.right_gauss) and \
-                (self.down_gauss == to_compare.down_gauss)
+            return (
+                (self.forward_gauss == to_compare.forward_gauss)
+                and (self.right_gauss == to_compare.right_gauss)
+                and (self.down_gauss == to_compare.down_gauss)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ MagneticFieldFrd in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "forward_gauss: " + str(self.forward_gauss),
                 "right_gauss: " + str(self.right_gauss),
-                "down_gauss: " + str(self.down_gauss)
-                ])
+                "down_gauss: " + str(self.down_gauss),
+            ]
+        )
 
         return f"MagneticFieldFrd: [{struct_repr}]"
 
@@ -2874,38 +2180,19 @@ class MagneticFieldFrd:
     def translate_from_rpc(rpcMagneticFieldFrd):
         """ Translates a gRPC struct to the SDK equivalent """
         return MagneticFieldFrd(
-                
-                rpcMagneticFieldFrd.forward_gauss,
-                
-                
-                rpcMagneticFieldFrd.right_gauss,
-                
-                
-                rpcMagneticFieldFrd.down_gauss
-                )
+            rpcMagneticFieldFrd.forward_gauss,
+            rpcMagneticFieldFrd.right_gauss,
+            rpcMagneticFieldFrd.down_gauss,
+        )
 
     def translate_to_rpc(self, rpcMagneticFieldFrd):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcMagneticFieldFrd.forward_gauss = self.forward_gauss
-            
-        
-        
-        
-            
+
         rpcMagneticFieldFrd.right_gauss = self.right_gauss
-            
-        
-        
-        
-            
+
         rpcMagneticFieldFrd.down_gauss = self.down_gauss
-            
-        
-        
 
 
 class Imu:
@@ -2931,15 +2218,14 @@ class Imu:
 
      """
 
-    
-
     def __init__(
-            self,
-            acceleration_frd,
-            angular_velocity_frd,
-            magnetic_field_frd,
-            temperature_degc,
-            timestamp_us):
+        self,
+        acceleration_frd,
+        angular_velocity_frd,
+        magnetic_field_frd,
+        temperature_degc,
+        timestamp_us,
+    ):
         """ Initializes the Imu object """
         self.acceleration_frd = acceleration_frd
         self.angular_velocity_frd = angular_velocity_frd
@@ -2952,25 +2238,28 @@ class Imu:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # Imu object
-            return \
-                (self.acceleration_frd == to_compare.acceleration_frd) and \
-                (self.angular_velocity_frd == to_compare.angular_velocity_frd) and \
-                (self.magnetic_field_frd == to_compare.magnetic_field_frd) and \
-                (self.temperature_degc == to_compare.temperature_degc) and \
-                (self.timestamp_us == to_compare.timestamp_us)
+            return (
+                (self.acceleration_frd == to_compare.acceleration_frd)
+                and (self.angular_velocity_frd == to_compare.angular_velocity_frd)
+                and (self.magnetic_field_frd == to_compare.magnetic_field_frd)
+                and (self.temperature_degc == to_compare.temperature_degc)
+                and (self.timestamp_us == to_compare.timestamp_us)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ Imu in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "acceleration_frd: " + str(self.acceleration_frd),
                 "angular_velocity_frd: " + str(self.angular_velocity_frd),
                 "magnetic_field_frd: " + str(self.magnetic_field_frd),
                 "temperature_degc: " + str(self.temperature_degc),
-                "timestamp_us: " + str(self.timestamp_us)
-                ])
+                "timestamp_us: " + str(self.timestamp_us),
+            ]
+        )
 
         return f"Imu: [{struct_repr}]"
 
@@ -2978,56 +2267,25 @@ class Imu:
     def translate_from_rpc(rpcImu):
         """ Translates a gRPC struct to the SDK equivalent """
         return Imu(
-                
-                AccelerationFrd.translate_from_rpc(rpcImu.acceleration_frd),
-                
-                
-                AngularVelocityFrd.translate_from_rpc(rpcImu.angular_velocity_frd),
-                
-                
-                MagneticFieldFrd.translate_from_rpc(rpcImu.magnetic_field_frd),
-                
-                
-                rpcImu.temperature_degc,
-                
-                
-                rpcImu.timestamp_us
-                )
+            AccelerationFrd.translate_from_rpc(rpcImu.acceleration_frd),
+            AngularVelocityFrd.translate_from_rpc(rpcImu.angular_velocity_frd),
+            MagneticFieldFrd.translate_from_rpc(rpcImu.magnetic_field_frd),
+            rpcImu.temperature_degc,
+            rpcImu.timestamp_us,
+        )
 
     def translate_to_rpc(self, rpcImu):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         self.acceleration_frd.translate_to_rpc(rpcImu.acceleration_frd)
-            
-        
-        
-        
-            
+
         self.angular_velocity_frd.translate_to_rpc(rpcImu.angular_velocity_frd)
-            
-        
-        
-        
-            
+
         self.magnetic_field_frd.translate_to_rpc(rpcImu.magnetic_field_frd)
-            
-        
-        
-        
-            
+
         rpcImu.temperature_degc = self.temperature_degc
-            
-        
-        
-        
-            
+
         rpcImu.timestamp_us = self.timestamp_us
-            
-        
-        
 
 
 class TelemetryServerResult:
@@ -3044,8 +2302,6 @@ class TelemetryServerResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for telemetry requests.
@@ -3078,7 +2334,6 @@ class TelemetryServerResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -3128,12 +2383,8 @@ class TelemetryServerResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the TelemetryServerResult object """
         self.result = result
         self.result_str = result_str
@@ -3143,19 +2394,16 @@ class TelemetryServerResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # TelemetryServerResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ TelemetryServerResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"TelemetryServerResult: [{struct_repr}]"
 
@@ -3163,30 +2411,16 @@ class TelemetryServerResult:
     def translate_from_rpc(rpcTelemetryServerResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return TelemetryServerResult(
-                
-                TelemetryServerResult.Result.translate_from_rpc(rpcTelemetryServerResult.result),
-                
-                
-                rpcTelemetryServerResult.result_str
-                )
+            TelemetryServerResult.Result.translate_from_rpc(rpcTelemetryServerResult.result),
+            rpcTelemetryServerResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcTelemetryServerResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcTelemetryServerResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcTelemetryServerResult.result_str = self.result_str
-            
-        
-        
 
+        rpcTelemetryServerResult.result_str = self.result_str
 
 
 class TelemetryServerError(Exception):
@@ -3216,11 +2450,9 @@ class TelemetryServer(AsyncBase):
         """ Setups the api stub """
         self._stub = telemetry_server_pb2_grpc.TelemetryServerServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return TelemetryServerResult.translate_from_rpc(response.telemetry_server_result)
-    
 
     async def publish_position(self, position, velocity_ned, heading):
         """
@@ -3244,26 +2476,21 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishPositionRequest()
-        
+
         position.translate_to_rpc(request.position)
-                
-            
-        
+
         velocity_ned.translate_to_rpc(request.velocity_ned)
-                
-            
-        
+
         heading.translate_to_rpc(request.heading)
-                
-            
+
         response = await self._stub.PublishPosition(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
-            raise TelemetryServerError(result, "publish_position()", position, velocity_ned, heading)
-        
+            raise TelemetryServerError(
+                result, "publish_position()", position, velocity_ned, heading
+            )
 
     async def publish_home(self, home):
         """
@@ -3281,20 +2508,19 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishHomeRequest()
-        
+
         home.translate_to_rpc(request.home)
-                
-            
+
         response = await self._stub.PublishHome(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_home()", home)
-        
 
-    async def publish_sys_status(self, battery, rc_receiver_status, gyro_status, accel_status, mag_status, gps_status):
+    async def publish_sys_status(
+        self, battery, rc_receiver_status, gyro_status, accel_status, mag_status, gps_status
+    ):
         """
          Publish 'sys status' updates.
 
@@ -3321,10 +2547,9 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishSysStatusRequest()
-        
+
         battery.translate_to_rpc(request.battery)
-                
-            
+
         request.rc_receiver_status = rc_receiver_status
         request.gyro_status = gyro_status
         request.accel_status = accel_status
@@ -3332,12 +2557,19 @@ class TelemetryServer(AsyncBase):
         request.gps_status = gps_status
         response = await self._stub.PublishSysStatus(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
-            raise TelemetryServerError(result, "publish_sys_status()", battery, rc_receiver_status, gyro_status, accel_status, mag_status, gps_status)
-        
+            raise TelemetryServerError(
+                result,
+                "publish_sys_status()",
+                battery,
+                rc_receiver_status,
+                gyro_status,
+                accel_status,
+                mag_status,
+                gps_status,
+            )
 
     async def publish_extended_sys_state(self, vtol_state, landed_state):
         """
@@ -3356,22 +2588,19 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishExtendedSysStateRequest()
-        
+
         request.vtol_state = vtol_state.translate_to_rpc()
-                
-            
-        
+
         request.landed_state = landed_state.translate_to_rpc()
-                
-            
+
         response = await self._stub.PublishExtendedSysState(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
-            raise TelemetryServerError(result, "publish_extended_sys_state()", vtol_state, landed_state)
-        
+            raise TelemetryServerError(
+                result, "publish_extended_sys_state()", vtol_state, landed_state
+            )
 
     async def publish_raw_gps(self, raw_gps, gps_info):
         """
@@ -3392,22 +2621,17 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishRawGpsRequest()
-        
+
         raw_gps.translate_to_rpc(request.raw_gps)
-                
-            
-        
+
         gps_info.translate_to_rpc(request.gps_info)
-                
-            
+
         response = await self._stub.PublishRawGps(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_raw_gps()", raw_gps, gps_info)
-        
 
     async def publish_battery(self, battery):
         """
@@ -3425,18 +2649,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishBatteryRequest()
-        
+
         battery.translate_to_rpc(request.battery)
-                
-            
+
         response = await self._stub.PublishBattery(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_battery()", battery)
-        
 
     async def publish_status_text(self, status_text):
         """
@@ -3454,18 +2675,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishStatusTextRequest()
-        
+
         status_text.translate_to_rpc(request.status_text)
-                
-            
+
         response = await self._stub.PublishStatusText(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_status_text()", status_text)
-        
 
     async def publish_odometry(self, odometry):
         """
@@ -3483,18 +2701,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishOdometryRequest()
-        
+
         odometry.translate_to_rpc(request.odometry)
-                
-            
+
         response = await self._stub.PublishOdometry(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_odometry()", odometry)
-        
 
     async def publish_position_velocity_ned(self, position_velocity_ned):
         """
@@ -3512,18 +2727,17 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishPositionVelocityNedRequest()
-        
+
         position_velocity_ned.translate_to_rpc(request.position_velocity_ned)
-                
-            
+
         response = await self._stub.PublishPositionVelocityNed(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
-            raise TelemetryServerError(result, "publish_position_velocity_ned()", position_velocity_ned)
-        
+            raise TelemetryServerError(
+                result, "publish_position_velocity_ned()", position_velocity_ned
+            )
 
     async def publish_ground_truth(self, ground_truth):
         """
@@ -3541,18 +2755,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishGroundTruthRequest()
-        
+
         ground_truth.translate_to_rpc(request.ground_truth)
-                
-            
+
         response = await self._stub.PublishGroundTruth(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_ground_truth()", ground_truth)
-        
 
     async def publish_imu(self, imu):
         """
@@ -3570,18 +2781,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishImuRequest()
-        
+
         imu.translate_to_rpc(request.imu)
-                
-            
+
         response = await self._stub.PublishImu(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_imu()", imu)
-        
 
     async def publish_scaled_imu(self, imu):
         """
@@ -3599,18 +2807,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishScaledImuRequest()
-        
+
         imu.translate_to_rpc(request.imu)
-                
-            
+
         response = await self._stub.PublishScaledImu(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_scaled_imu()", imu)
-        
 
     async def publish_raw_imu(self, imu):
         """
@@ -3628,18 +2833,15 @@ class TelemetryServer(AsyncBase):
         """
 
         request = telemetry_server_pb2.PublishRawImuRequest()
-        
+
         imu.translate_to_rpc(request.imu)
-                
-            
+
         response = await self._stub.PublishRawImu(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_raw_imu()", imu)
-        
 
     async def publish_unix_epoch_time(self, time_us):
         """
@@ -3660,9 +2862,7 @@ class TelemetryServer(AsyncBase):
         request.time_us = time_us
         response = await self._stub.PublishUnixEpochTime(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != TelemetryServerResult.Result.SUCCESS:
             raise TelemetryServerError(result, "publish_unix_epoch_time()", time_us)
-        

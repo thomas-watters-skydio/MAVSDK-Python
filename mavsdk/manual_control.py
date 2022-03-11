@@ -20,8 +20,6 @@ class ManualControlResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for manual control requests.
@@ -57,7 +55,6 @@ class ManualControlResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -112,12 +109,8 @@ class ManualControlResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ManualControlResult object """
         self.result = result
         self.result_str = result_str
@@ -127,19 +120,16 @@ class ManualControlResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ManualControlResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ManualControlResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ManualControlResult: [{struct_repr}]"
 
@@ -147,30 +137,16 @@ class ManualControlResult:
     def translate_from_rpc(rpcManualControlResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ManualControlResult(
-                
-                ManualControlResult.Result.translate_from_rpc(rpcManualControlResult.result),
-                
-                
-                rpcManualControlResult.result_str
-                )
+            ManualControlResult.Result.translate_from_rpc(rpcManualControlResult.result),
+            rpcManualControlResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcManualControlResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcManualControlResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcManualControlResult.result_str = self.result_str
-            
-        
-        
 
+        rpcManualControlResult.result_str = self.result_str
 
 
 class ManualControlError(Exception):
@@ -199,11 +175,9 @@ class ManualControl(AsyncBase):
         """ Setups the api stub """
         self._stub = manual_control_pb2_grpc.ManualControlServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ManualControlResult.translate_from_rpc(response.manual_control_result)
-    
 
     async def start_position_control(self):
         """
@@ -221,12 +195,10 @@ class ManualControl(AsyncBase):
         request = manual_control_pb2.StartPositionControlRequest()
         response = await self._stub.StartPositionControl(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ManualControlResult.Result.SUCCESS:
             raise ManualControlError(result, "start_position_control()")
-        
 
     async def start_altitude_control(self):
         """
@@ -244,12 +216,10 @@ class ManualControl(AsyncBase):
         request = manual_control_pb2.StartAltitudeControlRequest()
         response = await self._stub.StartAltitudeControl(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ManualControlResult.Result.SUCCESS:
             raise ManualControlError(result, "start_altitude_control()")
-        
 
     async def set_manual_control_input(self, x, y, z, r):
         """
@@ -285,9 +255,7 @@ class ManualControl(AsyncBase):
         request.r = r
         response = await self._stub.SetManualControlInput(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ManualControlResult.Result.SUCCESS:
             raise ManualControlError(result, "set_manual_control_input()", x, y, z, r)
-        

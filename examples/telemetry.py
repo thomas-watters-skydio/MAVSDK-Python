@@ -15,6 +15,7 @@ async def run():
     asyncio.ensure_future(print_in_air(drone))
     asyncio.ensure_future(print_position(drone))
 
+
 async def print_battery(drone):
     async for battery in drone.telemetry.battery():
         print(f"Battery: {battery.remaining_percent}")

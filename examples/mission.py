@@ -3,7 +3,7 @@
 import asyncio
 
 from mavsdk import System
-from mavsdk.mission import (MissionItem, MissionPlan)
+from mavsdk.mission import MissionItem, MissionPlan
 
 
 async def run():
@@ -16,53 +16,63 @@ async def run():
             print("Drone discovered!")
             break
 
-    print_mission_progress_task = asyncio.ensure_future(
-        print_mission_progress(drone))
+    print_mission_progress_task = asyncio.ensure_future(print_mission_progress(drone))
 
     running_tasks = [print_mission_progress_task]
-    termination_task = asyncio.ensure_future(
-        observe_is_in_air(drone, running_tasks))
+    termination_task = asyncio.ensure_future(observe_is_in_air(drone, running_tasks))
 
     mission_items = []
-    mission_items.append(MissionItem(47.398039859999997,
-                                     8.5455725400000002,
-                                     25,
-                                     10,
-                                     True,
-                                     float('nan'),
-                                     float('nan'),
-                                     MissionItem.CameraAction.NONE,
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan')))
-    mission_items.append(MissionItem(47.398036222362471,
-                                     8.5450146439425509,
-                                     25,
-                                     10,
-                                     True,
-                                     float('nan'),
-                                     float('nan'),
-                                     MissionItem.CameraAction.NONE,
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan')))
-    mission_items.append(MissionItem(47.397825620791885,
-                                     8.5450092830163271,
-                                     25,
-                                     10,
-                                     True,
-                                     float('nan'),
-                                     float('nan'),
-                                     MissionItem.CameraAction.NONE,
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan'),
-                                     float('nan')))
+    mission_items.append(
+        MissionItem(
+            47.398039859999997,
+            8.5455725400000002,
+            25,
+            10,
+            True,
+            float("nan"),
+            float("nan"),
+            MissionItem.CameraAction.NONE,
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+        )
+    )
+    mission_items.append(
+        MissionItem(
+            47.398036222362471,
+            8.5450146439425509,
+            25,
+            10,
+            True,
+            float("nan"),
+            float("nan"),
+            MissionItem.CameraAction.NONE,
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+        )
+    )
+    mission_items.append(
+        MissionItem(
+            47.397825620791885,
+            8.5450092830163271,
+            25,
+            10,
+            True,
+            float("nan"),
+            float("nan"),
+            MissionItem.CameraAction.NONE,
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+            float("nan"),
+        )
+    )
 
     mission_plan = MissionPlan(mission_items)
 
@@ -82,9 +92,7 @@ async def run():
 
 async def print_mission_progress(drone):
     async for mission_progress in drone.mission.mission_progress():
-        print(f"Mission progress: "
-              f"{mission_progress.current}/"
-              f"{mission_progress.total}")
+        print(f"Mission progress: " f"{mission_progress.current}/" f"{mission_progress.total}")
 
 
 async def observe_is_in_air(drone, running_tasks):

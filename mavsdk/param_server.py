@@ -20,12 +20,7 @@ class IntParam:
 
      """
 
-    
-
-    def __init__(
-            self,
-            name,
-            value):
+    def __init__(self, name, value):
         """ Initializes the IntParam object """
         self.name = name
         self.value = value
@@ -35,49 +30,28 @@ class IntParam:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # IntParam object
-            return \
-                (self.name == to_compare.name) and \
-                (self.value == to_compare.value)
+            return (self.name == to_compare.name) and (self.value == to_compare.value)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ IntParam in string representation """
-        struct_repr = ", ".join([
-                "name: " + str(self.name),
-                "value: " + str(self.value)
-                ])
+        struct_repr = ", ".join(["name: " + str(self.name), "value: " + str(self.value)])
 
         return f"IntParam: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcIntParam):
         """ Translates a gRPC struct to the SDK equivalent """
-        return IntParam(
-                
-                rpcIntParam.name,
-                
-                
-                rpcIntParam.value
-                )
+        return IntParam(rpcIntParam.name, rpcIntParam.value)
 
     def translate_to_rpc(self, rpcIntParam):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcIntParam.name = self.name
-            
-        
-        
-        
-            
+
         rpcIntParam.value = self.value
-            
-        
-        
 
 
 class FloatParam:
@@ -94,12 +68,7 @@ class FloatParam:
 
      """
 
-    
-
-    def __init__(
-            self,
-            name,
-            value):
+    def __init__(self, name, value):
         """ Initializes the FloatParam object """
         self.name = name
         self.value = value
@@ -109,49 +78,28 @@ class FloatParam:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # FloatParam object
-            return \
-                (self.name == to_compare.name) and \
-                (self.value == to_compare.value)
+            return (self.name == to_compare.name) and (self.value == to_compare.value)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ FloatParam in string representation """
-        struct_repr = ", ".join([
-                "name: " + str(self.name),
-                "value: " + str(self.value)
-                ])
+        struct_repr = ", ".join(["name: " + str(self.name), "value: " + str(self.value)])
 
         return f"FloatParam: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcFloatParam):
         """ Translates a gRPC struct to the SDK equivalent """
-        return FloatParam(
-                
-                rpcFloatParam.name,
-                
-                
-                rpcFloatParam.value
-                )
+        return FloatParam(rpcFloatParam.name, rpcFloatParam.value)
 
     def translate_to_rpc(self, rpcFloatParam):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcFloatParam.name = self.name
-            
-        
-        
-        
-            
+
         rpcFloatParam.value = self.value
-            
-        
-        
 
 
 class AllParams:
@@ -168,12 +116,7 @@ class AllParams:
 
      """
 
-    
-
-    def __init__(
-            self,
-            int_params,
-            float_params):
+    def __init__(self, int_params, float_params):
         """ Initializes the AllParams object """
         self.int_params = int_params
         self.float_params = float_params
@@ -183,19 +126,18 @@ class AllParams:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # AllParams object
-            return \
-                (self.int_params == to_compare.int_params) and \
-                (self.float_params == to_compare.float_params)
+            return (self.int_params == to_compare.int_params) and (
+                self.float_params == to_compare.float_params
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ AllParams in string representation """
-        struct_repr = ", ".join([
-                "int_params: " + str(self.int_params),
-                "float_params: " + str(self.float_params)
-                ])
+        struct_repr = ", ".join(
+            ["int_params: " + str(self.int_params), "float_params: " + str(self.float_params)]
+        )
 
         return f"AllParams: [{struct_repr}]"
 
@@ -203,43 +145,30 @@ class AllParams:
     def translate_from_rpc(rpcAllParams):
         """ Translates a gRPC struct to the SDK equivalent """
         return AllParams(
-                
-                list(map(lambda elem: IntParam.translate_from_rpc(elem), rpcAllParams.int_params)),
-                
-                
-                list(map(lambda elem: FloatParam.translate_from_rpc(elem), rpcAllParams.float_params))
-                )
+            list(map(lambda elem: IntParam.translate_from_rpc(elem), rpcAllParams.int_params)),
+            list(map(lambda elem: FloatParam.translate_from_rpc(elem), rpcAllParams.float_params)),
+        )
 
     def translate_to_rpc(self, rpcAllParams):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpc_elems_list = []
         for elem in self.int_params:
-                
+
             rpc_elem = param_server_pb2.IntParam()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcAllParams.int_params.extend(rpc_elems_list)
-            
-        
-        
-        
-            
+
         rpc_elems_list = []
         for elem in self.float_params:
-                
+
             rpc_elem = param_server_pb2.FloatParam()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcAllParams.float_params.extend(rpc_elems_list)
-            
-        
-        
 
 
 class ParamServerResult:
@@ -256,8 +185,6 @@ class ParamServerResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for param requests.
@@ -284,7 +211,6 @@ class ParamServerResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NOT_FOUND = 2
@@ -324,12 +250,8 @@ class ParamServerResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ParamServerResult object """
         self.result = result
         self.result_str = result_str
@@ -339,19 +261,16 @@ class ParamServerResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ParamServerResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ParamServerResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ParamServerResult: [{struct_repr}]"
 
@@ -359,30 +278,16 @@ class ParamServerResult:
     def translate_from_rpc(rpcParamServerResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ParamServerResult(
-                
-                ParamServerResult.Result.translate_from_rpc(rpcParamServerResult.result),
-                
-                
-                rpcParamServerResult.result_str
-                )
+            ParamServerResult.Result.translate_from_rpc(rpcParamServerResult.result),
+            rpcParamServerResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcParamServerResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcParamServerResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcParamServerResult.result_str = self.result_str
-            
-        
-        
 
+        rpcParamServerResult.result_str = self.result_str
 
 
 class ParamServerError(Exception):
@@ -411,11 +316,9 @@ class ParamServer(AsyncBase):
         """ Setups the api stub """
         self._stub = param_server_pb2_grpc.ParamServerServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ParamServerResult.translate_from_rpc(response.param_server_result)
-    
 
     async def retrieve_param_int(self, name):
         """
@@ -440,21 +343,17 @@ class ParamServer(AsyncBase):
         """
 
         request = param_server_pb2.RetrieveParamIntRequest()
-        
-            
+
         request.name = name
-            
+
         response = await self._stub.RetrieveParamInt(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ParamServerResult.Result.SUCCESS:
             raise ParamServerError(result, "retrieve_param_int()", name)
-        
 
         return response.value
-        
 
     async def provide_param_int(self, name, value):
         """
@@ -481,12 +380,10 @@ class ParamServer(AsyncBase):
         request.value = value
         response = await self._stub.ProvideParamInt(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ParamServerResult.Result.SUCCESS:
             raise ParamServerError(result, "provide_param_int()", name, value)
-        
 
     async def retrieve_param_float(self, name):
         """
@@ -511,21 +408,17 @@ class ParamServer(AsyncBase):
         """
 
         request = param_server_pb2.RetrieveParamFloatRequest()
-        
-            
+
         request.name = name
-            
+
         response = await self._stub.RetrieveParamFloat(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ParamServerResult.Result.SUCCESS:
             raise ParamServerError(result, "retrieve_param_float()", name)
-        
 
         return response.value
-        
 
     async def provide_param_float(self, name, value):
         """
@@ -552,12 +445,10 @@ class ParamServer(AsyncBase):
         request.value = value
         response = await self._stub.ProvideParamFloat(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ParamServerResult.Result.SUCCESS:
             raise ParamServerError(result, "provide_param_float()", name, value)
-        
 
     async def retrieve_all_params(self):
         """
@@ -574,7 +465,4 @@ class ParamServer(AsyncBase):
         request = param_server_pb2.RetrieveAllParamsRequest()
         response = await self._stub.RetrieveAllParams(request)
 
-        
-
         return AllParams.translate_from_rpc(response.params)
-            

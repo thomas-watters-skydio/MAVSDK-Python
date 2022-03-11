@@ -7,6 +7,8 @@ from .async_plugin_manager import AsyncPluginManager
 
 from . import action
 from . import calibration
+from . import command
+from . import poi
 from . import camera
 from . import core
 from . import failure
@@ -43,6 +45,7 @@ class _LoggingThread(threading.Thread):
         for line in self.pipe:
             self.log_fn(line.decode("utf-8").replace("\n", ""))
 
+
 class System:
     """
     Instantiate a System object, that will serve as a proxy to
@@ -66,6 +69,7 @@ class System:
         MAVLink component ID of the mavsdk_server (1..255).
 
     """
+
     def __init__(self, mavsdk_server_address=None, port=50051, sysid=245, compid=190):
         self._mavsdk_server_address = mavsdk_server_address
         self._port = port
@@ -100,11 +104,15 @@ class System:
             self._stop_mavsdk_server()
 
             # add a delay to be sure recourses have been freed and restart mavsdk_server
-            import time; time.sleep(1)
+            import time
+
+            time.sleep(1)
 
         if self._mavsdk_server_address is None:
-            self._mavsdk_server_address = 'localhost'
-            self._server_process = self._start_mavsdk_server(system_address,self._port, self._sysid, self._compid)
+            self._mavsdk_server_address = "localhost"
+            self._server_process = self._start_mavsdk_server(
+                system_address, self._port, self._sysid, self._compid
+            )
 
         await self._init_plugins(self._mavsdk_server_address, self._port)
 
@@ -113,9 +121,10 @@ class System:
         kill the running mavsdk_server and clean the whole instance
         """
         import subprocess
-        if isinstance(self._server_process,subprocess.Popen):
+
+        if isinstance(self._server_process, subprocess.Popen):
             self._server_process.kill()
-            self.__init__(port = self._port)
+            self.__init__(port=self._port)
 
     async def _init_plugins(self, host, port):
         plugin_manager = await AsyncPluginManager.create(host=host, port=port)
@@ -123,6 +132,8 @@ class System:
         self._plugins = {}
         self._plugins["action"] = action.Action(plugin_manager)
         self._plugins["calibration"] = calibration.Calibration(plugin_manager)
+        self._plugins["command"] = command.Command(plugin_manager)
+        self._plugins["poi"] = poi.Poi(plugin_manager)
         self._plugins["camera"] = camera.Camera(plugin_manager)
         self._plugins["core"] = core.Core(plugin_manager)
         self._plugins["failure"] = failure.Failure(plugin_manager)
@@ -148,8 +159,7 @@ class System:
 
     @staticmethod
     def error_uninitialized(plugin_name: str) -> str:
-        return "{plugin_name} plugin has not been initialized!" \
-            "Did you run `System.connect()`?"
+        return "{plugin_name} plugin has not been initialized!" "Did you run `System.connect()`?"
 
     @property
     def action(self) -> action.Action:
@@ -295,6 +305,18 @@ class System:
             raise RuntimeError(self.error_uninitialized("Tune"))
         return self._plugins["tune"]
 
+    @property
+    def command(self) -> command.Command:
+        if "command" not in self._plugins:
+            raise RuntimeError(self.error_uninitialized("Poi"))
+        return self._plugins["command"]
+
+    @property
+    def poi(self) -> poi.Poi:
+        if "poi" not in self._plugins:
+            raise RuntimeError(self.error_uninitialized("Poi"))
+        return self._plugins["poi"]
+
     @staticmethod
     def _start_mavsdk_server(system_address, port, sysid, compid):
         """
@@ -312,23 +334,28 @@ class System:
             from importlib_resources import path
 
         try:
-            with path(bin, 'mavsdk_server') as backend:
-                bin_path_and_args = [os.fspath(backend),
-                                     "-p", str(port),
-                                     "--sysid", str(sysid),
-                                     "--compid", str(compid)]
+            with path(bin, "mavsdk_server") as backend:
+                bin_path_and_args = [
+                    os.fspath(backend),
+                    "-p",
+                    str(port),
+                    "--sysid",
+                    str(sysid),
+                    "--compid",
+                    str(compid),
+                ]
                 if system_address:
                     bin_path_and_args.append(system_address)
-                p = subprocess.Popen(bin_path_and_args,
-                                     shell=False,
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT)
+                p = subprocess.Popen(
+                    bin_path_and_args, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+                )
 
                 logger = logging.getLogger(__name__)
                 log_thread = _LoggingThread(p.stdout, logger.debug)
                 log_thread.start()
         except FileNotFoundError:
-            print("""
+            print(
+                """
 This installation does not provide an embedded 'mavsdk_server' binary.
 If you installed using pip, this means that 'mavsdk_server' is not distributed
 for your platform yet (e.g. arm).
@@ -343,7 +370,8 @@ You will need to get and run the 'mavsdk_server' binary manually:
 
   3. Set the 'mavsdk_server_address' and port when creating the System:
      'drone = System(mavsdk_server_address='localhost', port=50051)'
-""")
+"""
+            )
             sys.exit(1)
 
         def cleanup():

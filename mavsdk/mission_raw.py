@@ -20,12 +20,7 @@ class MissionProgress:
 
      """
 
-    
-
-    def __init__(
-            self,
-            current,
-            total):
+    def __init__(self, current, total):
         """ Initializes the MissionProgress object """
         self.current = current
         self.total = total
@@ -35,49 +30,28 @@ class MissionProgress:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # MissionProgress object
-            return \
-                (self.current == to_compare.current) and \
-                (self.total == to_compare.total)
+            return (self.current == to_compare.current) and (self.total == to_compare.total)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ MissionProgress in string representation """
-        struct_repr = ", ".join([
-                "current: " + str(self.current),
-                "total: " + str(self.total)
-                ])
+        struct_repr = ", ".join(["current: " + str(self.current), "total: " + str(self.total)])
 
         return f"MissionProgress: [{struct_repr}]"
 
     @staticmethod
     def translate_from_rpc(rpcMissionProgress):
         """ Translates a gRPC struct to the SDK equivalent """
-        return MissionProgress(
-                
-                rpcMissionProgress.current,
-                
-                
-                rpcMissionProgress.total
-                )
+        return MissionProgress(rpcMissionProgress.current, rpcMissionProgress.total)
 
     def translate_to_rpc(self, rpcMissionProgress):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcMissionProgress.current = self.current
-            
-        
-        
-        
-            
+
         rpcMissionProgress.total = self.total
-            
-        
-        
 
 
 class MissionItem:
@@ -127,23 +101,22 @@ class MissionItem:
 
      """
 
-    
-
     def __init__(
-            self,
-            seq,
-            frame,
-            command,
-            current,
-            autocontinue,
-            param1,
-            param2,
-            param3,
-            param4,
-            x,
-            y,
-            z,
-            mission_type):
+        self,
+        seq,
+        frame,
+        command,
+        current,
+        autocontinue,
+        param1,
+        param2,
+        param3,
+        param4,
+        x,
+        y,
+        z,
+        mission_type,
+    ):
         """ Initializes the MissionItem object """
         self.seq = seq
         self.frame = frame
@@ -164,27 +137,29 @@ class MissionItem:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # MissionItem object
-            return \
-                (self.seq == to_compare.seq) and \
-                (self.frame == to_compare.frame) and \
-                (self.command == to_compare.command) and \
-                (self.current == to_compare.current) and \
-                (self.autocontinue == to_compare.autocontinue) and \
-                (self.param1 == to_compare.param1) and \
-                (self.param2 == to_compare.param2) and \
-                (self.param3 == to_compare.param3) and \
-                (self.param4 == to_compare.param4) and \
-                (self.x == to_compare.x) and \
-                (self.y == to_compare.y) and \
-                (self.z == to_compare.z) and \
-                (self.mission_type == to_compare.mission_type)
+            return (
+                (self.seq == to_compare.seq)
+                and (self.frame == to_compare.frame)
+                and (self.command == to_compare.command)
+                and (self.current == to_compare.current)
+                and (self.autocontinue == to_compare.autocontinue)
+                and (self.param1 == to_compare.param1)
+                and (self.param2 == to_compare.param2)
+                and (self.param3 == to_compare.param3)
+                and (self.param4 == to_compare.param4)
+                and (self.x == to_compare.x)
+                and (self.y == to_compare.y)
+                and (self.z == to_compare.z)
+                and (self.mission_type == to_compare.mission_type)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ MissionItem in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "seq: " + str(self.seq),
                 "frame: " + str(self.frame),
                 "command: " + str(self.command),
@@ -197,8 +172,9 @@ class MissionItem:
                 "x: " + str(self.x),
                 "y: " + str(self.y),
                 "z: " + str(self.z),
-                "mission_type: " + str(self.mission_type)
-                ])
+                "mission_type: " + str(self.mission_type),
+            ]
+        )
 
         return f"MissionItem: [{struct_repr}]"
 
@@ -206,128 +182,49 @@ class MissionItem:
     def translate_from_rpc(rpcMissionItem):
         """ Translates a gRPC struct to the SDK equivalent """
         return MissionItem(
-                
-                rpcMissionItem.seq,
-                
-                
-                rpcMissionItem.frame,
-                
-                
-                rpcMissionItem.command,
-                
-                
-                rpcMissionItem.current,
-                
-                
-                rpcMissionItem.autocontinue,
-                
-                
-                rpcMissionItem.param1,
-                
-                
-                rpcMissionItem.param2,
-                
-                
-                rpcMissionItem.param3,
-                
-                
-                rpcMissionItem.param4,
-                
-                
-                rpcMissionItem.x,
-                
-                
-                rpcMissionItem.y,
-                
-                
-                rpcMissionItem.z,
-                
-                
-                rpcMissionItem.mission_type
-                )
+            rpcMissionItem.seq,
+            rpcMissionItem.frame,
+            rpcMissionItem.command,
+            rpcMissionItem.current,
+            rpcMissionItem.autocontinue,
+            rpcMissionItem.param1,
+            rpcMissionItem.param2,
+            rpcMissionItem.param3,
+            rpcMissionItem.param4,
+            rpcMissionItem.x,
+            rpcMissionItem.y,
+            rpcMissionItem.z,
+            rpcMissionItem.mission_type,
+        )
 
     def translate_to_rpc(self, rpcMissionItem):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcMissionItem.seq = self.seq
-            
-        
-        
-        
-            
+
         rpcMissionItem.frame = self.frame
-            
-        
-        
-        
-            
+
         rpcMissionItem.command = self.command
-            
-        
-        
-        
-            
+
         rpcMissionItem.current = self.current
-            
-        
-        
-        
-            
+
         rpcMissionItem.autocontinue = self.autocontinue
-            
-        
-        
-        
-            
+
         rpcMissionItem.param1 = self.param1
-            
-        
-        
-        
-            
+
         rpcMissionItem.param2 = self.param2
-            
-        
-        
-        
-            
+
         rpcMissionItem.param3 = self.param3
-            
-        
-        
-        
-            
+
         rpcMissionItem.param4 = self.param4
-            
-        
-        
-        
-            
+
         rpcMissionItem.x = self.x
-            
-        
-        
-        
-            
+
         rpcMissionItem.y = self.y
-            
-        
-        
-        
-            
+
         rpcMissionItem.z = self.z
-            
-        
-        
-        
-            
+
         rpcMissionItem.mission_type = self.mission_type
-            
-        
-        
 
 
 class MissionImportData:
@@ -347,13 +244,7 @@ class MissionImportData:
 
      """
 
-    
-
-    def __init__(
-            self,
-            mission_items,
-            geofence_items,
-            rally_items):
+    def __init__(self, mission_items, geofence_items, rally_items):
         """ Initializes the MissionImportData object """
         self.mission_items = mission_items
         self.geofence_items = geofence_items
@@ -364,21 +255,24 @@ class MissionImportData:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # MissionImportData object
-            return \
-                (self.mission_items == to_compare.mission_items) and \
-                (self.geofence_items == to_compare.geofence_items) and \
-                (self.rally_items == to_compare.rally_items)
+            return (
+                (self.mission_items == to_compare.mission_items)
+                and (self.geofence_items == to_compare.geofence_items)
+                and (self.rally_items == to_compare.rally_items)
+            )
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ MissionImportData in string representation """
-        struct_repr = ", ".join([
+        struct_repr = ", ".join(
+            [
                 "mission_items: " + str(self.mission_items),
                 "geofence_items: " + str(self.geofence_items),
-                "rally_items: " + str(self.rally_items)
-                ])
+                "rally_items: " + str(self.rally_items),
+            ]
+        )
 
         return f"MissionImportData: [{struct_repr}]"
 
@@ -386,59 +280,55 @@ class MissionImportData:
     def translate_from_rpc(rpcMissionImportData):
         """ Translates a gRPC struct to the SDK equivalent """
         return MissionImportData(
-                
-                list(map(lambda elem: MissionItem.translate_from_rpc(elem), rpcMissionImportData.mission_items)),
-                
-                
-                list(map(lambda elem: MissionItem.translate_from_rpc(elem), rpcMissionImportData.geofence_items)),
-                
-                
-                list(map(lambda elem: MissionItem.translate_from_rpc(elem), rpcMissionImportData.rally_items))
+            list(
+                map(
+                    lambda elem: MissionItem.translate_from_rpc(elem),
+                    rpcMissionImportData.mission_items,
                 )
+            ),
+            list(
+                map(
+                    lambda elem: MissionItem.translate_from_rpc(elem),
+                    rpcMissionImportData.geofence_items,
+                )
+            ),
+            list(
+                map(
+                    lambda elem: MissionItem.translate_from_rpc(elem),
+                    rpcMissionImportData.rally_items,
+                )
+            ),
+        )
 
     def translate_to_rpc(self, rpcMissionImportData):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpc_elems_list = []
         for elem in self.mission_items:
-                
+
             rpc_elem = mission_raw_pb2.MissionItem()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcMissionImportData.mission_items.extend(rpc_elems_list)
-            
-        
-        
-        
-            
+
         rpc_elems_list = []
         for elem in self.geofence_items:
-                
+
             rpc_elem = mission_raw_pb2.MissionItem()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcMissionImportData.geofence_items.extend(rpc_elems_list)
-            
-        
-        
-        
-            
+
         rpc_elems_list = []
         for elem in self.rally_items:
-                
+
             rpc_elem = mission_raw_pb2.MissionItem()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                
+
         rpcMissionImportData.rally_items.extend(rpc_elems_list)
-            
-        
-        
 
 
 class MissionRawResult:
@@ -455,8 +345,6 @@ class MissionRawResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for action requests.
@@ -504,7 +392,6 @@ class MissionRawResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         ERROR = 2
@@ -579,12 +466,8 @@ class MissionRawResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the MissionRawResult object """
         self.result = result
         self.result_str = result_str
@@ -594,19 +477,16 @@ class MissionRawResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # MissionRawResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ MissionRawResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"MissionRawResult: [{struct_repr}]"
 
@@ -614,30 +494,16 @@ class MissionRawResult:
     def translate_from_rpc(rpcMissionRawResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return MissionRawResult(
-                
-                MissionRawResult.Result.translate_from_rpc(rpcMissionRawResult.result),
-                
-                
-                rpcMissionRawResult.result_str
-                )
+            MissionRawResult.Result.translate_from_rpc(rpcMissionRawResult.result),
+            rpcMissionRawResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcMissionRawResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcMissionRawResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcMissionRawResult.result_str = self.result_str
-            
-        
-        
 
+        rpcMissionRawResult.result_str = self.result_str
 
 
 class MissionRawError(Exception):
@@ -666,11 +532,9 @@ class MissionRaw(AsyncBase):
         """ Setups the api stub """
         self._stub = mission_raw_pb2_grpc.MissionRawServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return MissionRawResult.translate_from_rpc(response.mission_raw_result)
-    
 
     async def upload_mission(self, mission_items):
         """
@@ -691,25 +555,22 @@ class MissionRaw(AsyncBase):
         """
 
         request = mission_raw_pb2.UploadMissionRequest()
-        
+
         rpc_elems_list = []
         for elem in mission_items:
-                    
+
             rpc_elem = mission_raw_pb2.MissionItem()
             elem.translate_to_rpc(rpc_elem)
             rpc_elems_list.append(rpc_elem)
-                    
+
         request.mission_items.extend(rpc_elems_list)
-                
-            
+
         response = await self._stub.UploadMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "upload_mission()", mission_items)
-        
 
     async def cancel_mission_upload(self):
         """
@@ -724,12 +585,10 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.CancelMissionUploadRequest()
         response = await self._stub.CancelMissionUpload(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "cancel_mission_upload()")
-        
 
     async def download_mission(self):
         """
@@ -749,19 +608,16 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.DownloadMissionRequest()
         response = await self._stub.DownloadMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "download_mission()")
-        
 
         mission_items = []
         for mission_items_rpc in response.mission_items:
             mission_items.append(MissionItem.translate_from_rpc(mission_items_rpc))
 
         return mission_items
-            
 
     async def cancel_mission_download(self):
         """
@@ -776,12 +632,10 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.CancelMissionDownloadRequest()
         response = await self._stub.CancelMissionDownload(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "cancel_mission_download()")
-        
 
     async def start_mission(self):
         """
@@ -798,12 +652,10 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.StartMissionRequest()
         response = await self._stub.StartMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "start_mission()")
-        
 
     async def pause_mission(self):
         """
@@ -823,12 +675,10 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.PauseMissionRequest()
         response = await self._stub.PauseMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "pause_mission()")
-        
 
     async def clear_mission(self):
         """
@@ -843,12 +693,10 @@ class MissionRaw(AsyncBase):
         request = mission_raw_pb2.ClearMissionRequest()
         response = await self._stub.ClearMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "clear_mission()")
-        
 
     async def set_current_mission_item(self, index):
         """
@@ -872,12 +720,10 @@ class MissionRaw(AsyncBase):
         request.index = index
         response = await self._stub.SetCurrentMissionItem(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "set_current_mission_item()", index)
-        
 
     async def mission_progress(self):
         """
@@ -896,9 +742,7 @@ class MissionRaw(AsyncBase):
 
         try:
             async for response in mission_progress_stream:
-                
 
-            
                 yield MissionProgress.translate_from_rpc(response.mission_progress)
         finally:
             mission_progress_stream.cancel()
@@ -926,9 +770,7 @@ class MissionRaw(AsyncBase):
 
         try:
             async for response in mission_changed_stream:
-                
 
-            
                 yield response.mission_changed
         finally:
             mission_changed_stream.cancel()
@@ -960,18 +802,14 @@ class MissionRaw(AsyncBase):
         """
 
         request = mission_raw_pb2.ImportQgroundcontrolMissionRequest()
-        
-            
+
         request.qgc_plan_path = qgc_plan_path
-            
+
         response = await self._stub.ImportQgroundcontrolMission(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != MissionRawResult.Result.SUCCESS:
             raise MissionRawError(result, "import_qgroundcontrol_mission()", qgc_plan_path)
-        
 
         return MissionImportData.translate_from_rpc(response.mission_import_data)
-            

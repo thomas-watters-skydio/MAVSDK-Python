@@ -38,7 +38,6 @@ class StatusTextType(Enum):
 
      """
 
-    
     DEBUG = 0
     INFO = 1
     NOTICE = 2
@@ -104,8 +103,6 @@ class ServerUtilityResult:
 
      """
 
-    
-    
     class Result(Enum):
         """
          Possible results returned for server utility requests.
@@ -129,7 +126,6 @@ class ServerUtilityResult:
 
          """
 
-        
         UNKNOWN = 0
         SUCCESS = 1
         NO_SYSTEM = 2
@@ -164,12 +160,8 @@ class ServerUtilityResult:
 
         def __str__(self):
             return self.name
-    
 
-    def __init__(
-            self,
-            result,
-            result_str):
+    def __init__(self, result, result_str):
         """ Initializes the ServerUtilityResult object """
         self.result = result
         self.result_str = result_str
@@ -179,19 +171,16 @@ class ServerUtilityResult:
         try:
             # Try to compare - this likely fails when it is compared to a non
             # ServerUtilityResult object
-            return \
-                (self.result == to_compare.result) and \
-                (self.result_str == to_compare.result_str)
+            return (self.result == to_compare.result) and (self.result_str == to_compare.result_str)
 
         except AttributeError:
             return False
 
     def __str__(self):
         """ ServerUtilityResult in string representation """
-        struct_repr = ", ".join([
-                "result: " + str(self.result),
-                "result_str: " + str(self.result_str)
-                ])
+        struct_repr = ", ".join(
+            ["result: " + str(self.result), "result_str: " + str(self.result_str)]
+        )
 
         return f"ServerUtilityResult: [{struct_repr}]"
 
@@ -199,30 +188,16 @@ class ServerUtilityResult:
     def translate_from_rpc(rpcServerUtilityResult):
         """ Translates a gRPC struct to the SDK equivalent """
         return ServerUtilityResult(
-                
-                ServerUtilityResult.Result.translate_from_rpc(rpcServerUtilityResult.result),
-                
-                
-                rpcServerUtilityResult.result_str
-                )
+            ServerUtilityResult.Result.translate_from_rpc(rpcServerUtilityResult.result),
+            rpcServerUtilityResult.result_str,
+        )
 
     def translate_to_rpc(self, rpcServerUtilityResult):
         """ Translates this SDK object into its gRPC equivalent """
 
-        
-        
-            
         rpcServerUtilityResult.result = self.result.translate_to_rpc()
-            
-        
-        
-        
-            
-        rpcServerUtilityResult.result_str = self.result_str
-            
-        
-        
 
+        rpcServerUtilityResult.result_str = self.result_str
 
 
 class ServerUtilityError(Exception):
@@ -251,11 +226,9 @@ class ServerUtility(AsyncBase):
         """ Setups the api stub """
         self._stub = server_utility_pb2_grpc.ServerUtilityServiceStub(channel)
 
-    
     def _extract_result(self, response):
         """ Returns the response status and description """
         return ServerUtilityResult.translate_from_rpc(response.server_utility_result)
-    
 
     async def send_status_text(self, type, text):
         """
@@ -276,16 +249,13 @@ class ServerUtility(AsyncBase):
         """
 
         request = server_utility_pb2.SendStatusTextRequest()
-        
+
         request.type = type.translate_to_rpc()
-                
-            
+
         request.text = text
         response = await self._stub.SendStatusText(request)
 
-        
         result = self._extract_result(response)
 
         if result.result != ServerUtilityResult.Result.SUCCESS:
             raise ServerUtilityError(result, "send_status_text()", type, text)
-        
