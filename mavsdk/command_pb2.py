@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\x15\x63ommand/command.proto\x12\x12mavsdk.rpc.command"J\n\x16SendCommandLongRequest\x12\x30\n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x1f.mavsdk.rpc.command.CommandLong"\xd5\x01\n\x0b\x43ommandLong\x12\x15\n\rtarget_system\x18\x01 \x01(\r\x12\x18\n\x10target_component\x18\x02 \x01(\r\x12\x0f\n\x07\x63ommand\x18\x03 \x01(\r\x12\x14\n\x0c\x63onfirmation\x18\x04 \x01(\r\x12\x0e\n\x06param1\x18\x05 \x01(\x02\x12\x0e\n\x06param2\x18\x06 \x01(\x02\x12\x0e\n\x06param3\x18\x07 \x01(\x02\x12\x0e\n\x06param4\x18\x08 \x01(\x02\x12\x0e\n\x06param5\x18\t \x01(\x02\x12\x0e\n\x06param6\x18\n \x01(\x02\x12\x0e\n\x06param7\x18\x0b \x01(\x02"T\n\x17SendCommandLongResponse\x12\x39\n\x0e\x63ommand_result\x18\x01 \x01(\x0b\x32!.mavsdk.rpc.command.CommandResult"\xa0\x02\n\rCommandResult\x12\x38\n\x06result\x18\x01 \x01(\x0e\x32(.mavsdk.rpc.command.CommandResult.Result\x12\x12\n\nresult_str\x18\x02 \x01(\t"\xc0\x01\n\x06Result\x12\x13\n\x0fRESULT_ACCEPTED\x10\x00\x12\x1f\n\x1bRESULT_TEMPORARILY_REJECTED\x10\x01\x12\x11\n\rRESULT_DENIED\x10\x02\x12\x16\n\x12RESULT_UNSUPPORTED\x10\x03\x12\x11\n\rRESULT_FAILED\x10\x04\x12\x16\n\x12RESULT_IN_PROGRESS\x10\x05\x12\x14\n\x10RESULT_CANCELLED\x10\x06\x12\x14\n\x10RESULT_NO_SYSTEM\x10\x07\x32~\n\x0e\x43ommandService\x12l\n\x0fSendCommandLong\x12*.mavsdk.rpc.command.SendCommandLongRequest\x1a+.mavsdk.rpc.command.SendCommandLongResponse"\x00\x42!\n\x11io.mavsdk.commandB\x0c\x43ommandProtob\x06proto3'
+    b'\n\x15\x63ommand/command.proto\x12\x12mavsdk.rpc.command"J\n\x16SendCommandLongRequest\x12\x30\n\x07\x63ommand\x18\x01 \x01(\x0b\x32\x1f.mavsdk.rpc.command.CommandLong"\xd5\x01\n\x0b\x43ommandLong\x12\x15\n\rtarget_system\x18\x01 \x01(\r\x12\x18\n\x10target_component\x18\x02 \x01(\r\x12\x0f\n\x07\x63ommand\x18\x03 \x01(\r\x12\x14\n\x0c\x63onfirmation\x18\x04 \x01(\r\x12\x0e\n\x06param1\x18\x05 \x01(\x02\x12\x0e\n\x06param2\x18\x06 \x01(\x02\x12\x0e\n\x06param3\x18\x07 \x01(\x02\x12\x0e\n\x06param4\x18\x08 \x01(\x02\x12\x0e\n\x06param5\x18\t \x01(\x02\x12\x0e\n\x06param6\x18\n \x01(\x02\x12\x0e\n\x06param7\x18\x0b \x01(\x02"T\n\x17SendCommandLongResponse\x12\x39\n\x0e\x63ommand_result\x18\x01 \x01(\x0b\x32!.mavsdk.rpc.command.CommandResult"\xe0\x03\n\rCommandResult\x12\x38\n\x06result\x18\x01 \x01(\x0e\x32(.mavsdk.rpc.command.CommandResult.Result\x12\x12\n\nresult_str\x18\x02 \x01(\t"\x80\x03\n\x06Result\x12\x12\n\x0eRESULT_UNKNOWN\x10\x00\x12\x12\n\x0eRESULT_SUCCESS\x10\x01\x12\x14\n\x10RESULT_NO_SYSTEM\x10\x02\x12\x1b\n\x17RESULT_CONNECTION_ERROR\x10\x03\x12\x0f\n\x0bRESULT_BUSY\x10\x04\x12\x19\n\x15RESULT_COMMAND_DENIED\x10\x05\x12.\n*RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN\x10\x06\x12$\n RESULT_COMMAND_DENIED_NOT_LANDED\x10\x07\x12\x12\n\x0eRESULT_TIMEOUT\x10\x08\x12*\n&RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN\x10\t\x12%\n!RESULT_NO_VTOL_TRANSITION_SUPPORT\x10\n\x12\x1a\n\x16RESULT_PARAMETER_ERROR\x10\x0b\x12\x16\n\x12RESULT_UNSUPPORTED\x10\x0c\x32~\n\x0e\x43ommandService\x12l\n\x0fSendCommandLong\x12*.mavsdk.rpc.command.SendCommandLongRequest\x1a+.mavsdk.rpc.command.SendCommandLongResponse"\x00\x42!\n\x11io.mavsdk.commandB\x0c\x43ommandProtob\x06proto3'
 )
 
 
@@ -79,9 +79,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
     _SENDCOMMANDLONGRESPONSE._serialized_start = 337
     _SENDCOMMANDLONGRESPONSE._serialized_end = 421
     _COMMANDRESULT._serialized_start = 424
-    _COMMANDRESULT._serialized_end = 712
+    _COMMANDRESULT._serialized_end = 904
     _COMMANDRESULT_RESULT._serialized_start = 520
-    _COMMANDRESULT_RESULT._serialized_end = 712
-    _COMMANDSERVICE._serialized_start = 714
-    _COMMANDSERVICE._serialized_end = 840
+    _COMMANDRESULT_RESULT._serialized_end = 904
+    _COMMANDSERVICE._serialized_start = 906
+    _COMMANDSERVICE._serialized_end = 1032
 # @@protoc_insertion_point(module_scope)

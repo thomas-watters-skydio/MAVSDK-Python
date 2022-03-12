@@ -177,70 +177,121 @@ class CommandResult:
 
          Values
          ------
-         ACCEPTED
-             
-         TEMPORARILY_REJECTED
-             
-         DENIED
-             
-         UNSUPPORTED
-             
-         FAILED
-             
-         IN_PROGRESS
-             
-         CANCELLED
-             
+         UNKNOWN
+              Unknown result
+
+         SUCCESS
+              Request was successful
+
          NO_SYSTEM
-             
+              No system is connected
+
+         CONNECTION_ERROR
+              Connection error
+
+         BUSY
+              Vehicle is busy
+
+         COMMAND_DENIED
+              Command refused by vehicle
+
+         COMMAND_DENIED_LANDED_STATE_UNKNOWN
+              Command refused because landed state is unknown
+
+         COMMAND_DENIED_NOT_LANDED
+              Command refused because vehicle not landed
+
+         TIMEOUT
+              Request timed out
+
+         VTOL_TRANSITION_SUPPORT_UNKNOWN
+              Hybrid/VTOL transition support is unknown
+
+         NO_VTOL_TRANSITION_SUPPORT
+              Vehicle does not support hybrid/VTOL transitions
+
+         PARAMETER_ERROR
+              Error getting or setting parameter
+
+         UNSUPPORTED
+              Action not supported
+
          """
 
-        ACCEPTED = 0
-        TEMPORARILY_REJECTED = 1
-        DENIED = 2
-        UNSUPPORTED = 3
-        FAILED = 4
-        IN_PROGRESS = 5
-        CANCELLED = 6
-        NO_SYSTEM = 7
+        UNKNOWN = 0
+        SUCCESS = 1
+        NO_SYSTEM = 2
+        CONNECTION_ERROR = 3
+        BUSY = 4
+        COMMAND_DENIED = 5
+        COMMAND_DENIED_LANDED_STATE_UNKNOWN = 6
+        COMMAND_DENIED_NOT_LANDED = 7
+        TIMEOUT = 8
+        VTOL_TRANSITION_SUPPORT_UNKNOWN = 9
+        NO_VTOL_TRANSITION_SUPPORT = 10
+        PARAMETER_ERROR = 11
+        UNSUPPORTED = 12
 
         def translate_to_rpc(self):
-            if self == CommandResult.Result.ACCEPTED:
-                return command_pb2.CommandResult.RESULT_ACCEPTED
-            if self == CommandResult.Result.TEMPORARILY_REJECTED:
-                return command_pb2.CommandResult.RESULT_TEMPORARILY_REJECTED
-            if self == CommandResult.Result.DENIED:
-                return command_pb2.CommandResult.RESULT_DENIED
-            if self == CommandResult.Result.UNSUPPORTED:
-                return command_pb2.CommandResult.RESULT_UNSUPPORTED
-            if self == CommandResult.Result.FAILED:
-                return command_pb2.CommandResult.RESULT_FAILED
-            if self == CommandResult.Result.IN_PROGRESS:
-                return command_pb2.CommandResult.RESULT_IN_PROGRESS
-            if self == CommandResult.Result.CANCELLED:
-                return command_pb2.CommandResult.RESULT_CANCELLED
+            if self == CommandResult.Result.UNKNOWN:
+                return command_pb2.CommandResult.RESULT_UNKNOWN
+            if self == CommandResult.Result.SUCCESS:
+                return command_pb2.CommandResult.RESULT_SUCCESS
             if self == CommandResult.Result.NO_SYSTEM:
                 return command_pb2.CommandResult.RESULT_NO_SYSTEM
+            if self == CommandResult.Result.CONNECTION_ERROR:
+                return command_pb2.CommandResult.RESULT_CONNECTION_ERROR
+            if self == CommandResult.Result.BUSY:
+                return command_pb2.CommandResult.RESULT_BUSY
+            if self == CommandResult.Result.COMMAND_DENIED:
+                return command_pb2.CommandResult.RESULT_COMMAND_DENIED
+            if self == CommandResult.Result.COMMAND_DENIED_LANDED_STATE_UNKNOWN:
+                return command_pb2.CommandResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+            if self == CommandResult.Result.COMMAND_DENIED_NOT_LANDED:
+                return command_pb2.CommandResult.RESULT_COMMAND_DENIED_NOT_LANDED
+            if self == CommandResult.Result.TIMEOUT:
+                return command_pb2.CommandResult.RESULT_TIMEOUT
+            if self == CommandResult.Result.VTOL_TRANSITION_SUPPORT_UNKNOWN:
+                return command_pb2.CommandResult.RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN
+            if self == CommandResult.Result.NO_VTOL_TRANSITION_SUPPORT:
+                return command_pb2.CommandResult.RESULT_NO_VTOL_TRANSITION_SUPPORT
+            if self == CommandResult.Result.PARAMETER_ERROR:
+                return command_pb2.CommandResult.RESULT_PARAMETER_ERROR
+            if self == CommandResult.Result.UNSUPPORTED:
+                return command_pb2.CommandResult.RESULT_UNSUPPORTED
 
         @staticmethod
         def translate_from_rpc(rpc_enum_value):
             """ Parses a gRPC response """
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_ACCEPTED:
-                return CommandResult.Result.ACCEPTED
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_TEMPORARILY_REJECTED:
-                return CommandResult.Result.TEMPORARILY_REJECTED
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_DENIED:
-                return CommandResult.Result.DENIED
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_UNSUPPORTED:
-                return CommandResult.Result.UNSUPPORTED
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_FAILED:
-                return CommandResult.Result.FAILED
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_IN_PROGRESS:
-                return CommandResult.Result.IN_PROGRESS
-            if rpc_enum_value == command_pb2.CommandResult.RESULT_CANCELLED:
-                return CommandResult.Result.CANCELLED
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_UNKNOWN:
+                return CommandResult.Result.UNKNOWN
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_SUCCESS:
+                return CommandResult.Result.SUCCESS
             if rpc_enum_value == command_pb2.CommandResult.RESULT_NO_SYSTEM:
                 return CommandResult.Result.NO_SYSTEM
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_CONNECTION_ERROR:
+                return CommandResult.Result.CONNECTION_ERROR
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_BUSY:
+                return CommandResult.Result.BUSY
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_COMMAND_DENIED:
+                return CommandResult.Result.COMMAND_DENIED
+            if (
+                rpc_enum_value
+                == command_pb2.CommandResult.RESULT_COMMAND_DENIED_LANDED_STATE_UNKNOWN
+            ):
+                return CommandResult.Result.COMMAND_DENIED_LANDED_STATE_UNKNOWN
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_COMMAND_DENIED_NOT_LANDED:
+                return CommandResult.Result.COMMAND_DENIED_NOT_LANDED
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_TIMEOUT:
+                return CommandResult.Result.TIMEOUT
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_VTOL_TRANSITION_SUPPORT_UNKNOWN:
+                return CommandResult.Result.VTOL_TRANSITION_SUPPORT_UNKNOWN
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_NO_VTOL_TRANSITION_SUPPORT:
+                return CommandResult.Result.NO_VTOL_TRANSITION_SUPPORT
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_PARAMETER_ERROR:
+                return CommandResult.Result.PARAMETER_ERROR
+            if rpc_enum_value == command_pb2.CommandResult.RESULT_UNSUPPORTED:
+                return CommandResult.Result.UNSUPPORTED
 
         def __str__(self):
             return self.name
